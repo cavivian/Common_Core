@@ -14,11 +14,11 @@
 
 size_t	ft_strlcat(char *dest, const char *src, size_t n)
 {
-	//size_t	len;
+	size_t	len;
 	size_t	a;
 	size_t	b;
 
-	//len = ft_strlen((char *)src) + ft_strlen((char *)dest);
+	len = ft_strlen((char *)src) + ft_strlen((char *)dest);
 	a = ft_strlen((char *)dest);
 	b = 0;
 	if (n <= a)
