@@ -16,7 +16,8 @@ NAME = libftprintf.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -c
 
-SRCS = 
+SRCS = ft_printf.c /
+	ft_external_func.c /
 	
 OBJS = $(SRCS:.c=.o)
 
