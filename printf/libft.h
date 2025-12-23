@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:54:22 by cavivian          #+#    #+#             */
-/*   Updated: 2025/12/17 09:22:02 by cavivian         ###   ########.fr       */
+/*   Updated: 2025/12/23 10:16:44 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <stdarg.h>
 
 typedef struct s_list
 {
