@@ -13,7 +13,6 @@
 #include "libft.h"
 
 //qui devo usare le variabili: va_start, va_arg, va_copy e va_end.
-int ft_printf(const char *, ...)
+int	ft_printf(const char *format, ...)
 {
-	
 }

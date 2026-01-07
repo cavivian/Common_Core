@@ -1,51 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_external_func.c                                 :+:      :+:    :+:   */
+/*   ft_exfunct.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/23 09:33:39 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/07 12:26:20 by cavivian         ###   ########.fr       */
+/*   Created: 2026/01/07 10:55:07 by cavivian          #+#    #+#             */
+/*   Updated: 2026/01/07 13:21:35 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <limits.h>
-#include <stdarg.h>
 
-void	ft_putchar(char c)
+void	ft_putchars(char c)
 {
 	write(1, &c, 1);
 }
 
-void	ft_putstr(char *str)
+void	ft_putnbr(int nb)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
+	if (nb == -2147483648)
 	{
-		write(1, &str[1], 1);
-		i++;
+		write(1, "-2147483648", 11);
+		return ;
+	}
+	if (nb < 0)
+	{
+		ft_putchars('-');
+		nb = -nb;
+	}
+	if (nb < 10)
+	{
+		ft_putchars(nb + '0');
+	}
+	else
+	{
+		ft_putnbr(nb / 10);
+		ft_putchars(nb % 10 + '0');
 	}
 }
 
-//per %d e %i
-void	ft_putint(int n)
-{
-	ft_putnbr(n);
-}
-
-void	ft_putper(void)
-{
-	char	c;
-
-	c = 37;
-	write (1, &c, 1);
-}
-
-void	ft_puthexlow(unsigned int nb)
+void	ft_puthexupp(unsigned int nb)
 {
 	if (nb >= 16)
 	{
@@ -54,15 +49,18 @@ void	ft_puthexlow(unsigned int nb)
 	if ((nb % 16) < 10)
 		ft_putchar(48 + (nb % 16));
 	else
-		ft_putchar('a' + ((nb % 16) - 10));
+		ft_putchar('A' + ((nb % 16) - 10));
 }
 
-/*int	main(void)
+void	ft_putnbr(unsigned int nb)
 {
-	int	n;
-
-	n = 48;
-	ft_puthex(n);
-	//write (1, &n, 1);
-	//return (0);
-}*/
+	if (nb < 10)
+	{
+		ft_putchars(nb + '0');
+	}
+	else
+	{
+		ft_putnbr(nb / 10);
+		ft_putchars(nb % 10 + '0');
+	}
+}
