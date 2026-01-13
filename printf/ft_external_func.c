@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 09:33:39 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/07 12:26:20 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:08:42 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include <limits.h>
 #include <stdarg.h>
 
-void	ft_putchar(char c)
+void	ft_putchar(char c) //%c prints a single character
 {
 	write(1, &c, 1);
 }
 
-void	ft_putstr(char *str)
+void	ft_putstr(char *str) //%s prints a string
 {
 	int	i;
 
@@ -31,13 +31,12 @@ void	ft_putstr(char *str)
 	}
 }
 
-//per %d e %i
-void	ft_putint(int n)
+int	ft_putint(int n) //%d e %i prints a decimal and integer in base 10
 {
 	ft_putnbr(n);
 }
 
-void	ft_putper(void)
+int	ft_putper(void) //%% prints a percent sign
 {
 	char	c;
 
@@ -45,11 +44,12 @@ void	ft_putper(void)
 	write (1, &c, 1);
 }
 
-void	ft_puthexlow(unsigned int nb)
+//%x prints a number in hexadecimal lowercase format
+int	ft_puthexlow(unsigned int nb)
 {
 	if (nb >= 16)
 	{
-		ft_puthex(nb / 16);
+		ft_puthexlow(nb / 16);
 	}
 	if ((nb % 16) < 10)
 		ft_putchar(48 + (nb % 16));
@@ -57,12 +57,12 @@ void	ft_puthexlow(unsigned int nb)
 		ft_putchar('a' + ((nb % 16) - 10));
 }
 
-/*int	main(void)
+/* int	main(void)
 {
 	int	n;
 
-	n = 48;
-	ft_puthex(n);
+	n = 473;
+	ft_puthexlow(n);
 	//write (1, &n, 1);
 	//return (0);
-}*/
+} */
