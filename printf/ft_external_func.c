@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 09:33:39 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/13 14:08:42 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/14 10:23:10 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_putstr(char *str) //%s prints a string
 int	ft_putint(int n) //%d e %i prints a decimal and integer in base 10
 {
 	ft_putnbr(n);
+	return (n);
 }
 
 int	ft_putper(void) //%% prints a percent sign
@@ -42,6 +43,7 @@ int	ft_putper(void) //%% prints a percent sign
 
 	c = 37;
 	write (1, &c, 1);
+	return (c);
 }
 
 //%x prints a number in hexadecimal lowercase format
@@ -55,6 +57,7 @@ int	ft_puthexlow(unsigned int nb)
 		ft_putchar(48 + (nb % 16));
 	else
 		ft_putchar('a' + ((nb % 16) - 10));
+	return (nb);
 }
 
 /* int	main(void)
