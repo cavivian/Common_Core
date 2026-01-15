@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 08:45:37 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/14 14:23:05 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/15 08:43:56 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	ft_perc(char c, va_list args)
 		ft_putstr(va_arg(args, char *));
 	else if (c == 'u')
 		ft_putunsnbr(va_arg(args, unsigned int));
+	va_end(args);
 }
 
 //qui devo usare le variabili: va_list, va_start, va_arg, va_copy e va_end.
@@ -48,7 +49,7 @@ int	ft_printf(const char *format, ...)
 	while (format[i])
 	{
 		if (format[i] == '%')
-			ft_perc(va_arg(c, args));
+			ft_perc(c, args);
 		i++;
 	}
 }

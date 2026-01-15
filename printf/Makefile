@@ -6,7 +6,7 @@
 #    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/11 15:50:53 by cavivian          #+#    #+#              #
-#    Updated: 2026/01/14 10:18:13 by cavivian         ###   ########.fr        #
+#    Updated: 2026/01/15 10:24:57 by cavivian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ CFLAGS = -Wall -Wextra -Werror -c
 
 SRCS = 	ft_external_func.c \
 	ft_exfunct.c \
+
+include makefile.lib
 
 OBJS = $(SRCS:.c=.o)
 
