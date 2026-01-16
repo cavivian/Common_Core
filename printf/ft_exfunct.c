@@ -6,11 +6,11 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 10:55:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/14 12:24:52 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:17:24 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 void	ft_putnbr(int nb)
 {
@@ -73,11 +73,11 @@ int	ft_putnullpoint(void *c) //%p prints the void* argument in base 16
 	return (p);
 }
 
-/* int	main(void)
+int	main(void)
 {
-	int	nb = 42;
+	unsigned int	nb = 42;
 
-	ft_putnbr(nb);
+	ft_putunsnbr(nb);
 	printf("%d", nb);
 	return (0);
-} */
+}

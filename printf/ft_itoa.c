@@ -6,11 +6,11 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 10:32:04 by cavivian          #+#    #+#             */
-/*   Updated: 2025/12/17 14:47:52 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:38:51 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
 static int	count_intlen(int num)
 {

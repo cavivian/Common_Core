@@ -6,16 +6,12 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 08:45:37 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/15 08:43:56 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:36:02 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
+#include "ft_printf.h"
+#include <stdarg.h>
 
 int	ft_perc(char c, va_list args)
 {
@@ -30,7 +26,7 @@ int	ft_perc(char c, va_list args)
 	else if (c == 'X')
 		ft_puthexupp(va_arg(args, unsigned int));
 	else if (c == '%')
-		ft_putper(va_arg(args, char));
+		ft_putper();
 	else if (c == 's')
 		ft_putstr(va_arg(args, char *));
 	else if (c == 'u')
@@ -46,10 +42,13 @@ int	ft_printf(const char *format, ...)
 
 	va_start(ap, format);
 	i = 0;
+	if (!format)
+		return (-1);
 	while (format[i])
 	{
 		if (format[i] == '%')
-			ft_perc(c, args);
+			ft_perc((char)format);
 		i++;
 	}
+	return (0);
 }

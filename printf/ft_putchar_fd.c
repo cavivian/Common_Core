@@ -6,15 +6,15 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 10:33:08 by cavivian          #+#    #+#             */
-/*   Updated: 2025/12/09 16:10:58 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/16 13:17:48 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_putchar_fd(char c, int fd)
+void	ft_putchar(char c, int fd)
 {
-	write (fd, &c, 1);
+	write (1, &c, 1);
 }
 
 /*int main()
