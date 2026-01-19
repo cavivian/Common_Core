@@ -6,7 +6,7 @@
 #    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/11 15:50:53 by cavivian          #+#    #+#              #
-#    Updated: 2026/01/16 11:51:03 by cavivian         ###   ########.fr        #
+#    Updated: 2026/01/19 13:42:40 by cavivian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,7 @@ CFLAGS = -Wall -Wextra -Werror -c
 
 SRCS = 	ft_external_func.c \
 	ft_exfunct.c \
-	ft_count.c \
-	ft_printf.c
-
+	ft_printf.c \
 
 OBJS = $(SRCS:.c=.o)
 

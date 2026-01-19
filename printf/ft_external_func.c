@@ -6,29 +6,28 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 09:33:39 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/16 14:15:37 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/19 13:46:44 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <limits.h>
-#include <stdarg.h>
 
 void	ft_putchar(char c) //%c prints a single character
 {
 	write(1, &c, 1);
 }
 
-void	ft_putstr(char *str) //%s prints a string
+int	ft_putstr(char *str) //%s prints a string
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] != '\0')
 	{
-		write(1, &str[1], 1);
+		write(1, &str[i], 1);
 		i++;
 	}
+	return (i);
 }
 
 int	ft_putint(int n) //%d e %i prints a decimal and integer in base 10

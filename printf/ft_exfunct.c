@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 10:55:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/16 14:17:24 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/19 13:47:01 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,4 @@ int	ft_putnullpoint(void *c) //%p prints the void* argument in base 16
 	write (1, "0x", 2);
 	ft_puthexlow(p);
 	return (p);
-}
-
-int	main(void)
-{
-	unsigned int	nb = 42;
-
-	ft_putunsnbr(nb);
-	printf("%d", nb);
-	return (0);
 }
