@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 11:28:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/19 13:47:20 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/20 15:39:58 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,16 @@ void	ft_putchar(char c);
 int		ft_putstr(char *str);
 int		ft_putint(int n);
 int		ft_putper(void);
-int		ft_puthexlow(unsigned int nb);
-void	ft_putnbr(int nb);
+int		ft_puthexlow(unsigned int nb, char a);
+int		ft_putnbr(int nb);
 int		ft_puthexupp(unsigned int nb);
 int		ft_putunsnbr(unsigned int nb);
 int		ft_putnullpoint(void *c);
 int		ft_perc(char c, va_list *ap);
 int		ft_printf(const char *format, ...);
+size_t	ft_strlen(const char *str);
+int		ft_itoa(long num);
+int		count_intlen(int num);
+void	*ft_calloc(size_t num, size_t size);
 
 #endif 

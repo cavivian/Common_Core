@@ -6,7 +6,7 @@
 #    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/11 15:50:53 by cavivian          #+#    #+#              #
-#    Updated: 2026/01/19 13:42:40 by cavivian         ###   ########.fr        #
+#    Updated: 2026/01/20 14:22:29 by cavivian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ CFLAGS = -Wall -Wextra -Werror -c
 SRCS = 	ft_external_func.c \
 	ft_exfunct.c \
 	ft_printf.c \
+	ft_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -36,6 +37,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f a.out
 	@echo "Tutto pulito (eseguibile eliminato)."
 
 re: fclean all

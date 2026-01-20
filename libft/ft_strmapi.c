@@ -33,10 +33,10 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	return (str);
 }
 
-int	main()
+/*int	main()
 {
 	char const s[] = "andiamo";
 	unsigned int i = 0;
 
 	printf("%s\n", ft_strmapi(s, f(i, s[i])));
-}
+}*/

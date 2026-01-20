@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 09:33:39 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/19 13:46:44 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/20 15:08:54 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	ft_putstr(char *str) //%s prints a string
 	i = 0;
 	while (str[i] != '\0')
 	{
-		write(1, &str[i], 1);
+		ft_putchar(str[i]);
 		i++;
 	}
-	return (i);
+	return (ft_strlen(str));
 }
 
 int	ft_putint(int n) //%d e %i prints a decimal and integer in base 10
@@ -36,27 +36,25 @@ int	ft_putint(int n) //%d e %i prints a decimal and integer in base 10
 	return (n);
 }
 
-int	ft_putper(void) //%% prints a percent sign
+//%x prints a number in hexadecimal lowercase format
+int	ft_puthexlow(unsigned int nb, char a)
 {
 	char	c;
+	int		n;
 
-	c = 37;
-	write (1, &c, 1);
-	return (c);
-}
-
-//%x prints a number in hexadecimal lowercase format
-int	ft_puthexlow(unsigned int nb)
-{
+	c = 'a';
+	n = 0;
+	if (a == 'X')
+		c -= 32;
 	if (nb >= 16)
 	{
-		ft_puthexlow(nb / 16);
+		n += ft_puthexlow(nb / 16, a);
 	}
 	if ((nb % 16) < 10)
 		ft_putchar(48 + (nb % 16));
 	else
-		ft_putchar('a' + ((nb % 16) - 10));
-	return (nb);
+		ft_putchar(c + ((nb % 16) - 10));
+	return (n + 1);
 }
 
 /* int	main(void)
