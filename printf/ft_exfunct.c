@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 10:55:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/20 15:49:34 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/21 12:00:05 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 int	ft_putnbr(int nb)
 {
+	int	i;
+
+	i = count_intlen(nb);
 	if (nb == -2147483648)
 	{
 		write(1, "-2147483648", 11);
-		return (11);
+		return (i);
 	}
 	if (nb < 0)
 	{
@@ -33,7 +36,7 @@ int	ft_putnbr(int nb)
 		ft_putnbr(nb / 10);
 		ft_putchar(nb % 10 + '0');
 	}
-	return (count_intlen(nb));
+	return (i);
 }
 
 //%X prints a number in hexadecimal uppercase format
@@ -49,7 +52,8 @@ int	ft_puthexupp(unsigned int nb)
 		ft_putchar('A' + ((nb % 16) - 10));
 	return (nb);
 }
-unsigned long	suca(unsigned long num)
+
+unsigned long	ft_countuns(unsigned long num)
 {
 	int	len;
 
@@ -63,6 +67,7 @@ unsigned long	suca(unsigned long num)
 	}
 	return (len);
 }
+
 int	ft_putunsnbr(unsigned int nb) //%u prints an unsigned number in base 10
 {
 	if (nb < 10)
@@ -74,16 +79,20 @@ int	ft_putunsnbr(unsigned int nb) //%u prints an unsigned number in base 10
 		ft_putunsnbr(nb / 10);
 		ft_putchar(nb % 10 + '0');
 	}
-	return (suca(nb));
+	return (ft_countuns(nb));
 }
 
 int	ft_putnullpoint(void *c) //%p prints the void* argument in base 16
 {
 	unsigned long		p;
-	int n;
+	int					n;
 
 	n = 0;
 	p = (unsigned long)c;
+	if (!c)
+	{
+		return (ft_putstr("(nil)"));
+	}
 	write (1, "0x", 2);
 	n = ft_puthexlow(p, 'x');
 	return (n + 2);

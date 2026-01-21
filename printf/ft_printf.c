@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 08:45:37 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/20 15:48:00 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/21 13:32:00 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	ft_printf(const char *format, ...)
 	count = 0;
 	va_start(ap, format);
 	i = 0;
-/* 	if (!format)
-		return (-1); */
+	if (!format)
+		return (-1);
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
@@ -72,10 +72,7 @@ int	ft_printf(const char *format, ...)
 
 /* int	main(void)
 {
-	
-	printf("%d\n", printf(" %u \n", -76467));
-
-
-	printf("%d\n", ft_printf(" %u \n", -76467));
-
+	printf("%d\n", ft_printf(" NULL %s NULL \n", NULL));
+	//printf("%d\n", printf(" NULL %s NULL ", NULL));
+	return (0);
 } */

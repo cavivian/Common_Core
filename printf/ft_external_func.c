@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 09:33:39 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/20 15:08:54 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/21 13:32:17 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ int	ft_putstr(char *str) //%s prints a string
 	int	i;
 
 	i = 0;
+	if (!str)
+	{
+		write (1, "(null)", 6);
+		return (6);
+	}
 	while (str[i] != '\0')
 	{
 		ft_putchar(str[i]);
@@ -37,7 +42,7 @@ int	ft_putint(int n) //%d e %i prints a decimal and integer in base 10
 }
 
 //%x prints a number in hexadecimal lowercase format
-int	ft_puthexlow(unsigned int nb, char a)
+int	ft_puthexlow(unsigned long nb, char a)
 {
 	char	c;
 	int		n;
@@ -56,13 +61,3 @@ int	ft_puthexlow(unsigned int nb, char a)
 		ft_putchar(c + ((nb % 16) - 10));
 	return (n + 1);
 }
-
-/* int	main(void)
-{
-	int	n;
-
-	n = 473;
-	ft_puthexlow(n);
-	write (1, &n, 1);
-	return (0);
-} */

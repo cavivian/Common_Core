@@ -6,19 +6,22 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:13:32 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/20 15:41:43 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/21 11:42:00 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	count_intlen(int num)
+int	count_intlen(long num)
 {
 	int	len;
 
 	len = 0;
 	if (num <= 0)
+	{
+		num *= -1;
 		len++;
+	}
 	while (num > 0)
 	{
 		num /= 10;
