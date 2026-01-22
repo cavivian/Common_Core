@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 11:28:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/21 14:12:26 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/01/22 10:27:46 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <limits.h>
 
 char	*get_next_line(int fd);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 
 #endif 

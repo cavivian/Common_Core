@@ -124,7 +124,7 @@ char	**ft_split(char const *s, char c)
 
 	printf("%s\n", split[0]);
 	if(split[1][0] == '\0')
-		printf("suca"); 
+		printf("ciao"); 
 	printf("%s\n", split[1]);
 	printf("%s\n", split[2]);
 	printf("%s\n", split[3]);
