@@ -6,16 +6,14 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 11:28:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/26 11:56:27 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/06 11:26:46 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+# define BUFFER_SIZE 10
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE=10
-#endif
 
 # include <unistd.h>
 # include <stdlib.h>

@@ -6,39 +6,42 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/26 10:51:58 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/06 15:39:34 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	controllen(int i)
+int	controllen(char *buffer, int buffer_size)
 {
+	int	i;
 
+	i = ft_strlen(buffer);
+	while (buffer[i] < BUFFER_SIZE)
+	{
+		read(0, buffer[i], BUFFER_SIZE);
+		i++;
+	}
+	return (i);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*str = NULL;
-	int			i;
-	char		*buffer;
-	char		*m;
 	int			fd;
+	static char	*str;
+	char		*buffer;
+	int			i;
+	char		*m;
 
+	fd = 0;
+	str = NULL;
 	i = 0;
-	fd = 1;
-	m = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!m || !str)
+	m = malloc(buffer);
+	if (!str || !buffer || !m)
 		return (NULL);
-	str = buffer;
-	while (fd > 0 && str[i])
+	while (buffer[i] != '\0')
 	{
-		controllen(i);
-		read(0, buffer[i], BUFFER_SIZE + 1);
-		write(1, &buffer[i], BUFFER_SIZE + 1);
-		write(1, "\n", 1);
-		i++;
+		
 	}
 	free(m);
-	return (str);
 }
