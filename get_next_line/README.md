@@ -11,24 +11,8 @@ _________
 __________
 
 ## Istruzioni
-### 1. Compilare il programma:
 
-```C
-make
-``` 
-
-### 2. Eliminare file oggetto: 
-
-```C
-make clean 
-``` 
-
-### 3. Eliminare l'eseguibile:
-```C
-make fclean 
-```
-
-### 2. Compilare il programma con le flags:
+### 1. Compilare il programma con le flags:
 
 ```C
 cc -Wall -Wextra -Werror -D BUFFER_SIZE=n

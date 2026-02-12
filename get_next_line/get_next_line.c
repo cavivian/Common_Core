@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/02/06 15:39:34 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/11 21:34:47 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 int	controllen(char *buffer, int buffer_size)
 {
 	int	i;
-
+	char	*m;
+	
+	m = malloc(buffer_size);
+	if (!m)
+		return (-1);
 	i = ft_strlen(buffer);
 	while (buffer[i] < BUFFER_SIZE)
 	{
@@ -23,6 +27,26 @@ int	controllen(char *buffer, int buffer_size)
 		i++;
 	}
 	return (i);
+}
+
+char	contrnwline( char *buffer, int buffer_size)
+{
+	int				i;
+	char			*m;
+	static  char	*str;
+	
+	if (!m)
+		return (0);
+	i = 0;
+	while (buffer[i] != '\n' && buffer[i] != '\0')
+		i++;
+	if (buffer[i] == '\n')
+		{
+			str = ft_strjoin(str, ft_substr(buffer, 0, i + 1));
+			buffer = ft_substr(buffer, i + 1, ft_strlen(buffer) - i - 1);
+			m = malloc(sizeof (str)); 
+		}
+	return (str);
 }
 
 char	*get_next_line(int fd)
@@ -41,7 +65,13 @@ char	*get_next_line(int fd)
 		return (NULL);
 	while (buffer[i] != '\0')
 	{
-		
+		while (buffer[i] != '\n' && buffer[i] != '\0')
+			i++;
+		if (buffer[i] == '\n')
+		{			str = ft_strjoin(str, ft_substr(buffer, 0, i + 1));
+			buffer = ft_substr(buffer, i + 1, ft_strlen(buffer) - i - 1);
+			return (str);
+		}
 	}
 	free(m);
 }
