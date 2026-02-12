@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/02/11 21:34:47 by camilla          ###   ########.fr       */
+/*   Updated: 2026/02/12 11:04:52 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ int	controllen(char *buffer, int buffer_size)
 	return (i);
 }
 
-char	contrnwline( char *buffer, int buffer_size)
+char	contrnwline( char *buffer, int buffer_size, char **str)
 {
 	int				i;
 	char			*m;
-	static  char	*str;
 	
 	if (!m)
 		return (0);
@@ -42,25 +41,22 @@ char	contrnwline( char *buffer, int buffer_size)
 		i++;
 	if (buffer[i] == '\n')
 		{
-			str = ft_strjoin(str, ft_substr(buffer, 0, i + 1));
+			*str = ft_strjoin(*str, ft_substr(buffer, 0, i + 1));
 			buffer = ft_substr(buffer, i + 1, ft_strlen(buffer) - i - 1);
-			m = malloc(sizeof (str)); 
+			m = malloc(sizeof (*str)); 
 		}
-	return (str);
+	return (*str);
 }
 
 char	*get_next_line(int fd)
 {
-	int			fd;
 	static char	*str;
 	char		*buffer;
 	int			i;
 	char		*m;
-
-	fd = 0;
-	str = NULL;
+	
 	i = 0;
-	m = malloc(buffer);
+	m = malloc(BUFFER_SIZE);
 	if (!str || !buffer || !m)
 		return (NULL);
 	while (buffer[i] != '\0')
