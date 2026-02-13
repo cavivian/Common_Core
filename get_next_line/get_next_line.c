@@ -6,45 +6,29 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/02/12 11:04:52 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/13 16:41:42 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	controllen(char *buffer, int buffer_size)
-{
-	int	i;
-	char	*m;
-	
-	m = malloc(buffer_size);
-	if (!m)
-		return (-1);
-	i = ft_strlen(buffer);
-	while (buffer[i] < BUFFER_SIZE)
-	{
-		read(0, buffer[i], BUFFER_SIZE);
-		i++;
-	}
-	return (i);
-}
-
-char	contrnwline( char *buffer, int buffer_size, char **str)
+char	*contrnwline(char *buffer, int buffer_size,char **str, char **m)
 {
 	int				i;
-	char			*m;
-	
-	if (!m)
-		return (0);
+
 	i = 0;
-	while (buffer[i] != '\n' && buffer[i] != '\0')
-		i++;
-	if (buffer[i] == '\n')
+	while (buffer[i] != '\0')
+	{
+		while (buffer[i] != '\n' && buffer[i] != '\0')
+		{
+			i++;
+		}
+		return (NULL);
+		if (buffer[i] == '\n')
 		{
 			*str = ft_strjoin(*str, ft_substr(buffer, 0, i + 1));
-			buffer = ft_substr(buffer, i + 1, ft_strlen(buffer) - i - 1);
-			m = malloc(sizeof (*str)); 
 		}
+	}
 	return (*str);
 }
 
@@ -59,6 +43,7 @@ char	*get_next_line(int fd)
 	m = malloc(BUFFER_SIZE);
 	if (!str || !buffer || !m)
 		return (NULL);
+	read(fd, &buffer, BUFFER_SIZE);
 	while (buffer[i] != '\0')
 	{
 		while (buffer[i] != '\n' && buffer[i] != '\0')
