@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/02/16 10:45:15 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/16 11:03:55 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ char	*contrnwline(char *buffer, char **str)
 			return (*str);
 		}
 		else if (buffer[i] == '\0')
-			return (NULL);
+		{
+			*str = ft_strjoin(*str, ft_substr(buffer, 0, i));
+			return (*str);
+		}
 	}
 	return (NULL);
 }
