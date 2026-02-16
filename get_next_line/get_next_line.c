@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/02/14 15:33:26 by camilla          ###   ########.fr       */
+/*   Updated: 2026/02/16 10:45:15 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ char	*contrnwline(char *buffer, char **str)
 			i++;
 		if (buffer[i] == '\n')
 		{
-			*str = ft_strjoin(*str, ft_substr(buffer, 0, i + 1));
-			buffer = ft_substr(buffer, i + 1, ft_strlen(buffer) - i - 1);
+			*str = ft_strjoin(*str, ft_substr(buffer, 0, i + 1)); // i+1 = byte subito dopo '\n'
+			buffer = ft_substr(buffer, i + 1, ft_strlen(buffer) - i - 1); // -i -1 = da' la lunghezza del resto della stringa senza contare '\n'
 			return (*str);
 		}
 		else if (buffer[i] == '\0')
 			return (NULL);
 	}
+	return (NULL);
 }
 
 char	*get_next_line(int fd)
@@ -40,10 +41,11 @@ char	*get_next_line(int fd)
 	char		*m;
 	int			i;
 
-	m = malloc(BUFFER_SIZE);
+	m = malloc(BUFFER_SIZE + 1);
 	if (!m)
 		return (NULL);
 	i =read(fd, m, BUFFER_SIZE);
+	m[i] = '\0';
 	if (i == 0)
 		return (NULL);
 	contrnwline(m, &str);
@@ -52,4 +54,12 @@ char	*get_next_line(int fd)
 		return (str);
 	else
 		return (NULL);
+}
+
+int	main()
+{
+	int	fd;
+
+	fd = open("file.txt", O_RDONLY);
+	printf("%s", get_next_line(fd));
 }
