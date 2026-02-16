@@ -3,56 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/02/13 16:41:42 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/14 15:33:26 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*contrnwline(char *buffer, int buffer_size,char **str, char **m)
+char	*contrnwline(char *buffer, char **str)
 {
-	int				i;
+	int	i;
 
 	i = 0;
+	if(buffer[i] == '\0')
+			return (NULL);
 	while (buffer[i] != '\0')
 	{
 		while (buffer[i] != '\n' && buffer[i] != '\0')
-		{
 			i++;
-		}
-		return (NULL);
 		if (buffer[i] == '\n')
 		{
 			*str = ft_strjoin(*str, ft_substr(buffer, 0, i + 1));
+			buffer = ft_substr(buffer, i + 1, ft_strlen(buffer) - i - 1);
+			return (*str);
 		}
+		else if (buffer[i] == '\0')
+			return (NULL);
 	}
-	return (*str);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*str;
-	char		*buffer;
-	int			i;
 	char		*m;
-	
-	i = 0;
+	int			i;
+
 	m = malloc(BUFFER_SIZE);
-	if (!str || !buffer || !m)
+	if (!m)
 		return (NULL);
-	read(fd, &buffer, BUFFER_SIZE);
-	while (buffer[i] != '\0')
-	{
-		while (buffer[i] != '\n' && buffer[i] != '\0')
-			i++;
-		if (buffer[i] == '\n')
-		{			str = ft_strjoin(str, ft_substr(buffer, 0, i + 1));
-			buffer = ft_substr(buffer, i + 1, ft_strlen(buffer) - i - 1);
-			return (str);
-		}
-	}
+	i =read(fd, m, BUFFER_SIZE);
+	if (i == 0)
+		return (NULL);
+	contrnwline(m, &str);
 	free(m);
+	if (str)
+		return (str);
+	else
+		return (NULL);
 }
