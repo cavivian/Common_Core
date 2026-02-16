@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/02/16 11:03:55 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/16 14:06:26 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ char	*get_next_line(int fd)
 		return (NULL);
 	i =read(fd, m, BUFFER_SIZE);
 	m[i] = '\0';
+	while (!*str || (int)ft_strlen(str) - 1 != '\n')
+	{
+		i = read(fd, m, BUFFER_SIZE);
+		if (i == 0)
+			break;
+		m[i] = '\0';
+		contrnwline(m, &str);
+	}
 	if (i == 0)
 		return (NULL);
 	contrnwline(m, &str);
