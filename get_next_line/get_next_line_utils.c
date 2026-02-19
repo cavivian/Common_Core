@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:29 by cavivian          #+#    #+#             */
-/*   Updated: 2026/02/18 09:42:53 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/19 16:17:09 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,33 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	p[i] = '\0';
 	return (p);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*a;
+	int		i;
+
+	i = 0;
+	a = malloc(ft_strlen((char *)s) + 1);
+	while (s[i])
+	{
+		a[i] = s[i];
+		i++;
+	}
+	a[i] = '\0';
+	return (a);
+}
+
+char	*ft_strchr(const char *str, int p)
+{
+	while (*str != '\0')
+	{
+		if (*str == (char)p)
+			return ((char *)str);
+		str++;
+	}
+	if (*str == (char)p)
+		return ((char *)str);
+	return (NULL);
 }
