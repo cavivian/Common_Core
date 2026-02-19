@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:07 by cavivian          #+#    #+#             */
-/*   Updated: 2026/02/16 14:06:26 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/19 09:40:33 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,22 @@
 char	*contrnwline(char *buffer, char **str)
 {
 	int	i;
+	char *tmp;
+	char *vol;
 
 	i = 0;
-	if(buffer[i] == '\0')
-			return (NULL);
+	if (buffer[i] == '\0')
+		return (NULL);
 	while (buffer[i] != '\0')
 	{
-		while (buffer[i] != '\n' && buffer[i] != '\0')
-			i++;
 		if (buffer[i] == '\n')
 		{
-			*str = ft_strjoin(*str, ft_substr(buffer, 0, i + 1)); // i+1 = byte subito dopo '\n'
-			buffer = ft_substr(buffer, i + 1, ft_strlen(buffer) - i - 1); // -i -1 = da' la lunghezza del resto della stringa senza contare '\n'
-			return (*str);
-		}
-		else if (buffer[i] == '\0')
-		{
-			*str = ft_strjoin(*str, ft_substr(buffer, 0, i));
-			return (*str);
+			tmp = *str;
+			vol = ft_substr(buffer, 0, i + 1);
+			buffer = ft_strjoin(buffer, tmp);
+			
 		}
 	}
-	return (NULL);
 }
 
 char	*get_next_line(int fd)
@@ -47,9 +42,7 @@ char	*get_next_line(int fd)
 	m = malloc(BUFFER_SIZE + 1);
 	if (!m)
 		return (NULL);
-	i =read(fd, m, BUFFER_SIZE);
-	m[i] = '\0';
-	while (!*str || (int)ft_strlen(str) - 1 != '\n')
+	while (!str || (str && ft_strlen(str) > 0 && str[ft_strlen(str) - 1] != '\n'))
 	{
 		i = read(fd, m, BUFFER_SIZE);
 		if (i == 0)
@@ -57,9 +50,8 @@ char	*get_next_line(int fd)
 		m[i] = '\0';
 		contrnwline(m, &str);
 	}
-	if (i == 0)
-		return (NULL);
-	contrnwline(m, &str);
+	if (i == 0 && !str)
+		return (str);
 	free(m);
 	if (str)
 		return (str);

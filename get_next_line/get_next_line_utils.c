@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:29 by cavivian          #+#    #+#             */
-/*   Updated: 2026/01/26 09:06:05 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/18 09:42:53 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	p[i + j] = '\0';
+	free((void *)s2);
 	return (p);
 }
 
@@ -42,6 +43,8 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
+	if(!str)
+		return (0);
 	while (str[i] != '\0')
 	{
 		i++;
