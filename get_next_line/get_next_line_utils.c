@@ -6,35 +6,31 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:29 by cavivian          #+#    #+#             */
-/*   Updated: 2026/02/19 16:17:09 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/25 14:18:00 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
 	char	*p;
 
 	i = 0;
+	j = 0;
 	p = malloc(ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1);
-	if (!s1 || !s2)
+	if (!s1 && !s2)
 		return (NULL);
 	while (s1[i] != '\0')
-	{
-		p[i] = s1[i];
-		i++;
-	}
+		p[i++] = s1[j++];
 	j = 0;
 	while (s2[j] != '\0')
-	{
-		p[i + j] = s2[j];
-		j++;
-	}
-	p[i + j] = '\0';
-	free((void *)s2);
+		p[i++] = s2[j++];
+	p[i] = '\0';
+	if (s1)
+		free (s1);
 	return (p);
 }
 
@@ -107,4 +103,23 @@ char	*ft_strchr(const char *str, int p)
 	if (*str == (char)p)
 		return ((char *)str);
 	return (NULL);
+}
+
+void	*ft_calloc(size_t num, size_t size)
+{
+	char	*str;
+	size_t	i;
+
+	if (size != 0 && num > __SIZE_MAX__ / size)
+		return (NULL);
+	str = malloc(num * size);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < num * size)
+	{
+		str[i] = 0;
+		i++;
+	}
+	return (str);
 }
