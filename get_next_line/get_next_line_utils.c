@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:02:29 by cavivian          #+#    #+#             */
-/*   Updated: 2026/02/25 14:18:00 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/02/26 15:57:10 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,41 +39,13 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	if(!str)
+	if (!str)
 		return (0);
 	while (str[i] != '\0')
 	{
 		i++;
 	}
 	return (i);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	char	*p;
-
-	if (!s)
-		return (NULL);
-	if (ft_strlen((char *)s) <= start)
-	{
-		p = malloc(1);
-		p[0] = '\0';
-		return (p);
-	}
-	i = 0;
-	if (len > ft_strlen((char *)s) - start - 1)
-		len = ft_strlen((char *)s) - start;
-	p = malloc(len + 1);
-	if (!p)
-		return (NULL);
-	while (i < len)
-	{
-		p[i] = ((char *)s)[start + i];
-		i++;
-	}
-	p[i] = '\0';
-	return (p);
 }
 
 char	*ft_strdup(const char *s)
@@ -83,6 +55,8 @@ char	*ft_strdup(const char *s)
 
 	i = 0;
 	a = malloc(ft_strlen((char *)s) + 1);
+	if (!a)
+		return (NULL);
 	while (s[i])
 	{
 		a[i] = s[i];
