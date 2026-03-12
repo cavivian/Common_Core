@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   movep.c                                            :+:      :+:    :+:   */
+/*   movepr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 13:57:24 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/11 12:02:57 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/12 11:27:04 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	move_ra(struct Stacks *ra)
 		return (0);
 	tmp = ra->stack_a; // punta al primo nodo della lista, si salva perchè dovrà andare in coda dopo la rotazione
 	ra->stack_a = ra->stack_a->next; // la testa dello stack diventa il secondo nodo, perchè [1] deve andare in fondo
-	ultimo = ra->stack_a; // serve a trovare la fine della lista
+	ultimo = ra->stack_a; // serve a trovare la fine della lista inizializzazione di ultimo
 	while (ultimo->next != NULL)
 		ultimo = ultimo->next; // qui ultimo punta a [3]
 	ultimo->next = tmp; //coolegamento della vecchia testa in fondo

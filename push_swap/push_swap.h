@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:35:46 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/10 19:17:45 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/12 10:04:41 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ void move_pa(struct Stacks *pa);
 void move_pb(struct Stacks *pb);
 void move_ra(struct Stacks *ra);
 void move_rb(struct Stacks *rb);
+void move_rra(struct Stacks *rra);
+void move_rrb(struct Stacks *rrb);
+void move_rrr(struct Stacks *rrr);
+
 
 
 

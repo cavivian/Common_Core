@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:41:31 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/11 12:13:31 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/12 10:02:04 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,4 @@ void	move_ss(struct Stacks *ss)
 		ss->stack_b = second;
 	}
 	write(1, "ss\n", 3);
-}
-
-void	move_rra(struct Stacks *rra)
-{
-	t_node	*primo; // puntatore per scorrere
-	t_node	*ultimo;
-
-	primo = rra->stack_a;
-	if (rra->stack_a == NULL || rra->stack_a->next == NULL) // controllo che esista lo stack e che abbia piu' di un nodo
-		return (0);
-	while (primo->next->next != NULL) // scorro fino a trovare il penultimo
-		primo = primo->next; // nodo successivo a primo
-	ultimo = primo->next; // stacco l'ultimo nodo e lo aggiorno
-	primo->next = NULL;
-	ultimo->next = rra->stack_a; // metto l'ultimo in testa
-	rra->stack_a = ultimo;
-	write(1, "rra\n", 4);
 }

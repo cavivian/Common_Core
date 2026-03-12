@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: camilla <camilla@student.42.fr>            +#+  +:+       +#+         #
+#    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/11 15:50:53 by cavivian          #+#    #+#              #
-#    Updated: 2026/03/10 19:18:52 by camilla          ###   ########.fr        #
+#    Updated: 2026/03/12 10:05:21 by cavivian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ CFLAGS = -Wall -Wextra -Werror -c
 
 SRCS = push_swap.c/
 	moves.c /
-	movep.c /
+	movepr.c /
+	mover.c /
 	
 
 	
