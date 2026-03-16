@@ -3,36 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/13 14:12:13 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/15 19:26:09 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	sort_check(int argc, struct Stacks *ab)
-{
-	t_node	*tmp;
-
-	tmp = ab->stack_a;
-	if (ab->stack_a == NULL || ab->stack_a->next == NULL) // controllo che esiste lo stack e che ci sia piu' di un nodo
-		return (0);
-	while (tmp->next != NULL && tmp->value < tmp->next->value)
-	{
-		tmp = tmp->next;
-		if (tmp->value < tmp->next->value)
-		{
-			
-		}
-	}
-	return (1);
-}
-
 void	easyswap(int argc, struct Stacks *a_b)
 {
-	sort_check(argc, a_b);
+	if (!argc || !a_b)
+		return (NULL);
+	if (argc <= 5)
+		sort_check(a_b);
 }
 
 int push_swap(struct Stacks, int *argc, char *argv)

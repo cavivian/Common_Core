@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
+#    By: camilla <camilla@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/11 15:50:53 by cavivian          #+#    #+#              #
-#    Updated: 2026/03/12 10:05:21 by cavivian         ###   ########.fr        #
+#    Updated: 2026/03/15 19:25:35 by camilla          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,9 @@ SRCS = push_swap.c/
 	moves.c /
 	movepr.c /
 	mover.c /
+	sorting.c /
+	sortutils.c /
+	
 	
 
 	

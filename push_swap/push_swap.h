@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:35:46 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/13 10:26:17 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/15 19:24:19 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,15 @@ void move_rb(struct Stacks *rb);
 void move_rra(struct Stacks *rra);
 void move_rrb(struct Stacks *rrb);
 void move_rrr(struct Stacks *rrr);
-
-
+void easyswap(int argc, struct Stacks *a_b);
+int push_swap(struct Stacks, int *argc, char *argv);
+void sort_three(struct Stacks *ba);
+void sort_four(struct Stacks *aab);
+void sort_five(struct Stacks *bba);
+int sort(int argc, struct Stacks *_a_b);
+int find_min(struct Stacks *ab);
+int	sort_check( struct Stacks *ab);
+void last_sort(struct Stacks *ba);
 
 
 #endif
