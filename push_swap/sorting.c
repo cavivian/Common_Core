@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 15:02:19 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/15 19:32:43 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/16 09:20:03 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 void	sort_three(struct Stacks *ba)
 {
 	t_node	*tmp;
-	int	first;
-	int	second;
-	int	third;
+	int		first;
+	int		second;
+	int		third;
 
 	tmp = ba->stack_a;
 	first = tmp->value;
 	second = tmp->next->value;
 	third = tmp->next->next->value;
-	if (first < second && second < third)
+	if (sort_check(ba))
 		return ;
 	else if (first < third && third < second)
 	{
@@ -44,17 +44,9 @@ void	sort_four(struct Stacks *aab)
 {
 	t_node	*tmp;
 	t_node	*min;
-	int	first;
-	int	second;
-	int	third;
-	int	fourth;
 
 	tmp = aab->stack_a;
-	first = tmp->value;
-	second = tmp->next->value;
-	third = tmp->next->next->value;
-	fourth = tmp->next->next->next->value;
-	if (first < second && second < third && third < fourth)
+	if (sort_check(aab))
 		return ;
 	min = find_min(aab);
 	while (aab->stack_a->value != min->value)
@@ -68,33 +60,28 @@ void	sort_five(struct Stacks *bba)
 {
 	t_node	*tmp;
 	t_node	*min;
-	int	first;
-	int	second;
-	int	third;
-	int	fourth;
-	int	fifth;
 
 	tmp = bba->stack_a;
-	first = tmp->value;
-	second = tmp->next->value;
-	third = tmp->next->next->value;
-	fourth = tmp->next->next->next->value;
-	fifth = tmp->next->next->next->next->value;
-	if (first < second && second < third && third < fourth && fourth < fifth)
+	if (sort_check(bba))
 		return ;
+	min = find_min(bba);
+	while (bba->stack_a->value != min->value)
+		move_ra(bba);
+	move_pb(bba);
 	min = find_min(bba);
 	while (bba->stack_a->value != min->value)
 		move_ra(bba);
 	move_pb(bba);
 	sort_three(bba);
 	move_pa(bba);
+	move_pa(bba);
 }
 
-int sort(int argc, struct Stacks *_a_b)
+void	sort(int argc, struct Stacks *_a_b)
 {
 	argc = argc - 1; // per eliminare il conteggio del nome del file
 	if (sort_check(_a_b))
-		return (1);
+		return ;
 	if (argc == 2)
 		move_sa(_a_b);
 	else if (argc == 3)
