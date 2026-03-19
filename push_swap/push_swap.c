@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/16 09:19:11 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/18 10:52:55 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ int	push_swap(struct Stacks *aabb, int *argc, char *argv)
 	}
 }
 
-int	main( int *argc[], char *argv[])
+int	main( int argc, char *argv[])
 {
-	if (argc <= 0 || !argv)
-		write(1, "Error", sizeof(char));
-	if (argc <= 5)
-		easyswap(0, 0);
+    printf("Number of arguments: %d\n", argc);
+    for (int i = 0; i < argc; i++) {
+        printf("argv[%d]: %s\n", i, argv[i]);
+    }
+    return 0;
 }

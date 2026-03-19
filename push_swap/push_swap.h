@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:35:46 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/16 10:08:04 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/18 11:32:59 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 typedef struct nodo{
 	int value;
+	int	index;
 	struct nodo *next;
 }t_node;
 
@@ -28,7 +29,7 @@ typedef struct Stacks
 {
 	t_node *stack_a;
 	t_node *stack_b;
-};
+}stack;
 
 void move_sa(struct Stacks *sa);
 void move_sb(struct Stacks *sb);
@@ -49,7 +50,7 @@ void sort(int argc, struct Stacks *_a_b);
 int  find_min(struct Stacks *ab);
 int	 sort_check( struct Stacks *ab);
 void last_sort(struct Stacks *ba);
-void divide_in_chunk(struct Stacks *change);
+int divide_in_chunk(struct Stacks *change);
 int	find_max(struct Stacks *ab);
 
 

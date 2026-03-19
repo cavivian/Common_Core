@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 13:57:24 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/12 11:27:04 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/18 11:51:26 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	move_pa(struct Stacks *pa)
 	t_node	*tmp;
 
 	if (pa->stack_b == NULL || pa->stack_b->next == NULL)
-		return (0);
+		return ;
 	tmp = pa->stack_b;
 	pa->stack_b = pa->stack_b->next; // per aggiornare stack-b
 	tmp->next = pa->stack_a;
@@ -29,8 +29,8 @@ void	move_pb(struct Stacks *pb)
 {
 	t_node	*tmp;
 
-	if (pb->stack_a == NULL || pb->stack_a->next == NULL)
-		return (0);
+	if (pb->stack_a == NULL)
+		return ;
 	tmp = pb->stack_a;
 	pb->stack_a = pb->stack_a->next;
 	tmp->next = pb->stack_b;
@@ -44,7 +44,7 @@ void	move_ra(struct Stacks *ra)
 	t_node	*ultimo;
 
 	if (ra->stack_a == NULL || ra->stack_a->next == NULL) // previene errori di accesso a memoria non valida, controlla lista vuota e con un solo elemento
-		return (0);
+		return ;
 	tmp = ra->stack_a; // punta al primo nodo della lista, si salva perchè dovrà andare in coda dopo la rotazione
 	ra->stack_a = ra->stack_a->next; // la testa dello stack diventa il secondo nodo, perchè [1] deve andare in fondo
 	ultimo = ra->stack_a; // serve a trovare la fine della lista inizializzazione di ultimo
@@ -61,7 +61,7 @@ void	move_rb(struct Stacks *rb)
 	t_node	*ultimo;
 
 	if (rb->stack_b == NULL || rb->stack_b->next == NULL)
-		return (0);
+		return ;
 	tmp = rb->stack_b;
 	rb->stack_b = rb->stack_b->next;
 	ultimo = rb->stack_b;

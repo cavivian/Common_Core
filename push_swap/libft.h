@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:54:22 by cavivian          #+#    #+#             */
-/*   Updated: 2025/12/17 09:22:02 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/18 11:31:16 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		ft_memcmp(const void *buffer1, const void *buffer2, size_t count);
 void	*ft_memchr(const void *buffer, int c, size_t count);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
-char	*ft_itoa(long num);
+//char	*ft_itoa(long num);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 void	ft_putchar_fd(char c, int fd);

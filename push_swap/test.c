@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   moves.c                                            :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/10 11:41:31 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/18 11:50:43 by cavivian         ###   ########.fr       */
+/*   Created: 2026/03/18 11:13:51 by cavivian          #+#    #+#             */
+/*   Updated: 2026/03/18 11:46:50 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include "push_swap.h" // adatta all'header tuo
 
 void	move_sa(struct Stacks *sa)
 {
@@ -32,48 +34,56 @@ void	move_sa(struct Stacks *sa)
 	write (1, "sa\n", 3);
 }
 
-void	move_sb(struct Stacks *sb)
+t_node	*new_node(int value)
 {
-	t_node	*first;
-	t_node	*second;
-	t_node	*third;
+	t_node	*node;
 
-	if (sb->stack_b == NULL || sb->stack_b->next == NULL)
-		return ;
-	first = sb->stack_b;
-	second = first->next;
-	third = second->next;
-	first->next = third;
-	second->next = first;
-	sb->stack_b = second;
-	write (1, "sb\n", 3);
+	node = malloc(sizeof(t_node));
+	if (!node)
+		return (NULL);
+	node->value = value;
+	node->next = NULL;
+	return (node);
 }
 
-void	move_ss(struct Stacks *ss)
+void	print_stack(t_node *stack, char *name)
 {
-	t_node	*first;
-	t_node	*second;
-	t_node	*third;
+	printf("Stack %s: ", name);
+	while (stack)
+	{
+		printf("%d -> ", stack->value);
+		stack = stack->next;
+	}
+	printf("NULL\n");
+}
 
-	if (!ss)
-		return ;
-	if (ss->stack_a && ss->stack_a->next)
+int	main(int argc, char **argv)
+{
+	struct Stacks	stacks;
+	t_node			*node;
+	int				i;
+
+	if (argc < 2)
 	{
-		first = ss->stack_a;
-		second = first->next;
-		third = second->next;
-		first->next = third;
-		second->next = first;
-		ss->stack_a = second;
+		printf("Usage: %s <num1> <num2> ...\n", argv[0]);
+		return (1);
 	}
-	if (ss->stack_b && ss->stack_b->next)
+	stacks.stack_a = NULL;
+	stacks.stack_b = NULL;
+	i = argc - 1;
+	while (i >= 1)
 	{
-		first = ss->stack_b;
-		second = first->next;
-		third = second->next;
-		first->next = third;
-		second->next = first;
-		ss->stack_b = second;
+		node = new_node(atoi(argv[i]));
+		node->next = stacks.stack_a;
+		stacks.stack_a = node;
+		i--;
 	}
-	write(1, "ss\n", 3);
+	printf("--- Before move_pa ---\n");
+	print_stack(stacks.stack_a, "A");
+	print_stack(stacks.stack_b, "B");
+	move_sa(&stacks);
+	printf("--- After move_pa ---\n");
+	print_stack(stacks.stack_a, "A");
+	print_stack(stacks.stack_b, "B");
+	return (0);
 }
