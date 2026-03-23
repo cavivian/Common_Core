@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chunkutils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 10:05:49 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/16 10:07:33 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/21 18:35:47 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	find_max(struct Stacks *ab)
 	tmp = ab->stack_a;
 	max_node = tmp;
 	max_value = tmp->value;
-	while (tmp->value != NULL)
+	while (tmp != NULL)
 	{
 		if (tmp->value > max_value)
 		{

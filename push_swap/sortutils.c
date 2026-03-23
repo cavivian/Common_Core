@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sortutils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 18:41:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/16 09:22:07 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/21 18:46:02 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ int	find_min(struct Stacks *ab)
 {
 	t_node	*tmp;
 	t_node	*min_node;
-	int		min_value;
+	int		min_index;
 
 	tmp = ab->stack_a;
 	min_node = tmp;
-	min_value = tmp->value;
-	while (tmp->value != NULL)
+	min_index = tmp->index;
+	while (tmp != NULL)
 	{
-		if (tmp->value < min_value)
+		if (tmp->value < min_index)
 		{
-			min_value = tmp->value;
+			min_index = tmp->index;
 			min_node = tmp;
 		}
 		tmp = tmp->next;
@@ -42,7 +42,7 @@ int	sort_check( struct Stacks *ab)
 		return (1); // return 1 perchè è ovvio che sia già ordinato
 	while (tmp->next != NULL)
 	{
-		if (tmp->value < tmp->next->value)
+		if (tmp->index < tmp->next->index)
 			tmp = tmp->next;
 		else
 			return (0);

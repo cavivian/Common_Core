@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 15:02:19 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/18 10:44:13 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/21 18:44:39 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	sort_three(struct Stacks *ba)
 	int		third;
 
 	tmp = ba->stack_a;
-	first = tmp->value;
-	second = tmp->next->value;
-	third = tmp->next->next->value;
+	first = tmp->index;
+	second = tmp->next->index;
+	third = tmp->next->next->index;
 	if (sort_check(ba))
 		return ;
 	else if (first < third && third < second)
@@ -49,7 +49,7 @@ void	sort_four(struct Stacks *aab)
 	if (sort_check(aab))
 		return ;
 	min = find_min(aab);
-	while (aab->stack_a->value != min->value)
+	while (aab->stack_a->index != min->index)
 		move_ra(aab);
 	move_pb(aab);
 	sort_three(aab);
@@ -65,11 +65,11 @@ void	sort_five(struct Stacks *bba)
 	if (sort_check(bba))
 		return ;
 	min = find_min(bba);
-	while (bba->stack_a->value != min->value)
+	while (bba->stack_a->index != min->index)
 		move_ra(bba);
 	move_pb(bba);
 	min = find_min(bba);
-	while (bba->stack_a->value != min->value)
+	while (bba->stack_a->index != min->index)
 		move_ra(bba);
 	move_pb(bba);
 	sort_three(bba);

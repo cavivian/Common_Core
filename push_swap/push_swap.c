@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/18 10:52:55 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/21 18:34:36 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,27 @@ void	easyswap(int argc, struct Stacks *a_b)
 		sort(argc, a_b);
 }
 
+void	ft_indexing(struct Stacks *a)
+{
+	t_node	*current;
+	t_node	*compare;
+	int		count;
+
+	current = a->stack_a;
+	while (current != NULL)
+	{
+		count = 0;
+		compare = a->stack_a;
+		while (compare != NULL)
+		{
+			if (compare->value < current->value)
+				count++;
+			compare = compare->next;
+		}
+		current->index = count;
+		current = current->next;
+	}
+}
 int	push_swap(struct Stacks *aabb, int *argc, char *argv)
 {
 	int	i;
