@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:35:46 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/22 16:53:53 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/23 11:00:51 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 #include "libft.h"
 
 typedef struct nodo{
@@ -52,7 +53,7 @@ int	 sort_check( struct Stacks *ab);
 void last_sort(struct Stacks *ba);
 int divide_in_chunk(struct Stacks *change);
 int	find_max(struct Stacks *ab);
-void    check_duplicate(t_node *stack, int num);
+int    check_duplicate(t_node *stack, int num);
 t_list	*ft_lstnew(void *content);
 t_node  *ft_parse(int argc, char **argv);
 void	ft_lstadd_back(t_list **lst, t_list *new);

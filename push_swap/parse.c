@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 15:23:33 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/22 16:20:25 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/23 11:13:11 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,20 @@ int is_number(char *str)
 t_node  *ft_parse(int argc, char **argv)
 {
     int i;
-    int tmp;
-    t_node  *new;
+	long	tmp;
     t_node  *stack = NULL;
 
     i = 1;
-    if(argc < 2)
-        return (NULL);
     while (i < argc)
     {
         if (!is_number(argv[i]))
-        {
-            write (1, "Error\n", 7);
-            return (NULL);
-        }
+            return (free_stack(&stack));
         tmp = ft_atoi(argv[i]);
-        new = ft_lstnew(tmp);
-        ft_lstadd_back(&stack, new);
+		if (tmp > 2147483647 || tmp < -2147483648)
+			return (free_stack(&stack));
+		if (check_duplicate(stack, (int)tmp))
+			return (free_stck(&stack));
+		ft_lstadd_back(&stack, ft_lstnew((int)tmp));
         i++;
     }
     return (stack);

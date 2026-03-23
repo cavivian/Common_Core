@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 16:11:56 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/22 16:52:47 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/23 11:15:34 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_list	*ft_lstnew(void *content)
 	return (list);
 }
 
-void    check_duplicate(t_node *stack, int num)
+int    check_duplicate(t_node *stack, int num)
 {
     while (stack != NULL)
     {
@@ -44,4 +44,9 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		temp = ft_lstlast(*lst);
 		temp->next = new;
 	}
+}
+
+void	free_stack(t_node **stack)
+{
+	
 }
