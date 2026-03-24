@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 16:11:56 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/24 09:45:19 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/24 10:47:09 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	free_stack(t_node **stack)
 
 t_node	*error_exit(t_node **stack)
 {
-	fre_stack(&stack);
+	free_stack(&stack);
 	write (2, "Error\n", 7);
 	return (NULL);
 }

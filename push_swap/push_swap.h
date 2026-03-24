@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:35:46 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/24 09:46:26 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/24 11:23:46 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 int	range_chunk(struct Stacks *range, int chunk_size, int count);
 void	free_stack(t_node **stack);
 t_node	*error_exit(t_node **stack);
+int	ft_lstsize(t_list *lst);
+int	get_position(t_node *stack, t_node *i);
+void	push_back_to_a(struct Stacks *b_to_a);
 
 
 #endif

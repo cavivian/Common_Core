@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sortutils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 18:41:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/21 18:46:02 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/24 10:49:49 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	find_min(struct Stacks *ab)
+t_node	*find_min(struct Stacks *ab)
 {
 	t_node	*tmp;
 	t_node	*min_node;
@@ -54,4 +54,21 @@ void	last_sort(struct Stacks *ba)
 {
 	move_sa(ba);
 	move_rra(ba);
+}
+
+int	ft_lstsize(t_list *lst)
+{
+	t_list	*temp;
+	int		i;
+
+	temp = lst;
+	i = 0;
+	if (temp == NULL)
+		return (0);
+	while (temp != NULL)
+	{
+		temp = temp->next;
+		i++;
+	}
+	return (i);
 }
