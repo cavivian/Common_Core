@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 15:23:33 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/23 11:13:11 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/24 09:46:07 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ t_node  *ft_parse(int argc, char **argv)
     while (i < argc)
     {
         if (!is_number(argv[i]))
-            return (free_stack(&stack));
+            return (error_exit(&stack));
         tmp = ft_atoi(argv[i]);
 		if (tmp > 2147483647 || tmp < -2147483648)
-			return (free_stack(&stack));
+			return (error_exit(&stack));
 		if (check_duplicate(stack, (int)tmp))
-			return (free_stck(&stack));
+			return (error_exit(&stack));
 		ft_lstadd_back(&stack, ft_lstnew((int)tmp));
         i++;
     }

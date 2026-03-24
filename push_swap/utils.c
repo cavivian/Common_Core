@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 16:11:56 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/23 11:15:34 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/24 09:45:19 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,24 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 
 void	free_stack(t_node **stack)
 {
-	
+	t_node *tmp;
+	t_node *current;
+
+	if (!*stack || !stack)
+		return ;
+	current = *stack;
+	while (current)
+	{
+		tmp = current->next;
+		free(current);
+		current = tmp;
+	}
+	*stack = NULL;
+}
+
+t_node	*error_exit(t_node **stack)
+{
+	fre_stack(&stack);
+	write (2, "Error\n", 7);
+	return (NULL);
 }
