@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 10:05:49 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/24 11:24:25 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/25 11:41:03 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,29 @@ int	get_position(t_node *stack, t_node *i)
 		position++;
 	}
 	return (position);
+}
+
+void	push_minichunk_to_b(struct Stacks *a_to_b, int range)
+{
+	int	i;
+	t_node	*tmp;
+
+	i = 0;
+	tmp = a_to_b->stack_a;
+	while (tmp != NULL)
+	{
+		if (tmp->index <= i)
+		{
+			move_pb(a_to_b);
+			i++;
+		}
+		else if ( tmp->index <= (i + range))
+		{
+			move_pb(a_to_b);
+			move_rb(a_to_b);
+			i++;
+		}
+		else
+			move_ra;
+	}
 }

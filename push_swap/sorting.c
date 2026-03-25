@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sorting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 15:02:19 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/21 18:44:39 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/25 14:13:44 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,19 @@ void	sort_five(struct Stacks *bba)
 	move_pa(bba);
 }
 
-void	sort(int argc, struct Stacks *_a_b)
+void	sort(struct Stacks *_a_b)
 {
-	argc = argc - 1; // per eliminare il conteggio del nome del file
+	int	size;
+
+	size = ft_lstsize(_a_b);
 	if (sort_check(_a_b))
 		return ;
-	if (argc == 2)
+	if (size == 2)
 		move_sa(_a_b);
-	else if (argc == 3)
+	else if (size == 3)
 		sort_three(_a_b);
-	else if (argc == 4)
+	else if (size == 4)
 		sort_four(_a_b);
-	else if (argc == 5)
+	else if (size == 5)
 		sort_five(_a_b);
 }

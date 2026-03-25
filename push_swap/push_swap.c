@@ -3,23 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/21 18:34:36 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/25 14:14:37 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	easyswap(int argc, struct Stacks *a_b)
+void	easyswap(struct Stacks *a_b)
 {
-	if (!argc || !a_b)
+	t_node	*tmp;
+
+	tmp = a_b->stack_a;
+	if (!tmp->index || !a_b)
 		return (NULL);
-	if (argc <= 5)
+	if (tmp->index <= 5)
 		sort_check(a_b);
-	if (!sort_check(a_b) && argc <= 5)
-		sort(argc, a_b);
+	if (!sort_check(a_b) && tmp->index <= 5)
+		sort(tmp->index, a_b);
 }
 
 void	ft_indexing(struct Stacks *a)
@@ -43,17 +46,18 @@ void	ft_indexing(struct Stacks *a)
 		current = current->next;
 	}
 }
-int	push_swap(struct Stacks *aabb, int *argc, char *argv)
+void	push_swap(struct Stacks *aabb)
 {
-	int	i;
-	int	conversion;
+	t_node	*tmp;
+	int	size;
 
-	i = 1;
-	while (i < argc)
-	{
-		conversion = ft_atoi(argv);
-		i++;
-	}
+	tmp = aabb->stack_a;
+	size = ft_lstsize(tmp);
+	ft_indexing(aabb);
+	while (size <= 5)
+		easyswap(aabb);
+	while (size > 5)
+		divide_in_chunk(aabb);
 }
 
 int	main( int argc, char *argv[])
