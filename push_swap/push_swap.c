@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/25 14:14:37 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/26 10:26:43 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	easyswap(struct Stacks *a_b)
 
 	tmp = a_b->stack_a;
 	if (!tmp->index || !a_b)
-		return (NULL);
+		return ;
 	if (tmp->index <= 5)
 		sort_check(a_b);
 	if (!sort_check(a_b) && tmp->index <= 5)
-		sort(tmp->index, a_b);
+		sort(a_b);
 }
 
 void	ft_indexing(struct Stacks *a)
@@ -62,9 +62,13 @@ void	push_swap(struct Stacks *aabb)
 
 int	main( int argc, char *argv[])
 {
-    printf("Number of arguments: %d\n", argc);
-    for (int i = 0; i < argc; i++) {
-        printf("argv[%d]: %s\n", i, argv[i]);
-    }
-    return 0;
+	struct Stacks	stack;
+
+	stack.stack_a = ft_parse(argc, argv);
+	stack.stack_b = NULL;
+	if (argc < 2 || !stack.stack_a)
+		return (0);
+    push_swap(&stack);
+	free_stack(&stack.stack_a);
+    return (0);
 }

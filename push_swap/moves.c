@@ -6,13 +6,13 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:41:31 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/22 14:53:45 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/26 10:27:26 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	*move_sa(struct Stacks *sa)
+void	move_sa(struct Stacks *sa)
 {
 	t_node	*first;// punta al primo nodo della lista, questo verrà scambiato con il secondo
 	t_node	*second;// punta al nodo successivo di first
@@ -20,9 +20,6 @@ void	*move_sa(struct Stacks *sa)
 
 	if (sa->stack_a == NULL || sa->stack_a->next == NULL) // controllo se abbiamo almeno due nodi nello stack
 		return ;
-	// salvataggio dei nodi temporanei
-	// punta al nodo successivo di second
-    // modifica dei collegamenti
 	first = sa->stack_a;
 	second = first->next;
 	third = second->next;
@@ -39,7 +36,7 @@ void	*move_sb(struct Stacks *sb)
 	t_node	*third;
 
 	if (sb->stack_b == NULL || sb->stack_b->next == NULL)
-		return ;
+		return (NULL);
 	first = sb->stack_b;
 	second = first->next;
 	third = second->next;
@@ -56,7 +53,7 @@ void	*move_ss(struct Stacks *ss)
 	t_node	*third;
 
 	if (!ss)
-		return ;
+		return (NULL);
 	if (ss->stack_a && ss->stack_a->next)
 	{
 		first = ss->stack_a;

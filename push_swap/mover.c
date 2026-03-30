@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 10:01:22 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/22 14:54:02 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/26 10:21:19 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*move_rra(struct Stacks *rra)
 
 	primo = rra->stack_a;
 	if (!rra || rra->stack_a == NULL || rra->stack_a->next == NULL) // controllo che esista lo stack e che abbia piu' di un nodo
-		return ;
+		return (NULL);
 	while (primo->next->next != NULL) // scorro fino a trovare il penultimo
 		primo = primo->next; // nodo successivo a primo
 	ultimo = primo->next; // stacco l'ultimo nodo e lo aggiorno
@@ -36,7 +36,7 @@ void	*move_rrb(struct Stacks *rrb)
 
 	primo = rrb->stack_b;
 	if (!rrb || rrb->stack_b == NULL || rrb->stack_b->next == NULL)
-		return ;
+		return (NULL);
 	while (primo->next->next != NULL)
 		primo = primo->next;
 	ultimo = primo->next;
@@ -51,9 +51,6 @@ void	*move_rrr(struct Stacks *rrr)
 	t_node	*primo;
 	t_node	*ultimo;
 
-	if (!rrr || !rrr->stack_a || !rrr->stack_a->next
-		|| !rrr->stack_b  || !rrr->stack_b->next)
-		return ; 
 	if (rrr->stack_a && rrr->stack_a->next)
 	{
 		primo = rrr->stack_a;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movepr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 13:57:24 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/24 11:11:44 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/26 10:20:38 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*move_pa(struct Stacks *pa)
 	t_node	*tmp;
 
 	if (pa->stack_b == NULL || pa->stack_b->next == NULL)
-		return ;
+		return (NULL);
 	tmp = pa->stack_b;
 	pa->stack_b = pa->stack_b->next; // per aggiornare stack-b
 	tmp->next = pa->stack_a;
@@ -30,7 +30,7 @@ void	*move_pb(struct Stacks *pb)
 	t_node	*tmp;
 
 	if (pb->stack_a == NULL)
-		return ;
+		return (NULL);
 	tmp = pb->stack_a;
 	pb->stack_a = pb->stack_a->next;
 	tmp->next = pb->stack_b;
@@ -44,7 +44,7 @@ void	*move_ra(struct Stacks *ra)
 	t_node	*ultimo;
 
 	if (ra->stack_a == NULL || ra->stack_a->next == NULL) // previene errori di accesso a memoria non valida, controlla lista vuota e con un solo elemento
-		return ;
+		return (NULL);
 	tmp = ra->stack_a; // punta al primo nodo della lista, si salva perchè dovrà andare in coda dopo la rotazione
 	ra->stack_a = ra->stack_a->next; // la testa dello stack diventa il secondo nodo, perchè [1] deve andare in fondo
 	ultimo = ra->stack_a; // serve a trovare la fine della lista inizializzazione di ultimo
@@ -61,7 +61,7 @@ void	*move_rb(struct Stacks *rb)
 	t_node	*ultimo;
 
 	if (rb->stack_b == NULL || rb->stack_b->next == NULL)
-		return ;
+		return (NULL);
 	tmp = rb->stack_b;
 	rb->stack_b = rb->stack_b->next;
 	ultimo = rb->stack_b;
