@@ -6,36 +6,36 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 16:11:56 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/24 10:47:09 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/01 15:15:37 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_list	*ft_lstnew(void *content)
+t_node	*ft_lstnew(void *content)
 {
-	t_list	*list;
+	t_node	*list;
 
-	list = malloc(sizeof(t_list));
+	list = malloc(sizeof(t_node));
 	list->content = content;
 	list->next = NULL;
-	return (list);
+	return (content);
 }
 
-int    check_duplicate(t_node *stack, int num)
+int	check_duplicate(t_node *stack, int num)
 {
-    while (stack != NULL)
-    {
-        if (stack->value == num)
-            return (1);
-        stack = stack->next;
-    }
-    return (0);
+	while (stack != NULL)
+	{
+		if (stack->value == num)
+			return (1);
+		stack = stack->next;
+	}
+	return (0);
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_node **lst, t_node *new)
 {
-	t_list	*temp;
+	t_node	*temp;
 
 	if (!*lst)
 		*lst = new;
@@ -48,8 +48,8 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 
 void	free_stack(t_node **stack)
 {
-	t_node *tmp;
-	t_node *current;
+	t_node	*tmp;
+	t_node	*current;
 
 	if (!*stack || !stack)
 		return ;
@@ -65,7 +65,7 @@ void	free_stack(t_node **stack)
 
 t_node	*error_exit(t_node **stack)
 {
-	free_stack(&stack);
+	free_stack(stack);
 	write (2, "Error\n", 7);
 	return (NULL);
 }

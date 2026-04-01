@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 09:30:28 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/25 11:49:43 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/01 15:24:03 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	divide_in_chunk(struct Stacks *change)
 {
-	int	count;
+	int		count;
 	t_node	*tmp;
-	int	chunk_size;
-	int	range;
+	int		chunk_size;
+	int		range;
 
 	count = 0;
 	chunk_size = 0;
@@ -39,4 +39,3 @@ int	divide_in_chunk(struct Stacks *change)
 	}
 	return (chunk_size);
 }
-

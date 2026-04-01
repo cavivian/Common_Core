@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 11:13:51 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/18 11:46:50 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/30 09:42:48 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include "push_swap.h" // adatta all'header tuo
 
-void	move_sa(struct Stacks *sa)
+/* void	move_sa(struct Stacks *sa)
 {
 	t_node	*first;// punta al primo nodo della lista, questo verrà scambiato con il secondo
 	t_node	*second;// punta al nodo successivo di first
@@ -55,9 +55,9 @@ void	print_stack(t_node *stack, char *name)
 		stack = stack->next;
 	}
 	printf("NULL\n");
-}
+} */
 
-int	main(int argc, char **argv)
+/* int	main(int argc, char **argv)
 {
 	struct Stacks	stacks;
 	t_node			*node;
@@ -86,4 +86,4 @@ int	main(int argc, char **argv)
 	print_stack(stacks.stack_a, "A");
 	print_stack(stacks.stack_b, "B");
 	return (0);
-}
+} */

@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:54:22 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/18 11:31:16 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/30 09:05:36 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-typedef struct s_list
+typedef struct nodo
 {
 	void			*content; //int
-	struct s_list	*next; //nodo
-}					t_list;
+	struct s_node	*next; //nodo
+}	t_node;
 
 int		ft_atoi(const char *str);
 int		ft_isalnum(int c);
@@ -57,14 +57,14 @@ void	ft_putstr_fd(char *s, int fd);
 char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-t_list	*ft_lstnew(void *content);
-void	ft_lstadd_front(t_list **lst, t_list *new);
-int		ft_lstsize(t_list *lst);
-t_list	*ft_lstlast(t_list *lst);
-void	ft_lstadd_back(t_list **lst, t_list *new);
-void	ft_lstdelone(t_list *lst, void (*del)(void *));
-void	ft_lstclear(t_list **lst, void (*del)(void *));
-void	ft_lstiter(t_list *lst, void (*f)(void *));
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_node	*ft_lstnew(void *content);
+void	ft_lstadd_front(t_node **lst, t_node *new);
+int		ft_lstsize(t_node *lst);
+t_node	*ft_lstlast(t_node *lst);
+void	ft_lstadd_back(t_node **lst, t_node *new);
+void	ft_lstdelone(t_node *lst, void (*del)(void *));
+void	ft_lstclear(t_node **lst, void (*del)(void *));
+void	ft_lstiter(t_node *lst, void (*f)(void *));
+t_node	*ft_lstmap(t_node *lst, void *(*f)(void *), void (*del)(void *));
 
 #endif 

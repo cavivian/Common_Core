@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 18:41:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/24 10:49:49 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/30 09:40:28 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	last_sort(struct Stacks *ba)
 	move_rra(ba);
 }
 
-int	ft_lstsize(t_list *lst)
+int	ft_lstsize(t_node *lst)
 {
-	t_list	*temp;
+	t_node	*temp;
 	int		i;
 
 	temp = lst;

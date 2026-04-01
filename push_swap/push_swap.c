@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/26 10:26:43 by camilla          ###   ########.fr       */
+/*   Updated: 2026/04/01 15:16:10 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	easyswap(struct Stacks *a_b)
 	t_node	*tmp;
 
 	tmp = a_b->stack_a;
-	if (!tmp->index || !a_b)
+	if (/* !tmp->index || */ !a_b)
 		return ;
 	if (tmp->index <= 5)
 		sort_check(a_b);
@@ -46,18 +46,23 @@ void	ft_indexing(struct Stacks *a)
 		current = current->next;
 	}
 }
+
 void	push_swap(struct Stacks *aabb)
 {
 	t_node	*tmp;
-	int	size;
+	int		size;
 
 	tmp = aabb->stack_a;
 	size = ft_lstsize(tmp);
 	ft_indexing(aabb);
 	while (size <= 5)
+	{
 		easyswap(aabb);
+		size++;
+	}
 	while (size > 5)
 		divide_in_chunk(aabb);
+	size++;
 }
 
 int	main( int argc, char *argv[])
@@ -68,7 +73,7 @@ int	main( int argc, char *argv[])
 	stack.stack_b = NULL;
 	if (argc < 2 || !stack.stack_a)
 		return (0);
-    push_swap(&stack);
+	push_swap(&stack);
 	free_stack(&stack.stack_a);
-    return (0);
+	return (0);
 }

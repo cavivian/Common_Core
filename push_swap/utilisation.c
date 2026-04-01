@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   utilisation.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/25 10:28:34 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/01 14:50:27 by cavivian         ###   ########.fr       */
+/*   Created: 2026/03/30 09:12:04 by cavivian          #+#    #+#             */
+/*   Updated: 2026/04/01 14:59:01 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_atoi(const char *str)
+int	ft_isdigit(int c)
 {
-	int		i;
-	int		sign;
-	long	result;
+	if (c >= 48 && c <= 57)
+	{
+		return (1);
+	}
+	return (0);
+}
 
-	i = 0;
-	sign = 1;
-	result = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
+t_node	*ft_lstlast(t_node *lst)
+{
+	while (lst != NULL)
 	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
-		if (!(str[i] >= 48 && str[i] <= 57))
-			return (0);
+		if (!lst->next)
+			return (lst);
+		lst = lst->next;
 	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		result = result * 10 + (((char *)str)[i] - 48);
-		i++;
-	}
-	return (result * sign);
+	return (0);
 }

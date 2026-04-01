@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 15:02:19 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/25 14:13:44 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/03/30 09:29:59 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	sort(struct Stacks *_a_b)
 {
 	int	size;
 
-	size = ft_lstsize(_a_b);
+	size = ft_lstsize(_a_b->stack_a);
 	if (sort_check(_a_b))
 		return ;
 	if (size == 2)

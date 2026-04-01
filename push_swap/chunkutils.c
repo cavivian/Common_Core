@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 10:05:49 by cavivian          #+#    #+#             */
-/*   Updated: 2026/03/25 11:41:03 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/01 15:01:34 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,28 @@ void	push_back_to_a(struct Stacks *b_to_a)
 {
 	t_node	*tmp;
 	t_node	*max;
-	int	size;
-	int	position;
-	
+	int		size;
+	int		position;
+
 	tmp = b_to_a->stack_b;
 	while (tmp != NULL)
 	{
 		max = find_max(b_to_a);
 		size = ft_lstsize(tmp);
 		position = get_position(tmp, max);
-	if (position <= size / 2)
-		while (tmp != max)
-			move_rb(b_to_a);
-	else
-		while (tmp != max)
-			move_rrb(b_to_a);
-	move_pa(b_to_a);
+		if (position <= size / 2)
+			while (tmp != max)
+				move_rb(b_to_a);
+		else
+			while (tmp != max)
+				move_rrb(b_to_a);
+		move_pa(b_to_a);
 	}
 }
 
 int	get_position(t_node *stack, t_node *i)
 {
-	int position;
+	int	position;
 
 	position = 0;
 	while (stack)
@@ -73,7 +73,7 @@ int	get_position(t_node *stack, t_node *i)
 
 void	push_minichunk_to_b(struct Stacks *a_to_b, int range)
 {
-	int	i;
+	int		i;
 	t_node	*tmp;
 
 	i = 0;
@@ -85,13 +85,13 @@ void	push_minichunk_to_b(struct Stacks *a_to_b, int range)
 			move_pb(a_to_b);
 			i++;
 		}
-		else if ( tmp->index <= (i + range))
+		else if (tmp->index <= (i + range))
 		{
 			move_pb(a_to_b);
 			move_rb(a_to_b);
 			i++;
 		}
 		else
-			move_ra;
+			move_ra(a_to_b);
 	}
 }

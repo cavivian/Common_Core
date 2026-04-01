@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   movepr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 13:57:24 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/26 10:20:38 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/30 08:56:42 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	*move_pa(struct Stacks *pa)
+void	move_pa(struct Stacks *pa)
 {
 	t_node	*tmp;
 
 	if (pa->stack_b == NULL || pa->stack_b->next == NULL)
-		return (NULL);
+		return ;
 	tmp = pa->stack_b;
 	pa->stack_b = pa->stack_b->next; // per aggiornare stack-b
 	tmp->next = pa->stack_a;
@@ -25,12 +25,12 @@ void	*move_pa(struct Stacks *pa)
 	write (1, "pa\n", 3);
 }
 
-void	*move_pb(struct Stacks *pb)
+void	move_pb(struct Stacks *pb)
 {
 	t_node	*tmp;
 
 	if (pb->stack_a == NULL)
-		return (NULL);
+		return ;
 	tmp = pb->stack_a;
 	pb->stack_a = pb->stack_a->next;
 	tmp->next = pb->stack_b;
@@ -38,13 +38,13 @@ void	*move_pb(struct Stacks *pb)
 	write(1, "pb\n", 3);
 }
 
-void	*move_ra(struct Stacks *ra)
+void	move_ra(struct Stacks *ra)
 {
 	t_node	*tmp;
 	t_node	*ultimo;
 
 	if (ra->stack_a == NULL || ra->stack_a->next == NULL) // previene errori di accesso a memoria non valida, controlla lista vuota e con un solo elemento
-		return (NULL);
+		return ;
 	tmp = ra->stack_a; // punta al primo nodo della lista, si salva perchè dovrà andare in coda dopo la rotazione
 	ra->stack_a = ra->stack_a->next; // la testa dello stack diventa il secondo nodo, perchè [1] deve andare in fondo
 	ultimo = ra->stack_a; // serve a trovare la fine della lista inizializzazione di ultimo
@@ -55,13 +55,13 @@ void	*move_ra(struct Stacks *ra)
 	write (1, "ra\n", 3);
 }
 
-void	*move_rb(struct Stacks *rb)
+void	move_rb(struct Stacks *rb)
 {
 	t_node	*tmp;
 	t_node	*ultimo;
 
 	if (rb->stack_b == NULL || rb->stack_b->next == NULL)
-		return (NULL);
+		return ;
 	tmp = rb->stack_b;
 	rb->stack_b = rb->stack_b->next;
 	ultimo = rb->stack_b;
@@ -72,7 +72,7 @@ void	*move_rb(struct Stacks *rb)
 	write (1, "rb\n", 3);
 }
 
-void	*move_rr(struct Stacks *rr)
+void	move_rr(struct Stacks *rr)
 {
 	t_node	*tmp;
 	t_node	*ultimo;

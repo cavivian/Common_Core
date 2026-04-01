@@ -6,17 +6,17 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 08:53:22 by cavivian          #+#    #+#             */
-/*   Updated: 2025/12/16 11:52:32 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/01 11:48:34 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstlast(t_list *lst)
+t_node	*ft_lstlast(t_node *lst)
 {
 	while (lst != NULL)
 	{
-		if (!lst -> next)
+		if (!lst->next)
 			return (lst);
 		lst = lst->next;
 	}

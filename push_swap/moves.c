@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:41:31 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/26 10:27:26 by camilla          ###   ########.fr       */
+/*   Updated: 2026/03/30 08:58:10 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ void	move_sa(struct Stacks *sa)
 	write (1, "sa\n", 3);
 }
 
-void	*move_sb(struct Stacks *sb)
+void	move_sb(struct Stacks *sb)
 {
 	t_node	*first;
 	t_node	*second;
 	t_node	*third;
 
 	if (sb->stack_b == NULL || sb->stack_b->next == NULL)
-		return (NULL);
+		return ;
 	first = sb->stack_b;
 	second = first->next;
 	third = second->next;
@@ -46,14 +46,14 @@ void	*move_sb(struct Stacks *sb)
 	write (1, "sb\n", 3);
 }
 
-void	*move_ss(struct Stacks *ss)
+void	move_ss(struct Stacks *ss)
 {
 	t_node	*first;
 	t_node	*second;
 	t_node	*third;
 
 	if (!ss)
-		return (NULL);
+		return ;
 	if (ss->stack_a && ss->stack_a->next)
 	{
 		first = ss->stack_a;
