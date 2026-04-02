@@ -6,18 +6,18 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 09:30:28 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/01 15:24:03 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/02 15:53:23 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	divide_in_chunk(struct Stacks *change)
+int divide_in_chunk(struct Stacks *change)
 {
-	int		count;
-	t_node	*tmp;
-	int		chunk_size;
-	int		range;
+	int count;
+	t_node *tmp;
+	int chunk_size;
+	int range;
 
 	count = 0;
 	chunk_size = 0;
@@ -27,7 +27,7 @@ int	divide_in_chunk(struct Stacks *change)
 		count++;
 		tmp = tmp->next;
 	}
-	if (count <= 100)
+	if (count <= 100 && !sort_check(change))
 	{
 		chunk_size = count / 5;
 		range = count / 8;

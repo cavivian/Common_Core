@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/01 15:16:10 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/02 14:12:51 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,8 @@ void	push_swap(struct Stacks *aabb)
 	size = ft_lstsize(tmp);
 	ft_indexing(aabb);
 	while (size <= 5)
-	{
 		easyswap(aabb);
-		size++;
-	}
-	while (size > 5)
+	while (size > 5 && !sort_check(aabb))
 		divide_in_chunk(aabb);
 	size++;
 }
