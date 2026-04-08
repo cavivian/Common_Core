@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:35:46 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/01 09:54:19 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/06 16:39:57 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,32 @@ typedef struct nodo{
 	int value;
 	int	index;
 	struct nodo *next;
-}t_node;
-
-typedef struct Stacks
-{
 	t_node *stack_a;
 	t_node *stack_b;
-}stack;
+}t_node;
 
-void move_sa(struct Stacks *sa);
-void move_sb(struct Stacks *sb);
-void move_ss(struct Stacks *ss);
-void move_pa(struct Stacks *pa);
-void move_pb(struct Stacks *pb);
-void move_ra(struct Stacks *ra);
-void move_rb(struct Stacks *rb);
-void move_rra(struct Stacks *rra);
-void move_rrb(struct Stacks *rrb);
-void move_rrr(struct Stacks *rrr);
-void	easyswap(struct Stacks *a_b);
-void	push_swap(struct Stacks *aabb);
-void sort_three(struct Stacks *ba);
-void sort_four(struct Stacks *aab);
-void sort_five(struct Stacks *bba);
-void	sort(struct Stacks *_a_b);
-t_node  *find_min(struct Stacks *ab);
+void move_sa(struct nodo *sa);
+void move_sb(struct nodo *sb);
+void move_ss(struct nodo *ss);
+void move_pa(struct nodo *pa);
+void move_pb(struct nodo *pb);
+void move_ra(struct nodo *ra);
+void move_rb(struct nodo *rb);
+void move_rra(struct nodo *rra);
+void move_rrb(struct nodo *rrb);
+void move_rrr(struct nodo *rrr);
+void	easyswap(struct nodo *a_b);
+void	push_swap(struct nodo *aabb);
+void sort_three(struct nodo *ba);
+void sort_four(struct nodo *aab);
+void sort_five(struct nodo *bba);
+void	sort(struct nodo *_a_b);
+t_node  *find_min(struct nodo *ab);
 int is_number(char *str);
-int	 sort_check( struct Stacks *ab);
-void last_sort(struct Stacks *ba);
-int divide_in_chunk(struct Stacks *change);
-t_node	*find_max(struct Stacks *ab);
+int	 sort_check( struct nodo *ab);
+void last_sort(struct nodo *ba);
+int divide_in_chunk(struct nodo *change);
+t_node	*find_max(struct nodo *ab);
 int    check_duplicate(t_node *stack, int num);
 t_node	*ft_lstnew(void *content);
 t_node  *ft_parse(int argc, char **argv);
@@ -61,7 +57,7 @@ void	free_stack(t_node **stack);
 t_node	*error_exit(t_node **stack);
 int	ft_lstsize(t_node *lst);
 int	get_position(t_node *stack, t_node *i);
-void	push_back_to_a(struct Stacks *b_to_a);
+void	push_back_to_a(struct nodo *b_to_a);
 int	ft_atoi(const char *str);
 t_node	*ft_lstlast(t_node *lst);
 int	ft_isdigit(int c);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sorting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 15:02:19 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/30 09:29:59 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/06 16:41:13 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_three(struct Stacks *ba)
+void	sort_three(struct nodo *ba)
 {
 	t_node	*tmp;
 	int		first;
@@ -40,12 +40,10 @@ void	sort_three(struct Stacks *ba)
 		last_sort(ba);
 }
 
-void	sort_four(struct Stacks *aab)
+void	sort_four(struct nodo *aab)
 {
-	t_node	*tmp;
 	t_node	*min;
 
-	tmp = aab->stack_a;
 	if (sort_check(aab))
 		return ;
 	min = find_min(aab);
@@ -56,12 +54,10 @@ void	sort_four(struct Stacks *aab)
 	move_pa(aab);
 }
 
-void	sort_five(struct Stacks *bba)
+void	sort_five(struct nodo *bba)
 {
-	t_node	*tmp;
 	t_node	*min;
 
-	tmp = bba->stack_a;
 	if (sort_check(bba))
 		return ;
 	min = find_min(bba);
@@ -77,7 +73,7 @@ void	sort_five(struct Stacks *bba)
 	move_pa(bba);
 }
 
-void	sort(struct Stacks *_a_b)
+void	sort(struct nodo *_a_b)
 {
 	int	size;
 

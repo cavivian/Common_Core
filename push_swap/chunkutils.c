@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   chunkutils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 10:05:49 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/01 15:01:34 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/06 16:41:42 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_node	*find_max(struct Stacks *ab)
+t_node	*find_max(struct nodo *ab)
 {
 	t_node	*tmp;
 	t_node	*max_node;
@@ -33,7 +33,7 @@ t_node	*find_max(struct Stacks *ab)
 	return (max_node);
 }
 
-void	push_back_to_a(struct Stacks *b_to_a)
+void	push_back_to_a(struct nodo *b_to_a)
 {
 	t_node	*tmp;
 	t_node	*max;
@@ -71,7 +71,7 @@ int	get_position(t_node *stack, t_node *i)
 	return (position);
 }
 
-void	push_minichunk_to_b(struct Stacks *a_to_b, int range)
+void	push_minichunk_to_b(struct nodo *a_to_b, int range)
 {
 	int		i;
 	t_node	*tmp;

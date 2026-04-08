@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   moves.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:41:31 by camilla           #+#    #+#             */
-/*   Updated: 2026/03/30 08:58:10 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/06 16:40:25 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	move_sa(struct Stacks *sa)
+void	move_sa(struct nodo *sa)
 {
 	t_node	*first;// punta al primo nodo della lista, questo verrà scambiato con il secondo
 	t_node	*second;// punta al nodo successivo di first
@@ -29,7 +29,7 @@ void	move_sa(struct Stacks *sa)
 	write (1, "sa\n", 3);
 }
 
-void	move_sb(struct Stacks *sb)
+void	move_sb(struct nodo *sb)
 {
 	t_node	*first;
 	t_node	*second;
@@ -46,7 +46,7 @@ void	move_sb(struct Stacks *sb)
 	write (1, "sb\n", 3);
 }
 
-void	move_ss(struct Stacks *ss)
+void	move_ss(struct nodo *ss)
 {
 	t_node	*first;
 	t_node	*second;

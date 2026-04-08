@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/02 14:12:51 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/06 16:41:02 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	easyswap(struct Stacks *a_b)
+void	easyswap(struct nodo *a_b)
 {
 	t_node	*tmp;
 
@@ -25,7 +25,7 @@ void	easyswap(struct Stacks *a_b)
 		sort(a_b);
 }
 
-void	ft_indexing(struct Stacks *a)
+void	ft_indexing(struct nodo *a)
 {
 	t_node	*current;
 	t_node	*compare;
@@ -47,7 +47,7 @@ void	ft_indexing(struct Stacks *a)
 	}
 }
 
-void	push_swap(struct Stacks *aabb)
+void	push_swap(struct nodo *aabb)
 {
 	t_node	*tmp;
 	int		size;
@@ -64,7 +64,7 @@ void	push_swap(struct Stacks *aabb)
 
 int	main( int argc, char *argv[])
 {
-	struct Stacks	stack;
+	struct nodo	stack;
 
 	stack.stack_a = ft_parse(argc, argv);
 	stack.stack_b = NULL;

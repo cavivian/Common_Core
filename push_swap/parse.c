@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 15:23:33 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/02 16:14:33 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/06 16:42:32 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ t_node	*ft_parse(int argc, char **argv)
 {
 	int		i;
 	long	tmp;
-	t_node	*stack = NULL;
+	t_node	*stack;
 
+	stack = stack->stack_a;
 	i = 1;
 	while (i < argc)
 	{
