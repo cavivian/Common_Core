@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:35:46 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/06 16:39:57 by camilla          ###   ########.fr       */
+/*   Updated: 2026/04/08 08:58:33 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int divide_in_chunk(struct nodo *change);
 t_node	*find_max(struct nodo *ab);
 int    check_duplicate(t_node *stack, int num);
 t_node	*ft_lstnew(void *content);
-t_node  *ft_parse(int argc, char **argv);
+t_node  *ft_parse(struct nodo *stack, char **argv);
 void	ft_lstadd_back(t_node **lst, t_node *new);
 void	free_stack(t_node **stack);
 t_node	*error_exit(t_node **stack);

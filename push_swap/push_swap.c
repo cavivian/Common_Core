@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/06 16:41:02 by camilla          ###   ########.fr       */
+/*   Updated: 2026/04/08 09:11:48 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	easyswap(struct nodo *a_b)
 	t_node	*tmp;
 
 	tmp = a_b->stack_a;
-	if (/* !tmp->index || */ !a_b)
+	if (!tmp->index || !a_b)
 		return ;
 	if (tmp->index <= 5)
 		sort_check(a_b);
@@ -64,9 +64,9 @@ void	push_swap(struct nodo *aabb)
 
 int	main( int argc, char *argv[])
 {
-	struct nodo	stack;
+	struct nodo	*stack;
 
-	stack.stack_a = ft_parse(argc, argv);
+	stack.stack_a = ft_parse(*stack, argv);
 	stack.stack_b = NULL;
 	if (argc < 2 || !stack.stack_a)
 		return (0);

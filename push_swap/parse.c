@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 15:23:33 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/06 16:42:32 by camilla          ###   ########.fr       */
+/*   Updated: 2026/04/08 08:58:09 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,14 @@ int	is_number(char *str)
 	return (1);
 }
 
-t_node	*ft_parse(int argc, char **argv)
+t_node	*ft_parse(struct nodo *stack, char **argv)
 {
 	int		i;
 	long	tmp;
-	t_node	*stack;
 
 	stack = stack->stack_a;
 	i = 1;
-	while (i < argc)
+	while (i < ft_lstsize(stack))
 	{
 		if (!is_number(argv[i]))
 			return (error_exit(&stack));
