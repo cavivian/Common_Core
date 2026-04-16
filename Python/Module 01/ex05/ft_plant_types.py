@@ -37,7 +37,7 @@ class	Tree(Plant):
 		self.trunk_diameter = trunk_diameter
 
 	def produce_shade(self) -> str:
-		print(f'Tree {self.name} now produce a shade of {self.height:.1f}cm long and {self.trunk_diameter}cm wide.')
+		print(f'Tree {self.name} now produce a shade of {self.height}cm long and {self.trunk_diameter}cm wide.')
 
 	def show(self) -> str:
 		super().show()
@@ -71,7 +71,7 @@ def main():
 	fiore.bloom()
 	fiore.show()
 	print('\n=== Tree')
-	albero = Tree('Oak', 200, 365, 5.0)
+	albero = Tree('Oak', 200.0, 365, 5.0)
 	# print('Oak: 200.0cm, 365 days old')
 	albero.show()
 	print('[Asking the Oak to produce shade]')
