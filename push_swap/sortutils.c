@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sortutils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 18:41:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/06 16:41:22 by camilla          ###   ########.fr       */
+/*   Updated: 2026/04/17 11:52:34 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_lstsize(t_node *lst)
 	i = 0;
 	if (temp == NULL)
 		return (0);
-	while (temp != NULL)
+	while (temp->next != NULL)
 	{
 		temp = temp->next;
 		i++;

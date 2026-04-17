@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 15:23:33 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/08 08:58:09 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/17 11:55:20 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,16 @@ int	is_number(char *str)
 	return (1);
 }
 
-t_node	*ft_parse(struct nodo *stack, char **argv)
+t_node	*ft_parse(struct nodo *stack, char **argv, int argc)
 {
 	int		i;
 	long	tmp;
+	
 
 	stack = stack->stack_a;
+	stack = malloc(argc - 1);
 	i = 1;
+	/* printf("%d", ft_lstsize(stack)); */
 	while (i < ft_lstsize(stack))
 	{
 		if (!is_number(argv[i]))

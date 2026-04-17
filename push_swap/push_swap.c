@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/08 09:11:48 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/17 11:45:49 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,15 @@ void	push_swap(struct nodo *aabb)
 
 int	main( int argc, char *argv[])
 {
-	struct nodo	*stack;
+	struct nodo	stack;
+	/* printf("%d", argc); */
 
-	stack.stack_a = ft_parse(*stack, argv);
+	stack.stack_a = NULL;
 	stack.stack_b = NULL;
-	if (argc < 2 || !stack.stack_a)
+	if (argc < 2)
+		return (0);
+	stack.stack_a = ft_parse(&stack, argv, argc);
+	if (!stack.stack_a)
 		return (0);
 	push_swap(&stack);
 	free_stack(&stack.stack_a);
