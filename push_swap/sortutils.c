@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 18:41:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/20 10:56:12 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/20 14:31:30 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_node	*find_min(struct Stacks *ab)
 	min_index = tmp->index;
 	while (tmp != NULL)
 	{
-		if (tmp->value < min_index)
+		if (tmp->index < min_index)
 		{
 			min_index = tmp->index;
 			min_node = tmp;
@@ -37,9 +37,11 @@ int	sort_check( struct Stacks *ab)
 {
 	t_node	*tmp;
 
-	tmp = ab->stack_a;
+	if (ab->stack_b != NULL)
+        return (0);
 	if (ab->stack_a == NULL || ab->stack_a->next == NULL)
 		return (1); // return 1 perchè è ovvio che sia già ordinato
+	tmp = ab->stack_a;
 	while (tmp->next != NULL)
 	{
 		if (tmp->index < tmp->next->index)
@@ -65,7 +67,7 @@ int	ft_lstsize(t_node *lst)
 	i = 0;
 	if (temp == NULL)
 		return (0);
-	while (temp->next != NULL)
+	while (temp != NULL)
 	{
 		temp = temp->next;
 		i++;

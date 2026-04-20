@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:35:46 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/20 10:58:28 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/20 12:10:04 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ void	push_back_to_a(struct Stacks *b_to_a);
 int	ft_atoi(const char *str);
 t_node	*ft_lstlast(t_node *lst);
 int	ft_isdigit(int c);
+void	push_minichunk_to_b(struct Stacks *a_to_b, int range);
 
 #endif

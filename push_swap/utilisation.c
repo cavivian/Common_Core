@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 09:12:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/01 14:59:01 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/20 12:48:57 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ t_node	*ft_lstlast(t_node *lst)
 {
 	while (lst != NULL)
 	{
-		if (!lst->next)
-			return (lst);
-		lst = lst->next;
+		if(!lst)
+			return(NULL);
+		while (lst->next != NULL)
+			lst = lst->next;
+		return(lst);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/20 10:53:26 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/20 14:28:54 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,22 +47,28 @@ void	ft_indexing(struct Stacks *a)
 	}
 }
 
-void	push_swap(struct Stacks *aabb)
+void    push_swap(struct Stacks *aabb)
 {
-	t_node	*tmp;
-	int		size;
+    int     size;
+	int		range;
 
-	tmp = aabb->stack_a;
-	size = ft_lstsize(tmp);
-	ft_indexing(aabb);
-	while (size <= 5)
-	{
-		easyswap(aabb);
-		size++;
-	}
-	while (size > 5 && !sort_check(aabb))
-		divide_in_chunk(aabb);
-	//size++;
+    ft_indexing(aabb); // 1. Prima di tutto diamo gli indici
+    size = ft_lstsize(aabb->stack_a);
+
+    if (sort_check(aabb)) // Se è già ordinato, non fare nulla
+        return ;
+
+    if (size <= 5)
+    {
+        easyswap(aabb); // Gestisce 2, 3, 4 o 5 numeri
+    }
+    else
+    {
+        // LOGICA CHUNK (Niente while qui!)
+        range = divide_in_chunk(aabb); // Calcola il range
+        push_minichunk_to_b(aabb, range);  // Svuota A in B (ha già i suoi while dentro)
+        push_back_to_a(aabb);              // Riporta tutto in A (ha già i suoi while)
+    }
 }
 
 int	main( int argc, char *argv[])

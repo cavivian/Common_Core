@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 16:11:56 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/20 10:59:46 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/20 13:52:13 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_node	*ft_lstnew(int value)
 	if(!list)
 		return(NULL);
 	list->value = value;
+	list->index = -1;
 	list->next = NULL;
 	return (list);
 }
@@ -37,17 +38,19 @@ int	check_duplicate(t_node *stack, int num)
 	return (0);
 }
 
-void	ft_lstadd_back(t_node **lst, t_node *new)
+void ft_lstadd_back(t_node **lst, t_node *new)
 {
-	t_node	*temp;
+    t_node *last;
 
-	if (!*lst)
-		*lst = new;
-	else
-	{
-		temp = ft_lstlast(*lst);
-		temp->next = new;
-	}
+    if (!lst || !new)
+        return;
+    if (*lst == NULL)
+    {
+        *lst = new;
+        return;
+    }
+    last = ft_lstlast(*lst);
+    last->next = new; // Se ft_lstlast funziona bene, qui si ferma il crash.
 }
 
 void	free_stack(t_node **stack)

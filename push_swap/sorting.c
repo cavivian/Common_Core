@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 15:02:19 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/20 10:56:07 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/20 12:10:43 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	sort_five(struct Stacks *bba)
 void	sort(struct Stacks *_a_b)
 {
 	int	size;
+	int	chunk_range;
 
 	size = ft_lstsize(_a_b->stack_a);
 	if (sort_check(_a_b))
@@ -88,4 +89,10 @@ void	sort(struct Stacks *_a_b)
 		sort_four(_a_b);
 	else if (size == 5)
 		sort_five(_a_b);
+	else
+	{
+		chunk_range = divide_in_chunk(_a_b);
+		push_minichunk_to_b(_a_b, chunk_range);
+		push_back_to_a(_a_b);
+	}
 }
