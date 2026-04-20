@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   chunk.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 09:30:28 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/06 16:42:04 by camilla          ###   ########.fr       */
+/*   Updated: 2026/04/20 10:55:55 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int divide_in_chunk(struct nodo *change)
+int divide_in_chunk(struct Stacks *change)
 {
 	int count;
 	t_node *tmp;

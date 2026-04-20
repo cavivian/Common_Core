@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sorting.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/14 15:02:19 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/06 16:41:13 by camilla          ###   ########.fr       */
+/*   Updated: 2026/04/20 10:56:07 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_three(struct nodo *ba)
+void	sort_three(struct Stacks *ba)
 {
 	t_node	*tmp;
 	int		first;
@@ -40,7 +40,7 @@ void	sort_three(struct nodo *ba)
 		last_sort(ba);
 }
 
-void	sort_four(struct nodo *aab)
+void	sort_four(struct Stacks *aab)
 {
 	t_node	*min;
 
@@ -54,7 +54,7 @@ void	sort_four(struct nodo *aab)
 	move_pa(aab);
 }
 
-void	sort_five(struct nodo *bba)
+void	sort_five(struct Stacks *bba)
 {
 	t_node	*min;
 
@@ -73,7 +73,7 @@ void	sort_five(struct nodo *bba)
 	move_pa(bba);
 }
 
-void	sort(struct nodo *_a_b)
+void	sort(struct Stacks *_a_b)
 {
 	int	size;
 

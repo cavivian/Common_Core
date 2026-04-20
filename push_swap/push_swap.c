@@ -6,13 +6,13 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/17 11:45:49 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/20 10:53:26 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	easyswap(struct nodo *a_b)
+void	easyswap(struct Stacks *a_b)
 {
 	t_node	*tmp;
 
@@ -25,7 +25,7 @@ void	easyswap(struct nodo *a_b)
 		sort(a_b);
 }
 
-void	ft_indexing(struct nodo *a)
+void	ft_indexing(struct Stacks *a)
 {
 	t_node	*current;
 	t_node	*compare;
@@ -47,7 +47,7 @@ void	ft_indexing(struct nodo *a)
 	}
 }
 
-void	push_swap(struct nodo *aabb)
+void	push_swap(struct Stacks *aabb)
 {
 	t_node	*tmp;
 	int		size;
@@ -56,22 +56,25 @@ void	push_swap(struct nodo *aabb)
 	size = ft_lstsize(tmp);
 	ft_indexing(aabb);
 	while (size <= 5)
+	{
 		easyswap(aabb);
+		size++;
+	}
 	while (size > 5 && !sort_check(aabb))
 		divide_in_chunk(aabb);
-	size++;
+	//size++;
 }
 
 int	main( int argc, char *argv[])
 {
-	struct nodo	stack;
+	struct Stacks	stack;
 	/* printf("%d", argc); */
 
 	stack.stack_a = NULL;
 	stack.stack_b = NULL;
 	if (argc < 2)
 		return (0);
-	stack.stack_a = ft_parse(&stack, argv, argc);
+	stack.stack_a = ft_parse(argv, argc);
 	if (!stack.stack_a)
 		return (0);
 	push_swap(&stack);

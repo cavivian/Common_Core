@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   movepr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 13:57:24 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/06 16:40:41 by camilla          ###   ########.fr       */
+/*   Updated: 2026/04/20 10:55:28 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	move_pa(struct nodo *pa)
+void	move_pa(struct Stacks *pa)
 {
 	t_node	*tmp;
 
@@ -25,7 +25,7 @@ void	move_pa(struct nodo *pa)
 	write (1, "pa\n", 3);
 }
 
-void	move_pb(struct nodo *pb)
+void	move_pb(struct Stacks *pb)
 {
 	t_node	*tmp;
 
@@ -38,7 +38,7 @@ void	move_pb(struct nodo *pb)
 	write(1, "pb\n", 3);
 }
 
-void	move_ra(struct nodo *ra)
+void	move_ra(struct Stacks *ra)
 {
 	t_node	*tmp;
 	t_node	*ultimo;
@@ -55,7 +55,7 @@ void	move_ra(struct nodo *ra)
 	write (1, "ra\n", 3);
 }
 
-void	move_rb(struct nodo *rb)
+void	move_rb(struct Stacks *rb)
 {
 	t_node	*tmp;
 	t_node	*ultimo;
@@ -72,7 +72,7 @@ void	move_rb(struct nodo *rb)
 	write (1, "rb\n", 3);
 }
 
-void	move_rr(struct nodo *rr)
+void	move_rr(struct Stacks *rr)
 {
 	t_node	*tmp;
 	t_node	*ultimo;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mover.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 10:01:22 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/06 16:40:50 by camilla          ###   ########.fr       */
+/*   Updated: 2026/04/20 10:55:37 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	move_rra(struct nodo *rra)
+void	move_rra(struct Stacks *rra)
 {
 	t_node	*primo; // puntatore per scorrere
 	t_node	*ultimo;
@@ -29,7 +29,7 @@ void	move_rra(struct nodo *rra)
 	write(1, "rra\n", 4);
 }
 
-void	move_rrb(struct nodo *rrb)
+void	move_rrb(struct Stacks *rrb)
 {
 	t_node	*primo;
 	t_node	*ultimo;
@@ -46,7 +46,7 @@ void	move_rrb(struct nodo *rrb)
 	write (1, "rrb\n", 4);
 }
 
-void	move_rrr(struct nodo *rrr)
+void	move_rrr(struct Stacks *rrr)
 {
 	t_node	*primo;
 	t_node	*ultimo;

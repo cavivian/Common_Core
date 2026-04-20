@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 15:23:33 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/17 11:55:20 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/20 10:59:36 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,26 @@ int	is_number(char *str)
 	return (1);
 }
 
-t_node	*ft_parse(struct nodo *stack, char **argv, int argc)
+t_node	*ft_parse(char **argv, int argc)
 {
 	int		i;
 	long	tmp;
-	
+	t_node	*stack_a;
 
-	stack = stack->stack_a;
-	stack = malloc(argc - 1);
+	stack_a = NULL;
 	i = 1;
 	/* printf("%d", ft_lstsize(stack)); */
-	while (i < ft_lstsize(stack))
+	while (i < argc)
 	{
 		if (!is_number(argv[i]))
-			return (error_exit(&stack));
+			return (error_exit(&stack_a));
 		tmp = ft_atoi(argv[i]);
 		if (tmp > 2147483647 || tmp < -2147483648)
-			return (error_exit(&stack));
-		if (check_duplicate(stack, (int)tmp))
-			return (error_exit(&stack));
-		ft_lstadd_back(&stack, ft_lstnew((void *)tmp));
+			return (error_exit(&stack_a));
+		if (check_duplicate(stack_a, (int)tmp))
+			return (error_exit(&stack_a));
+		ft_lstadd_back(&stack_a, ft_lstnew((int)tmp));
 		i++;
 	}
-	return (stack);
+	return (stack_a);
 }

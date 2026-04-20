@@ -6,25 +6,29 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 16:11:56 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/01 15:15:37 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/20 10:59:46 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_node	*ft_lstnew(void *content)
+t_node	*ft_lstnew(int value)
 {
 	t_node	*list;
 
 	list = malloc(sizeof(t_node));
-	list->content = content;
+	if(!list)
+		return(NULL);
+	list->value = value;
 	list->next = NULL;
-	return (content);
+	return (list);
 }
 
 int	check_duplicate(t_node *stack, int num)
 {
-	while (stack != NULL)
+	if(!stack)
+		return(0);
+	while (stack)
 	{
 		if (stack->value == num)
 			return (1);
