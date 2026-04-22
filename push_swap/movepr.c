@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 13:57:24 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/20 10:55:28 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/22 11:11:51 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	move_pa(struct Stacks *pa)
 {
 	t_node	*tmp;
 
-	if (pa->stack_b == NULL || pa->stack_b->next == NULL)
+	if (pa->stack_b == NULL)
 		return ;
 	tmp = pa->stack_b;
 	pa->stack_b = pa->stack_b->next; // per aggiornare stack-b
@@ -63,10 +63,10 @@ void	move_rb(struct Stacks *rb)
 	if (rb->stack_b == NULL || rb->stack_b->next == NULL)
 		return ;
 	tmp = rb->stack_b;
-	rb->stack_b = rb->stack_b->next;
 	ultimo = rb->stack_b;
 	while (ultimo->next != NULL)
 		ultimo = ultimo->next;
+	rb->stack_b = tmp->next;
 	ultimo->next = tmp;
 	tmp->next = NULL;
 	write (1, "rb\n", 3);
