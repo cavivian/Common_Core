@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chunkutils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 10:05:49 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/20 15:19:50 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/21 11:25:18 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,13 @@ t_node	*find_max(struct Stacks *ab)
 {
 	t_node	*tmp;
 	t_node	*max_node;
-	int		max_value;
 
 	tmp = ab->stack_b;
 	max_node = tmp;
-	max_value = tmp->value;
-	while (tmp != NULL)
+	while (tmp)
 	{
-		if (tmp->value > max_value)
-		{
-			max_value = tmp->value;
+		if (tmp->index > max_node->index)
 			max_node = tmp;
-		}
 		tmp = tmp->next;
 	}
 	return (max_node);
@@ -35,22 +30,18 @@ t_node	*find_max(struct Stacks *ab)
 
 void	push_back_to_a(struct Stacks *b_to_a)
 {
-	t_node	*tmp;
-	t_node	*max;
 	int		size;
 	int		position;
 
-	tmp = b_to_a->stack_b;
 	while (b_to_a->stack_b != NULL)
 	{
-		max = find_max(b_to_a);
-		size = ft_lstsize(tmp);
-		position = get_position(tmp, max);
+		size = ft_lstsize(b_to_a->stack_b);
+		position = get_position(b_to_a->stack_b, find_max(b_to_a));
 		if (position <= size / 2)
-			while (tmp != max)
+			while (b_to_a->stack_b != find_max(b_to_a))
 				move_rb(b_to_a);
 		else
-			while (tmp != max)
+			while (b_to_a->stack_b != find_max(b_to_a))
 				move_rrb(b_to_a);
 		move_pa(b_to_a);
 	}
@@ -68,7 +59,7 @@ int	get_position(t_node *stack, t_node *i)
 		stack = stack->next;
 		position++;
 	}
-	return (position);
+	return (-1);
 }
 
 void	push_minichunk_to_b(struct Stacks *a_to_b, int range)
@@ -81,7 +72,7 @@ void	push_minichunk_to_b(struct Stacks *a_to_b, int range)
 		t_node	*tmp;
 		
 		tmp = a_to_b->stack_a;
-		printf("DEBUG: cima_index: %d, i: %d, range: %d\n", tmp->index, i, range);
+		fprintf(stderr, "DEBUG: cima_index: %d, i: %d, range: %d\n", tmp->index, i, range);
 		if (tmp->index <= i)
 		{
 			move_pb(a_to_b);
