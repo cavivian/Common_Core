@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 10:01:22 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/20 10:55:37 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/22 11:53:14 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,23 @@ void	move_rrr(struct Stacks *rrr)
 		rrr->stack_b = ultimo;
 	}
 	write (1, "rrr\n", 4);
+}
+
+void	*ft_calloc(size_t num, size_t size)
+{
+	char	*str;
+	size_t	i;
+
+	if (size != 0 && num > __SIZE_MAX__ / size)
+		return (NULL);
+	str = malloc(num * size);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < num * size)
+	{
+		str[i] = 0;
+		i++;
+	}
+	return (str);
 }

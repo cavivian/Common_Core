@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:35:46 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/20 12:10:04 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/22 11:58:37 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int divide_in_chunk(struct Stacks *change);
 t_node	*find_max(struct Stacks *ab);
 int    check_duplicate(t_node *stack, int num);
 t_node	*ft_lstnew(int value);
-t_node	*ft_parse(char **argv, int argc);
+t_node	*ft_parse(char **argv);
 void	ft_lstadd_back(t_node **lst, t_node *new);
 void	free_stack(t_node **stack);
 t_node	*error_exit(t_node **stack);
@@ -65,5 +65,12 @@ int	ft_atoi(const char *str);
 t_node	*ft_lstlast(t_node *lst);
 int	ft_isdigit(int c);
 void	push_minichunk_to_b(struct Stacks *a_to_b, int range);
+char	**ft_split(char const *s, char c);
+/* static void	countword(char *s, char c, char **split);
+static int	alloc_words(char *s, char c, char **split);
+static void	fre(char **split, int word);
+static int	findwords(char *s, char c); */
+void	*ft_calloc(size_t num, size_t size);
+void	free_array(char **args);
 
 #endif

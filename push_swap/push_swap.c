@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/20 14:28:54 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/22 11:57:51 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,24 @@ void    push_swap(struct Stacks *aabb)
 int	main( int argc, char *argv[])
 {
 	struct Stacks	stack;
-	/* printf("%d", argc); */
+	char **args;
+	int	is_split;
 
+	is_split = 0;
 	stack.stack_a = NULL;
 	stack.stack_b = NULL;
 	if (argc < 2)
 		return (0);
-	stack.stack_a = ft_parse(argv, argc);
+	if(argc == 2)
+	{
+		args = ft_split(argv[1], ' ');
+		is_split = 1;
+	}
+	else
+		args = argv + 1;
+	stack.stack_a = ft_parse(args);
+	if (is_split)
+        free_array(args);
 	if (!stack.stack_a)
 		return (0);
 	push_swap(&stack);
