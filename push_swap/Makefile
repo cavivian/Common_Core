@@ -6,7 +6,7 @@
 #    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/11 15:50:53 by cavivian          #+#    #+#              #
-#    Updated: 2026/04/23 09:57:45 by cavivian         ###   ########.fr        #
+#    Updated: 2026/04/23 12:12:25 by cavivian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS =	push_swap.c \
 	utils.c \
 	utilisation.c \
 	split.c \
+	utilise.c \
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,13 +6,13 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 10:28:34 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/01 14:50:27 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/23 11:30:55 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_atoi(const char *str)
+long	ft_atoi(const char *str)
 {
 	int		i;
 	int		sign;
