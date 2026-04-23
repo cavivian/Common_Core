@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 15:23:33 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/22 12:05:04 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/23 09:22:26 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ t_node	*ft_parse(char **argv)
 
 	stack_a = NULL;
 	i = 0;
-	/* printf("%d", ft_lstsize(stack)); */
 	while (argv[i])
 	{
 		if (!is_number(argv[i]))
@@ -50,8 +49,8 @@ t_node	*ft_parse(char **argv)
 		if (check_duplicate(stack_a, (int)tmp))
 			return (error_exit(&stack_a));
 		new_node = ft_lstnew((int)tmp);
-		if(!new_node)
-			return(error_exit(&stack_a));
+		if (!new_node)
+			return (error_exit(&stack_a));
 		ft_lstadd_back(&stack_a, new_node);
 		i++;
 	}
@@ -67,8 +66,8 @@ void	free_array(char **args)
 		return ;
 	while (args[i])
 	{
-		free(args[i]); // Libera la stringa "4894"
+		free(args[i]);
 		i++;
 	}
-	free(args); // Libera l'array che conteneva i puntatori
+	free(args);
 }

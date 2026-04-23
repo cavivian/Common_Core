@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:41:31 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/20 10:55:47 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/23 09:20:16 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void	move_sa(struct Stacks *sa)
 {
-	t_node	*first;// punta al primo nodo della lista, questo verrà scambiato con il secondo
-	t_node	*second;// punta al nodo successivo di first
+	t_node	*first;
+	t_node	*second;
 	t_node	*third;
 
-	if (sa->stack_a == NULL || sa->stack_a->next == NULL) // controllo se abbiamo almeno due nodi nello stack
+	if (sa->stack_a == NULL || sa->stack_a->next == NULL)
 		return ;
 	first = sa->stack_a;
 	second = first->next;
 	third = second->next;
-	first->next = third; // il vecchio primo punta al terzo
-	second->next = first; // il vecchio secondo diventa il nuovo top
-	sa->stack_a = second; // aggiornamento del top nello stack
+	first->next = third;
+	second->next = first;
+	sa->stack_a = second;
 	write (1, "sa\n", 3);
 }
 

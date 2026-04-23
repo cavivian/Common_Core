@@ -6,7 +6,7 @@
 #    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/11 15:50:53 by cavivian          #+#    #+#              #
-#    Updated: 2026/04/01 08:59:00 by cavivian         ###   ########.fr        #
+#    Updated: 2026/04/23 09:57:45 by cavivian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS =	push_swap.c \
 	parse.c \
 	utils.c \
 	utilisation.c \
+	split.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -36,8 +37,8 @@ all: $(NAME)
 $(NAME): $(OBJS)
 		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-#$(OBJS): 
-#		$(CC) $(CFLAGS) $(SRCS)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)

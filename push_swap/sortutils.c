@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 18:41:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/20 14:31:30 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/23 09:27:12 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	sort_check( struct Stacks *ab)
 	t_node	*tmp;
 
 	if (ab->stack_b != NULL)
-        return (0);
+		return (0);
 	if (ab->stack_a == NULL || ab->stack_a->next == NULL)
-		return (1); // return 1 perchè è ovvio che sia già ordinato
+		return (1);
 	tmp = ab->stack_a;
 	while (tmp->next != NULL)
 	{

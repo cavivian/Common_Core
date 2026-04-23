@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 13:57:24 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/22 11:11:51 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/23 08:50:02 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	move_pa(struct Stacks *pa)
 	if (pa->stack_b == NULL)
 		return ;
 	tmp = pa->stack_b;
-	pa->stack_b = pa->stack_b->next; // per aggiornare stack-b
+	pa->stack_b = pa->stack_b->next;
 	tmp->next = pa->stack_a;
 	pa->stack_a = tmp;
 	write (1, "pa\n", 3);
@@ -43,15 +43,15 @@ void	move_ra(struct Stacks *ra)
 	t_node	*tmp;
 	t_node	*ultimo;
 
-	if (ra->stack_a == NULL || ra->stack_a->next == NULL) // previene errori di accesso a memoria non valida, controlla lista vuota e con un solo elemento
+	if (ra->stack_a == NULL || ra->stack_a->next == NULL)
 		return ;
-	tmp = ra->stack_a; // punta al primo nodo della lista, si salva perchè dovrà andare in coda dopo la rotazione
-	ra->stack_a = ra->stack_a->next; // la testa dello stack diventa il secondo nodo, perchè [1] deve andare in fondo
-	ultimo = ra->stack_a; // serve a trovare la fine della lista inizializzazione di ultimo
+	tmp = ra->stack_a;
+	ra->stack_a = ra->stack_a->next;
+	ultimo = ra->stack_a;
 	while (ultimo->next != NULL)
-		ultimo = ultimo->next; // qui ultimo punta a [3]
-	ultimo->next = tmp; //coolegamento della vecchia testa in fondo
-	tmp->next = NULL; //ora tmp è l'ultimo nodo e il suo next deve essere NULL
+		ultimo = ultimo->next;
+	ultimo->next = tmp;
+	tmp->next = NULL;
 	write (1, "ra\n", 3);
 }
 

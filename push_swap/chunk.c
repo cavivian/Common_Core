@@ -6,17 +6,17 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 09:30:28 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/20 14:28:10 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/23 08:18:52 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int divide_in_chunk(struct Stacks *change)
+int	divide_in_chunk(struct Stacks *change)
 {
-	int count;
-	t_node *tmp;
-	int chunk_size;
+	int		count;
+	t_node	*tmp;
+	int		chunk_size;
 
 	count = 0;
 	chunk_size = 0;

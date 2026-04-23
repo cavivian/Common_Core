@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 16:11:56 by camilla           #+#    #+#             */
-/*   Updated: 2026/04/20 13:52:13 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/23 09:37:45 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ t_node	*ft_lstnew(int value)
 	t_node	*list;
 
 	list = malloc(sizeof(t_node));
-	if(!list)
-		return(NULL);
+	if (!list)
+		return (NULL);
 	list->value = value;
 	list->index = -1;
 	list->next = NULL;
@@ -27,8 +27,8 @@ t_node	*ft_lstnew(int value)
 
 int	check_duplicate(t_node *stack, int num)
 {
-	if(!stack)
-		return(0);
+	if (!stack)
+		return (0);
 	while (stack)
 	{
 		if (stack->value == num)
@@ -38,19 +38,19 @@ int	check_duplicate(t_node *stack, int num)
 	return (0);
 }
 
-void ft_lstadd_back(t_node **lst, t_node *new)
+void	ft_lstadd_back(t_node **lst, t_node *new)
 {
-    t_node *last;
+	t_node	*last;
 
-    if (!lst || !new)
-        return;
-    if (*lst == NULL)
-    {
-        *lst = new;
-        return;
-    }
-    last = ft_lstlast(*lst);
-    last->next = new; // Se ft_lstlast funziona bene, qui si ferma il crash.
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	last = ft_lstlast(*lst);
+	last->next = new;
 }
 
 void	free_stack(t_node **stack)
