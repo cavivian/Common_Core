@@ -1,8 +1,5 @@
 def input_temperature(tmp_str):
-	print('=== Garden Temperature ===')
-	
-	print(f"Input data is '{tmp_str}'")
-	print(f"Temperature is now {tmp_str}°C")
+	return int(tmp_str)
 
 def test_temperature(tmp_str):
 	input_temperature(25)
@@ -12,8 +9,11 @@ def test_temperature(tmp_str):
 
 
 def main():
+	print('=== Garden Temperature ===')
 	input_temperature(25)
-	test_temperature(25)
+	print(f"Input data is '{input_temperature(25)}'")
+	print(f'Temperature is now {input_temperature(25)}C')
+	""" test_temperature(25) """
 
 if __name__ == "__main__":
 	main()
