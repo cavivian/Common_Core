@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/23 11:46:23 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/23 12:17:28 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,31 +68,31 @@ void	push_swap(struct Stacks *aabb)
 	}
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-    struct Stacks   stack;
-    char            **args;
-    char            *full_string;
+	struct Stacks	stack;
+	char			**args;
+	char			*full_string;
 
-    stack.stack_a = NULL;
-    stack.stack_b = NULL;
-    if (argc < 2)
-        return (0);
-    full_string = join_args(argc, argv);
-    if (!full_string)
-        return (write(2, "Error\n", 6), 1);
-    args = ft_split(full_string, ' ');
-    free(full_string); // Non ci serve più
-    if (!args || !args[0])
-    {
-        if (args) free_array(args);
-        return (write(2, "Error\n", 6), 1);
-    }
-    stack.stack_a = ft_parse(args);
-    free_array(args);
-    if (!stack.stack_a)
-        return (0);
-    push_swap(&stack);
-    free_stack(&stack.stack_a);
-    return (0);
+	stack.stack_a = NULL;
+	stack.stack_b = NULL;
+	if (argc < 2)
+		return (0);
+	full_string = join_args(argc, argv);
+	if (!full_string)
+		return (write(2, "Error\n", 6), 1);
+	args = ft_split(full_string, ' ');
+	free(full_string); // Non ci serve più
+	if (!args || !args[0])
+	{
+		if (args) free_array(args);
+		return (write(2, "Error\n", 6), 1);
+	}
+	stack.stack_a = ft_parse(args);
+	free_array(args);
+	if (!stack.stack_a)
+		return (0);
+	push_swap(&stack);
+	free_stack(&stack.stack_a);
+	return (0);
 }
