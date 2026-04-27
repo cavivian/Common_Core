@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 11:49:03 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/23 11:51:05 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/27 09:48:52 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,17 @@ char	*ft_strdup(const char *s)
 	}
 	a[i] = '\0';
 	return (a);
+}
+
+void conver(char *str)
+{
+	int j;
+
+	j = 0;
+	while (str[j])
+	{
+    	if (str[j] == '\t' || str[j] == '\n' || str[j] == '\v' || str[j] == '\f' || str[j] == '\r')
+        	str[j] = ' '; // Trasforma tutti i separatori strani in spazi
+    	j++;
+	}
 }

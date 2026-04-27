@@ -6,7 +6,7 @@
 #    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/11 15:50:53 by cavivian          #+#    #+#              #
-#    Updated: 2026/04/23 12:12:25 by cavivian         ###   ########.fr        #
+#    Updated: 2026/04/27 10:06:12 by cavivian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,6 @@ fclean: clean
 	rm -f $(NAME)
 	@echo "Tutto pulito (eseguibile eliminato)."
 	
-re: fclean all
+re: fclean all 
 
 .PHONY: all clean fclean re
