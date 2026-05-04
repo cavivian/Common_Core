@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 11:49:03 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/27 09:48:52 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/29 10:36:57 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*join_args(int argc, char **argv)
 	{
 		tmp = ft_strjoin(s1, argv[i]);
 		free(s1);
-		s1 = ft_strjoin(tmp, " "); // Aggiungiamo uno spazio tra gli argomenti
+		s1 = ft_strjoin(tmp, " ");
 		free(tmp);
 		i++;
 	}
@@ -84,15 +84,16 @@ char	*ft_strdup(const char *s)
 	return (a);
 }
 
-void conver(char *str)
+void	conver(char *str)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (str[j])
 	{
-    	if (str[j] == '\t' || str[j] == '\n' || str[j] == '\v' || str[j] == '\f' || str[j] == '\r')
-        	str[j] = ' '; // Trasforma tutti i separatori strani in spazi
-    	j++;
+		if (str[j] == '\t' || str[j] == '\n'
+			|| str[j] == '\v' || str[j] == '\f' || str[j] == '\r')
+			str[j] = ' ';
+		j++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:35:46 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/27 09:49:08 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/29 10:35:02 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_node	*error_exit(t_node **stack);
 int		ft_lstsize(t_node *lst);
 int		get_position(t_node *stack, t_node *i);
 void	push_back_to_a(struct Stacks *b_to_a);
-long		ft_atoi(const char *str);
+long	ft_atoi(const char *str);
 t_node	*ft_lstlast(t_node *lst);
 int		ft_isdigit(int c);
 void	push_minichunk_to_b(struct Stacks *a_to_b, int range);
@@ -74,6 +74,6 @@ char	*join_args(int argc, char **argv);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *s);
-void conver(char *str);
+void	conver(char *str);
 
 #endif

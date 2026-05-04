@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 11:13:51 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/23 11:49:19 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/29 10:35:14 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,3 @@ char	**ft_split(char const *s, char c)
 	countword((char *)s, c, split);
 	return (split);
 }
-

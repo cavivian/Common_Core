@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 10:13:10 by cavivian          #+#    #+#             */
-/*   Updated: 2026/04/27 10:47:01 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/04/29 10:38:56 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void	easyswap(struct Stacks *a_b)
 void	ft_indexing(struct Stacks *a)
 {
 	t_node	*current;
-	t_node	*compare; 
+	t_node	*compare;
 	int		count;
 
 	current = a->stack_a;
 	while (current != NULL)
 	{
-		count = 0; // 
+		count = 0;
 		compare = a->stack_a;
 		while (compare != NULL)
 		{
@@ -68,28 +68,30 @@ void	push_swap(struct Stacks *aabb)
 	}
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-    struct Stacks   stack;
-    char            **args;
+	struct Stacks	stack;
+	char			**args;
+	char			*big_string;
 
+	big_string = NULL;
 	stack.stack_a = NULL;
 	stack.stack_b = NULL;
-    if (argc < 2)
-        return (0);
-    char *big_string = join_args(argc, argv); 
+	if (argc < 2)
+		return (0);
+	big_string = join_args(argc, argv);
 	if (!big_string)
-        return (1);
+		return (1);
 	conver(big_string);
-    args = ft_split(big_string, ' ');
-	free(big_string); // Non ci serve più la stringona
-    if (!args)
-        return (1);
-    stack.stack_a = ft_parse(args);
-    free_array(args);
-    if (!stack.stack_a)
-        return (0);
-    push_swap(&stack);
-    free_stack(&stack.stack_a);
+	args = ft_split(big_string, ' ');
+	free(big_string);
+	if (!args)
+		return (1);
+	stack.stack_a = ft_parse(args);
+	free_array(args);
+	if (!stack.stack_a)
+		return (0);
+	push_swap(&stack);
+	free_stack(&stack.stack_a);
 	return (0);
 }
