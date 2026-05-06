@@ -4,7 +4,6 @@ def time(day) -> None:
         print('Day ', i)
         i += 1
 
-
 def ft_count_harvest_recursive() -> None:
     day = int(input('Days until harvest: '))
     time(day)
