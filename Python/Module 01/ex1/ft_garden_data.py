@@ -6,12 +6,15 @@ class Plant:
 
     def show(self) -> str:
         return f"{self.name}: {self.height}cm, {self.age} days old"
-    
+
+
 def main() -> None:
     print("=== Garden Plant Registry ===")
-    plants = [Plant("Rose", 25, 30), Plant("Sunflower", 80, 45), Plant("Cactus", 15, 120)]
+    plants = [Plant("Rose", 25, 30), Plant("Sunflower", 80, 45),
+              Plant("Cactus", 15, 120)]
     for plant in plants:
         print(f"{plant.show()}")
+
 
 if __name__ == "__main__":
     main()

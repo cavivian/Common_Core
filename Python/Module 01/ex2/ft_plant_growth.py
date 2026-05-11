@@ -11,9 +11,10 @@ class Plant:
         self.height += 8/10
         return self.height
 
-    def	age(self) -> int:
+    def age(self) -> int:
         self.days += 1
         return self.days
+
 
 def main() -> None:
     print("=== Garden Plant Growth ===")
@@ -25,6 +26,7 @@ def main() -> None:
         nome_pianta.age()
         print(nome_pianta.show())
     print(f"Growth his week: {(days) * 8 / 10}cm")
+
 
 if __name__ == "__main__":
     main()

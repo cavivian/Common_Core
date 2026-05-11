@@ -18,6 +18,7 @@ def get_player_pos():
                     print(f"Error on parameter '{p.strip()}': {e}")
                     break
 
+
 def main():
     print('=== Game Coordinate System ===')
     print('\nGet a first set of coordinates')

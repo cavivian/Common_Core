@@ -3,26 +3,29 @@ class GardenError(Exception):
         self.message = message
         super().__init__(message)
 
+
 class PlantError(GardenError):
     def __init__(self, message="Unknown plant error"):
         super().__init__(message)
 
-    def check_plant(self, temperature) ->str:
+    def check_plant(self, temperature) -> None:
         self.temperature = temperature
         if temperature > 30:
-            raise PlantError (f'The tomato plant is wilting!')
+            raise PlantError('The tomato plant is wilting!')
+
 
 class WaterError(GardenError):
     def __init__(self, name):
         super().__init__(name)
 
-    def check_water(self, water) ->str:
+    def check_water(self, water) -> None:
         self.water = water
         if water < 10:
-            raise WaterError ('Not enough water in the tank!')
+            raise WaterError('Not enough water in the tank!')
+
 
 def main():
-    print ('=== Custom Garden Errors Demo ===')
+    print('=== Custom Garden Errors Demo ===')
     print('\nTesting PlantError...')
     plant = PlantError()
     try:
@@ -47,6 +50,7 @@ def main():
     except GardenError as e:
         print(f'Caught GardenError: {e}')
     print('\nAll custom error types work correctly!')
+
 
 if __name__ == "__main__":
     main()

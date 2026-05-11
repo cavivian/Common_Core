@@ -54,9 +54,11 @@ def ft_inventory_system():
     inventario.update({'magic_item': 1})
     print(f"Updated inventory: {inventario}")
 
+
 def main() -> None:
     print("=== Inventory System Analysis ===")
     ft_inventory_system()
+
 
 if __name__ == "__main__":
     main()

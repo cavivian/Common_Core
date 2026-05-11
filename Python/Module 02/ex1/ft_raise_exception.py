@@ -6,6 +6,7 @@ def input_temperature(tmp_str):
         raise Exception(f"{temp}°C is too cold for plants (min 0°C)")
     return temp
 
+
 def test_temperature():
     case = ["25", "abc", "100", "-50"]
     for data in case:
@@ -21,6 +22,7 @@ def main():
     print("=== Garden Temperature Checker ===")
     test_temperature()
     print("\nAll tests completed - program didn't crash!")
+
 
 if __name__ == "__main__":
     main()

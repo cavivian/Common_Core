@@ -44,5 +44,6 @@ def main():
     print('=== Achievement Tracker System ===')
     gen_player_achievements()
 
+
 if __name__ == "__main__":
     main()

@@ -7,10 +7,18 @@ class Plant:
             self.shade_calls = 0
 
         def display(self):
-            print(f'Stats: {self.grow_calls} grow, {self.age_calls} age, {self.show_calls} show')
+            print(
+                f'Stats: {self.grow_calls} grow, '
+                f'{self.age_calls} age, '
+                f'{self.show_calls} show'
+            )
 
         def display_tree(self):
-            print(f'Stats: {self.grow_calls} grow, {self.age_calls} age, {self.show_calls} show, \n {self.shade_calls} shade')
+            print(
+                f'Stats: {self.grow_calls} grow, '
+                f'{self.age_calls} age, '
+                f'{self.show_calls} show, \n {self.shade_calls} shade'
+            )
 
     def __init__(self, name: str, height: int, age: int):
         self.name = name
@@ -24,7 +32,7 @@ class Plant:
 
     @classmethod
     def create_anonymus(cls):
-        return cls(name = "Unknown plant", height =0.0, age=0)
+        return cls(name="Unknown plant", height=0.0, age=0)
 
     @staticmethod
     def age_control(age):
@@ -32,14 +40,15 @@ class Plant:
             print(f'Is {age} days more than a year? -> False')
         else:
             print(f'Is {age} days more than a year? -> True')
-        
-    def grow(self, value) -> float:
+
+    def grow(self, value) -> None:
         self.height += value
         self.stats.grow_calls += 1
-    
-    def age(self, days) -> int:
+
+    def age(self, days) -> None:
         self.current_age += days
         self.stats.age_calls += 1
+
 
 class Flower(Plant):
     def __init__(self, name, height, age, color):
@@ -54,10 +63,12 @@ class Flower(Plant):
         super().show()
         print(f' Color: {self.color}')
         if self.is_blooming:
-            print(f' {self.name} is blooming succesfully!')
+            if self.name == 'Sunflower':
+                print(f' {self.name} is blooming beautifully!')
+            else:
+                print(f' {self.name} is blooming succesfully!')
         else:
             print(f' {self.name} has not bloomed yet')
-
 
 
 class Tree(Plant):
@@ -65,13 +76,17 @@ class Tree(Plant):
         super().__init__(name, height, age)
         self.trunk_diameter = trunk_diameter
 
-    def produce_shade(self) -> str:
-        print(f'Tree {self.name} now produce a shade of {self.height:.1f}cm long and {self.trunk_diameter:.1f}cm wide.')
+    def produce_shade(self) -> None:
+        print(
+            f'Tree {self.name} '
+            f'now produce a shade of {self.height:.1f}cm '
+            f'long and {self.trunk_diameter:.1f}cm wide.'
+        )
         self.stats.shade_calls += 1
 
     def show(self):
         super().show()
-        print(f' Trunk diameter: {self.trunk_diameter}cm')
+        print(f' Trunk diameter: {self.trunk_diameter:.1f}cm')
 
 
 class Seeds(Flower):
@@ -92,11 +107,11 @@ class Seeds(Flower):
         else:
             print(' Seeds: 0')
 
-    def grow(self, value) -> float:
+    def grow(self, value) -> None:
         self.height += value
         self.stats.grow_calls += 1
-    
-    def age(self, days) -> int:
+
+    def age(self, days) -> None:
         self.current_age += days
         self.stats.age_calls += 1
 
@@ -112,6 +127,7 @@ def main():
     print(' [statistics for Rose]')
     fiore.stats.display()
     print(' [Asking the rose to grow and bloom]')
+    fiore.grow(8)
     fiore.bloom()
     fiore.show()
     print(' [Statstics for Rose]')
@@ -121,7 +137,7 @@ def main():
     albero.show()
     print(' [statistics for Oak]')
     albero.stats.display_tree()
-    print(' [Asking the Oak to produce shade]')
+    print(' [Asking the oak to produce shade]')
     albero.produce_shade()
     print(' [statistics for Oak]')
     albero.stats.display_tree()
@@ -135,12 +151,11 @@ def main():
     seme.show()
     print(' [Statistics for Sunflower]')
     seme.stats.display()
-    print('=== Anonymus')
+    print('\n=== Anonymus')
     anonimo = Plant.create_anonymus()
     anonimo.show()
     print(' [Statistics for Unknown plant]')
     anonimo.stats.display()
-
 
 
 if __name__ == "__main__":
