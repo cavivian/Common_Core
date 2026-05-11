@@ -12,7 +12,8 @@ class Plant:
     
     def age(self, days) -> int:
         self.a += days
-    
+
+   
 class	Flower(Plant):
     def __init__(self, name, height, age, color):
         super().__init__(name, height, age)
@@ -43,6 +44,7 @@ class	Tree(Plant):
         super().show()
         print(f' Trunk diameter: {self.trunk_diameter}cm')
 
+
 class	Vegetable(Plant):
     def __init__(self, name, height, age, harvest_season):
         super().__init__(name, height, age)
@@ -58,6 +60,7 @@ class	Vegetable(Plant):
         super().show()
         print(f' Harvest season: {self.harvest_season}')
         print(f' Nutritioal value: {self.nutritional_value}')
+
 
 def main():
     print('=== Garden Plant Types ===')
@@ -80,7 +83,6 @@ def main():
     print('[Make tomato grow and age for 20 days]')
     ortaggi.grow_and_age(20, 42)
     ortaggi.show()
-
 
 if __name__ == "__main__":
     main()

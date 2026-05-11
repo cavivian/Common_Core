@@ -18,12 +18,13 @@ class Plant:
 def main() -> None:
     print("=== Garden Plant Growth ===")
     nome_pianta = Plant('Rose', 25.0, 30)
+    print(nome_pianta.show())
     for days in range(1, 8):
         print(f"=== Day {days} ===")
-        print(nome_pianta.show())
         nome_pianta.grow()
         nome_pianta.age()
-    print(f"Growth his week: {(days) * 8 / 10}")
+        print(nome_pianta.show())
+    print(f"Growth his week: {(days) * 8 / 10}cm")
 
 if __name__ == "__main__":
     main()

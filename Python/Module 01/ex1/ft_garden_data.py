@@ -9,12 +9,9 @@ class Plant:
     
 def main() -> None:
     print("=== Garden Plant Registry ===")
-    pianta1 = Plant("Rose", 25, 30)
-    pianta2 = Plant("Sunflower", 80, 45)
-    pianta3 = Plant("Cactus", 15, 120)
-    print(pianta1.show())
-    print(pianta2.show())
-    print(pianta3.show())
+    plants = [Plant("Rose", 25, 30), Plant("Sunflower", 80, 45), Plant("Cactus", 15, 120)]
+    for plant in plants:
+        print(f"{plant.show()}")
 
 if __name__ == "__main__":
     main()

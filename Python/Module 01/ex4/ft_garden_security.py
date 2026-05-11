@@ -3,27 +3,29 @@ class Plant:
         self.name = name
         self._height = 15.0
         self._age = 30
-        self.set_height(height)
+        self.set_height(height) 
+        """serve come contenitore del dato, si usa dentro la classe,
+        mai fuori. Serve per avere piu' privacy all'interno del codice"""
         self.set_age(age)
 
     def show(self) -> str:
         return f"Plant created: {self.name}: {self._height:.1f}cm, {self._age} days old"
     
-    def set_height(self, value) -> int:
+    def set_height(self, value) -> None:
         if value < 0:
             print(f"{self.name}: Error, height can't be negative")
             print("Height update rejected")
         elif value > 0:
             self._height = float(value)
 
-    def set_age(self, value) -> int:
+    def set_age(self, value) -> None:
         if value < 0:
             print(f"{self.name}: Error, age can't be negative")
             print('Age update rejected')
         elif value > 0:
             self._age = int(value)
 
-    def get_height(self) -> int:
+    def get_height(self) -> float:
         return self._height
 
     def get_age(self) -> int:
@@ -47,3 +49,6 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+"""L'underscore serve a impedire che l'oggetto "Plant" finisca in uno stato assurdo (altezza o età negative).
+L'underscore _ è il muro, il metodo set è il guardiano al cancello. """
