@@ -23,5 +23,7 @@ def main() -> None:
             high_scores[name] = score
     print(f"High score: {high_scores}")
 
+
 if __name__ == "__main__":
     main()
+    

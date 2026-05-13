@@ -1,12 +1,12 @@
 import sys
 
-def main():
+def main() -> None:
     print('=== Player Score Analytics ===')
     args = sys.argv[1:] #prende il secondo elemento (quello subito dopo il nome del file) e itera fino all'ultimo
     if not args:
         print("No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ...")
         return
-    valid_scores = []
+    valid_scores = list[int]
     for data in args:
         try:
             number = int(data)

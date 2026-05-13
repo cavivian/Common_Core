@@ -1,6 +1,6 @@
 import sys
 
-def main():
+def main() -> None:
     print('=== Command Quest ===')
     i = 1
     j = len(sys.argv) - 1

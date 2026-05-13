@@ -1,6 +1,6 @@
 import sys
 
-def ft_inventory_system():
+def ft_inventory_system() -> None:
     args = sys.argv[1:]
     inventario = {}
     for items in args:
@@ -31,11 +31,10 @@ def ft_inventory_system():
     # 3. Ciclo per Percentuali e Ricerca Max/Min
     for name in inventario:
         qty = inventario[name]
-        
+
         # Calcolo percentuale corretta
         percentage = (qty / total_qty) * 100
         print(f"Item {name} represents {round(percentage, 1)}%")
-
         # Logica manuale per il Massimo (Most Abundant)
         if qty > max_qty:
             max_qty = qty

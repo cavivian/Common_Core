@@ -1,6 +1,6 @@
 import random
 
-def gen_player_achievements():
+def gen_player_achievements() -> None:
     player = ['Alice', 'Bob', 'Charlie', 'Dylan'] #lista, può essere iterata
     actions = {'Crafting Genius', 'Strategist', 'World Savior', 'Speed Runner',
                'Survivor', 'Master Explorer', 'Treasure Hunter'} #set con ordine sparso, non può essere iterato
@@ -22,17 +22,17 @@ def gen_player_achievements():
     # Ciclo principale: prendiamo un giocatore alla volta
     for name in salvataggio:
         miei_premi = salvataggio[name]
-    
+
     # Adesso creiamo un set che contiene i premi di TUTTI GLI ALTRI
-        premi_altri = set()
+        premi_altri = set([str])
         for altro_nome in salvataggio:
             if altro_nome != name: # Se il nome è diverso da quello che stiamo analizzando
             # Uniamo i suoi premi a quelli degli altri
                premi_altri = premi_altri.union(salvataggio[altro_nome])
-    
+
     # Finalmente facciamo la differenza
         only = miei_premi.difference(premi_altri)
-    
+
     # Stampiamo il risultato (Python stamperà set() se è vuoto)
         print(f"Only {name} has: {only}")
     for name in salvataggio:
@@ -40,7 +40,7 @@ def gen_player_achievements():
         print(f'\n{name} is missing: {differences}')
 
 
-def main():
+def main() -> None:
     print('=== Achievement Tracker System ===')
     gen_player_achievements()
 
