@@ -1,10 +1,13 @@
 import sys
 
+
 def main() -> None:
     print('=== Command Quest ===')
     i = 1
     j = len(sys.argv) - 1
-    print(f'Program name: {sys.argv[0]}')
+    if i == j:
+        nome_file = sys.argv[i]
+        print(f'Program name: {nome_file}')
     if j == 0:
         print('No arguments provided!')
     else:

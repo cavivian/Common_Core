@@ -1,5 +1,6 @@
 import math
 
+
 def get_player_pos() -> tuple:
     while True:
         line = input("Enter new coordinates as floats in format 'x,y,z': ")
@@ -8,7 +9,8 @@ def get_player_pos() -> tuple:
             if len(part) != 3:
                 print('Invalid syntax')
                 continue
-            coordinata = (float(part[0].strip()), float(part[1].strip()), float(part[2].strip()))
+            coordinata = (float(part[0].strip()),
+                          float(part[1].strip()), float(part[2].strip()))
             return coordinata
         except ValueError as e:
             for p in part:
@@ -29,7 +31,8 @@ def main() -> None:
     print(f'Distance to center: {round(distance1, 4)}')
     print('\nGot a second set of coordinates')
     part2 = get_player_pos()
-    distance2 = math.sqrt((part2[0] - part1[0])**2 + (part2[1] - part1[1])**2 + (part2[2] - part1[2])**2)
+    distance2 = math.sqrt((part2[0] - part1[0])**2 +
+                          (part2[1] - part1[1])**2 + (part2[2] - part1[2])**2)
     print(f'Distance between the 2 sets of coordinates: {round(distance2, 4)}')
 
 

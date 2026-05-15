@@ -1,12 +1,15 @@
 import sys
 
+
 def main() -> None:
     print('=== Player Score Analytics ===')
-    args = sys.argv[1:] #prende il secondo elemento (quello subito dopo il nome del file) e itera fino all'ultimo
+    args = sys.argv[1:]  # prende il secondo elemento (quello subito dopo
+# il nome del file) e itera fino all'ultimo
     if not args:
-        print("No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ...")
+        print("No scores provided. Usage: python3",
+              "ft_score_analytics.py <score1> <score2> ...")
         return
-    valid_scores = list[int]
+    valid_scores = []
     for data in args:
         try:
             number = int(data)
@@ -14,7 +17,8 @@ def main() -> None:
         except ValueError:
             print(f"Invalid parameter: '{data}'")
     if not valid_scores:
-        print("No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ...")
+        print("No scores provided. Usage: python3",
+              "ft_score_analytics.py <score1> <score2> ...")
         return
     total_players = len(valid_scores)
     total_score = sum(valid_scores)
@@ -22,7 +26,7 @@ def main() -> None:
     high_score = max(valid_scores)
     low_score = min(valid_scores)
     score_range = high_score - low_score
-    print(f"\nScores processed: {valid_scores}")
+    print(f"Scores processed: {valid_scores}")
     print(f"Total players: {total_players}")
     print(f"Total score: {total_score}")
     print(f"Average score: {average_score}")

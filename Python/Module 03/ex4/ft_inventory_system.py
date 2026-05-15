@@ -1,32 +1,33 @@
 import sys
 
+
 def ft_inventory_system() -> None:
     args = sys.argv[1:]
     inventario = {}
     for items in args:
         divpar = items.split(':')
         if len(divpar) != 2:
-           print(f"Error - invalid parameter '{items}'")
-           continue
+            print(f"Error - invalid parameter '{items}'")
+            continue
         name = divpar[0]
         value = divpar[1]
         if name in inventario:
-           print(f"Redundant item '{name}' - discarding")
-           continue
+            print(f"Redundant item '{name}' - discarding")
+            continue
         try:
             quantity = int(value)
             inventario[name] = quantity
         except ValueError as e:
-           print(f"Quantity error for'{name}': {e}")
+            print(f"Quantity error for'{name}': {e}")
     print(f"Got inventory: {inventario}")
     print(f"Item list: {list(inventario)}")
-    # 1. Calcolo del totale una volta sola per evitare sprechi
+    # 1. Calcolo del totale una volta sola
     total_qty = sum(inventario.values())
     print(f"Total quantity of the {len(inventario)} items: {total_qty}")
     # 2. Inizializzazione variabili per la ricerca manuale
     max_qty = -1
     max_item = ""
-    min_qty = float('inf') # Numero infinitamente grande
+    min_qty = float('inf')  # Numero infinitamente grande
     min_item = ""
     # 3. Ciclo per Percentuali e Ricerca Max/Min
     for name in inventario:
