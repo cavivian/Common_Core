@@ -1,4 +1,3 @@
-from typing import IO
 import sys
 
 def ft_ancient_fragment():

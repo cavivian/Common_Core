@@ -14,7 +14,7 @@ def main() -> None:
     for name in nomi_capitalizzati:
         numb = random.randint(1, 1000)
         dict[name] = numb
-    print(f"Score dict: {dict}")
+    print(f"\nScore dict: {dict}")
     total_quantity = sum(dict.values())
     media = total_quantity / len(dict)
     print(f"Score average is {media:.2f}")

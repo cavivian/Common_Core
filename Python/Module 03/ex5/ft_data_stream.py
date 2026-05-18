@@ -27,14 +27,14 @@ def main() -> None:
     match = gen_event(player, actions)
     for i in range(1000):
         p, a = next(match)
-        print(f"Event {i}: player {p} did action {a}")
+        print(f"Event {i}: Player {p} did action {a}")
     ten_events = []
     for _ in range(10):
         ten_events.append(next(match))
     print(f"\nBuilt list of 10 events: {ten_events}\n")
     for event in consume_event(ten_events):
         print(f"Got event from list: {event}")
-        print(f"Remains in list: {ten_events}")
+        print(f"Remains in list: {ten_events}\n")
 
 
 if __name__ == "__main__":

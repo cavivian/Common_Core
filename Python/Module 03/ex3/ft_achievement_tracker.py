@@ -4,16 +4,20 @@ import random
 def gen_player_achievements() -> None:
     player = ['Alice', 'Bob', 'Charlie', 'Dylan']  # lista, può essere iterata
     actions = {'Crafting Genius', 'Strategist', 'World Savior', 'Speed Runner',
-               'Survivor', 'Master Explorer', 'Treasure Hunter'}
+               'Survivor', 'Master Explorer', 'Treasure Hunter',
+               'Legendary Stuntman', 'Master Alchemist', 'Silent Assassin',
+               'Resource Magnet', 'Dragon Slayer'}
     # set con ordine sparso, non può essere iterato
     actions2 = {'Unstoppable', 'First Steps', 'Collector Supreme',
-                'Untouchable', 'Sharp Mind', 'Boss Slayer'}
+                'Untouchable', 'Sharp Mind', 'Boss Slayer',
+                'Hidden Path Finder', 'Social Butterfly', 'Marathon Runner',
+                'Puzzle Master', 'Night Owl'}
     tot = set.union(actions, actions2)  # unione dei due set
     salvataggio = {}  # dizionario
     i = 0  # per iterazione della lista
 # per ogni giocatore si stabilisce un numero e delle 'abilità' randomiche
     for name in player:
-        num = random.randint(1, 13)
+        num = random.randint(10, 15)
 # estrazione randomica dei premi per ciascun giocatore
         premi = set(random.sample(list(tot), num))
 # salvataggio delle estrazioni per poterle confrontare dopo
@@ -31,7 +35,7 @@ def gen_player_achievements() -> None:
         miei_premi = salvataggio[name]
 
     # Adesso creiamo un set che contiene i premi di TUTTI GLI ALTRI
-        premi_altri = set()
+        premi_altri: set[str] = set()
         for altro_nome in salvataggio:
             # Se il nome è diverso da quello che stiamo analizzando
             if altro_nome != name:

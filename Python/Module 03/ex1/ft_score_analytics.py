@@ -9,7 +9,7 @@ def main() -> None:
         print("No scores provided. Usage: python3",
               "ft_score_analytics.py <score1> <score2> ...")
         return
-    valid_scores = []
+    valid_scores: list[int] = []
     for data in args:
         try:
             number = int(data)

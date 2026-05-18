@@ -1,5 +1,4 @@
 import sys
-import typing
 
 
 def ft_stream_management():
