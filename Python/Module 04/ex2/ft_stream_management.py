@@ -3,7 +3,7 @@ import sys
 
 def ft_stream_management():
     i = 1
-    j = len(sys.argv) -1
+    j = len(sys.argv) - 1
     if i == j:
         nome_file = sys.argv[i]
         print(f"Accessing file '{nome_file}'")
@@ -32,9 +32,12 @@ def ft_stream_management():
             risposta = sys.stdin.readline()
             files = risposta.rstrip('\n')
             print(f"Saving data to '{files}'")
-            sys.stderr.write(f"[STDERR] Error opening file '{files}': [Errno 13] Permission denied: {files} \nData not saved.\n")
+            sys.stderr.write(f"[STDERR] Error opening file '{files}': "
+                             f"[Errno 13] Permission denied:"
+                             f" {files} \nData not saved.\n")
         except FileNotFoundError as e:
-            sys.stderr.write(f"[STDERR] Error opening file '{nome_file}': {e}\n")
+            sys.stderr.write(f"[STDERR] Error opening file"
+                             f"'{nome_file}': {e}\n")
 
 
 def main():

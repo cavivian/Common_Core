@@ -1,8 +1,9 @@
 import sys
 
+
 def ft_ancient_fragment():
     i = 1
-    j = len(sys.argv) -1
+    j = len(sys.argv) - 1
     if j == 0:
         print('Usage: ft_ancient_text.py <file>')
     elif i == j:

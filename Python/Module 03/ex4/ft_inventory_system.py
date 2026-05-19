@@ -51,8 +51,9 @@ def ft_inventory_system() -> None:
     print(f"Item least abundant: {min_item} with quantity {min_qty}")
 
     # 5. Aggiornamento e chiusura
-    inventario.update({'magic_item': 1})
-    print(f"Updated inventory: {inventario}")
+    if args:
+        inventario.update({'magic_item': 1})
+        print(f"Updated inventory: {inventario}")
 
 
 def main() -> None:

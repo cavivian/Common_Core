@@ -31,10 +31,10 @@ def main() -> None:
     ten_events = []
     for _ in range(10):
         ten_events.append(next(match))
-    print(f"\nBuilt list of 10 events: {ten_events}\n")
+    print(f"Built list of 10 events: {ten_events}")
     for event in consume_event(ten_events):
         print(f"Got event from list: {event}")
-        print(f"Remains in list: {ten_events}\n")
+        print(f"Remains in list: {ten_events}")
 
 
 if __name__ == "__main__":

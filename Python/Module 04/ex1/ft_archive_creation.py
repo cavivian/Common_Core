@@ -3,7 +3,7 @@ import sys
 
 def ft_archive_creation():
     i = 1
-    j = len(sys.argv) -1
+    j = len(sys.argv) - 1
     if i == j:
         nome_file = sys.argv[i]
         print(f"Accessing file '{nome_file}'")
@@ -16,19 +16,17 @@ def ft_archive_creation():
                 print(f"File '{nome_file}' closed")
             print("\nTransform data:\n")
             print('---')
-            
             # Trasformiamo il contenuto riga per riga
             # Usiamo readlines() per mantenere i caratteri originali
             with open(nome_file, "r") as nome_file:
                 righe_originali = nome_file.readlines()
-            
             testo_trasformato = ""
             for riga in righe_originali:
                 # Togliamo solo l'ultimo invio, mettiamo # e lo rimettiamo
                 riga_con_hash = riga.rstrip('\n') + "#"
                 print(f"\n{riga_con_hash}")
                 testo_trasformato += riga_con_hash + "\n"
-                
+
             print("\n---")
         except FileNotFoundError as e:
             print(f"Error opening file '{nome_file}': {e}")

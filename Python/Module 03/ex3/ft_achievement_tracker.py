@@ -1,60 +1,65 @@
 import random
 
 
-def gen_player_achievements() -> None:
-    player = ['Alice', 'Bob', 'Charlie', 'Dylan']  # lista, può essere iterata
-    actions = {'Crafting Genius', 'Strategist', 'World Savior', 'Speed Runner',
-               'Survivor', 'Master Explorer', 'Treasure Hunter',
-               'Legendary Stuntman', 'Master Alchemist', 'Silent Assassin',
-               'Resource Magnet', 'Dragon Slayer'}
-    # set con ordine sparso, non può essere iterato
-    actions2 = {'Unstoppable', 'First Steps', 'Collector Supreme',
-                'Untouchable', 'Sharp Mind', 'Boss Slayer',
-                'Hidden Path Finder', 'Social Butterfly', 'Marathon Runner',
-                'Puzzle Master', 'Night Owl'}
-    tot = set.union(actions, actions2)  # unione dei due set
-    salvataggio = {}  # dizionario
-    i = 0  # per iterazione della lista
-# per ogni giocatore si stabilisce un numero e delle 'abilità' randomiche
-    for name in player:
-        num = random.randint(10, 15)
-# estrazione randomica dei premi per ciascun giocatore
-        premi = set(random.sample(list(tot), num))
-# salvataggio delle estrazioni per poterle confrontare dopo
-        salvataggio[name] = premi
-        print(f"Player {player[i]}: {premi}")  # stampa delle varie estrazioni
-        i += 1  # iterazione
-    print(f"\nAll distinct achievements: {tot}")
-    common = salvataggio[name] & salvataggio['Alice'] & salvataggio['Bob'] \
-        & salvataggio['Charlie'] & salvataggio['Dylan']
-    print(f"\nCommon achievements: {common}")
-    print()
+# Definiamo i premi totali fuori come
+# costante globale (così la funzione è pulita)
+ACHIEVEMENTS = {
+    'Crafting Genius', 'Strategist', 'World Savior', 'Speed Runner',
+    'Survivor', 'Master Explorer', 'Treasure Hunter', 'Legendary Stuntman',
+    'Master Alchemist', 'Silent Assassin', 'Resource Magnet', 'Dragon Slayer',
+    'Unstoppable', 'First Steps', 'Collector Supreme', 'Untouchable',
+    'Sharp Mind', 'Boss Slayer', 'Hidden Path Finder', 'Social Butterfly',
+    'Marathon Runner', 'Puzzle Master', 'Night Owl'
+}
 
-    # Ciclo principale: prendiamo un giocatore alla volta
-    for name in salvataggio:
-        miei_premi = salvataggio[name]
 
-    # Adesso creiamo un set che contiene i premi di TUTTI GLI ALTRI
-        premi_altri: set[str] = set()
-        for altro_nome in salvataggio:
-            # Se il nome è diverso da quello che stiamo analizzando
-            if altro_nome != name:
-                # Uniamo i suoi premi a quelli degli altri
-                premi_altri = premi_altri.union(salvataggio[altro_nome])
+def gen_player_achievements() -> set[str]:
+    # Sceglie un numero casuale di obiettivi (es. tra 10 e 15)
+    num = random.randint(10, 15)
 
-    # Finalmente facciamo la differenza
-        only = miei_premi.difference(premi_altri)
+    # Estrae il set di premi casuali dal totale
+    premi = set(random.sample(list(ACHIEVEMENTS), num))
 
-    # Stampiamo il risultato (Python stamperà set() se è vuoto)
-        print(f"Only {name} has: {only}")
-    for name in salvataggio:
-        differences = tot - salvataggio[name]
-        print(f'\n{name} is missing: {differences}')
+    # RESTITUISCE il set (questo è il return richiesto dal subject!)
+    return premi
 
 
 def main() -> None:
-    print('=== Achievement Tracker System ===')
-    gen_player_achievements()
+    print('=== Achievement Tracker System ===\n')
+
+    players = ['Alice', 'Bob', 'Charlie', 'Dylan']
+    salvataggio = {}
+
+    # Per ogni giocatore, chiamiamo la funzione che GENERA e RITORNA il set
+    for name in players:
+        premi_ricevuti = gen_player_achievements()
+        salvataggio[name] = premi_ricevuti
+        print(f"Player {name}: {premi_ricevuti}")
+
+    print(f"\nAll distinct achievements: {ACHIEVEMENTS}")
+
+    # Calcolo dei premi in comune (Intersection)
+    common = (salvataggio['Alice'] & salvataggio['Bob'] &
+              salvataggio['Charlie'] & salvataggio['Dylan'])
+    print(f"\nCommon achievements: {common}\n")
+
+    # Ciclo per trovare i premi UNICI di ciascuno
+    for name in salvataggio:
+        miei_premi = salvataggio[name]
+
+        # Creiamo il set degli altri
+        premi_altri: set[str] = set()
+        for altro_nome in salvataggio:
+            if altro_nome != name:
+                premi_altri = premi_altri.union(salvataggio[altro_nome])
+
+        only = miei_premi.difference(premi_altri)
+        print(f"Only {name} has: {only}")
+
+    # Ciclo per trovare i premi MANCANTI di ciascuno
+    for name in salvataggio:
+        differences = ACHIEVEMENTS - salvataggio[name]
+        print(f'\n{name} is missing: {differences}')
 
 
 if __name__ == "__main__":
