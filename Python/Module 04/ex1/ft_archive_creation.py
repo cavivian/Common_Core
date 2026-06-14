@@ -32,11 +32,14 @@ def ft_archive_creation():
             print(f"Error opening file '{nome_file}': {e}")
         print("\n---")
         name = input("Enter new file name (or empty): ")
-        if not name:
-            print("Not saving data")
-        else:
+        try:
+            f = open(name)
+            f.read()
             print(f"Saving data to '{name}'")
             print(f"Data saved in file '{name}'")
+            f.close()
+        except Exception:
+            raise ("Not saving data")
 
 
 def main():
