@@ -879,34 +879,35 @@ int ft_atoi(const char *str) //passiamo alla funzione una stringa come parametro
 
 
 // lcm -> funzione che calcola l'mcm
-unsigned int lcm(unsigned int a, unsigned int b)
-{
-   if ( a == 0 || b == 0)
-      return 0;
-   unsigned int n = 0; 
-   if (a > b)
-      n = a;
-   else
-      n = b;
-   while (n > 0)
-   {
-      if (n % a == 0 && n % b == 0)
-      {
-         return(n);
-      }
-      n++;
-   }
-   return 0;
-}
+// unsigned int lcm(unsigned int a, unsigned int b)
+// {
+//    if ( a == 0 || b == 0) si controlla ceh i umeri passati non siano 0
+//       return 0; e si termina il programma
+//    unsigned int n = 0; temporanea per calcolare quale dei 2 numeri passati è maggiore
+//    if (a > b) se il maggiore è a
+//       n = a; n prende il suo valore
+//    else se invece è b
+//       n = b; n prende il valore di b
+//    while (n > 0) finquando n è più grande di 0 (è necessario un ciclo infinito)
+//    {
+//       if (n % a == 0 && n % b == 0) se non hanno resto 
+//       {
+//          return(n); si torna il risultato dell'mcm
+//       }
+//       n++; e si incrementa la n
+//    }
+//    return 0; si termina il programma
+// }
 
-int main()
-{
-   unsigned int a = 256;
-   unsigned int b = 94;
 
-   printf("%d\n", lcm(a, b));
-   return 0;
-}
+// int main() main per la funzione dell'mcm
+// {
+//    unsigned int a = 256; inizializzo i numeri
+//    unsigned int b = 94; e anceh il secondo
+
+//    printf("%d\n", lcm(a, b)); stampo il risultato
+//    return 0; termino iol programma
+// }
 
 
 

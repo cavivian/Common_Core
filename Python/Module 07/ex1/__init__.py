@@ -1,0 +1,1 @@
+from ex1.factory import CreatureFactory, HealingCreatureFactory, TransformCreatureFactory

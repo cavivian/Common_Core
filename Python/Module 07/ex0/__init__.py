@@ -1,0 +1,1 @@
+from ex0.factory import CreatureFactory, FlameFactory, AquaFactory
