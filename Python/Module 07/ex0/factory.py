@@ -14,7 +14,7 @@ class CreatureFactory(ABC):
 
 
 class FlameFactory(CreatureFactory):
-    def create_base(self):
+    def create_base(self) -> None:
         return (Flameling())
     
     def create_evolved(self):

@@ -2,10 +2,10 @@
 #include <stdio.h>
 
 //ft_putchar -> funzione che prende come parametro un char e lo stampa
-// void ft_putchar(char c) dichiarazione della funzione con passaggio del parametro
-// {
-//     write(1, &c, 1);  stampa del parametro utilizzando l'indirizzo.
-// }                     se scrivessi semplicemente c, stamperebbe il carattere, non il parametro passato
+void ft_putchar(char c) //dichiarazione della funzione con passaggio del parametro
+{
+    write(1, &c, 1);  //stampa del parametro utilizzando l'indirizzo.
+}                     //se scrivessi semplicemente c, stamperebbe il carattere, non il parametro passato
 
 
 //ft_print_alphabet -> funzione che stampa l'alfabeto completo
@@ -40,17 +40,21 @@
 // }
 
 
-// ft_print_numbers -> funzione che stampa i numeri dallo 0 al 9
-// void ft_print_numbers() non si passa nessun parametro
+//ft_print_numbers -> funzione che stampa i numeri dallo 0 al 9
+// void ft_print_numbers() //non si passa nessun parametro
 // {
-//     int i = 48; si inizializza la variabile a 0
-//     while(i <= 57) finquando non arriva al 9
+//     int i = 48; //si inizializza la variabile a 0
+//     while(i <= 57) //finquando non arriva al 9
 //     {
-//         ft_putchar(i); stampa i numeri
-//         i++; e incrementa
+//         ft_putchar(i); //stampa i numeri
+//         i++; //e incrementa
 //     }
-//      write(1, "\n", 1);
-//      return 0;
+//     write(1, "\n", 1);
+// }
+
+// int main()
+// {
+//     ft_print_numbers();
 // }
 
 
@@ -115,17 +119,25 @@
 
 
 // ft_lowercase -> funzione che converte le lettere maiuscole in minuscole
-// void ft_lowercase(char *str) prende una stringa come parametro
+// void ft_lowercase(char *str) //prende una stringa come parametro
 // {
-//     int i = 0; inizializiamo l'indice a 0
-//     while(str[i] != '\0') si scorre la lista finquando esiste
+//     int i = 0; //inizializiamo l'indice a 0
+//     while(str[i] != '\0') //si scorre la lista finquando esiste
 //     { 
-//         if (str[i] >= 'A' && str[i] <= 'Z') se il carattere della stringa è compresa nell'alfabeto maiuscolo
+//         if (str[i] >= 'A' && str[i] <= 'Z') //se il carattere della stringa è compresa nell'alfabeto maiuscolo
 //         {
-//             str[i] += 32; si converte la stringa in minuscolo
+//             str[i] = str[i] + 32; //si converte la stringa in minuscolo
 //         }
-//         i++; si va avanti
+//         write(1, &str[i], 1);
+//         i++; //si va avanti
 //     }
+// }
+
+// int main()
+// {
+//     char str[] = "ciAo MaMma";
+//     ft_lowercase(str);
+//     return 0;
 // }
 
 
@@ -156,6 +168,7 @@
 //     return 0; si termina il programma
 // }
 
+
 // first_word -> funzione che stampa la prima parola che trova in argv1
 // int main(int argc, char *argv[])
 // {
@@ -177,6 +190,7 @@
 //     write(1, "\n", 1); stampa la newline
 //     return 0; termina il programma
 // }
+
 
 //rotone -> funzione che stampa il carattere successivo alfabetico
 // int main(int argc, char *argv[])
@@ -211,51 +225,50 @@
 //     return 0; termina il programma
 // }
 
+
 //rev_print -> funzione che stampa un argomento passato all'incovercio
 // int main(int argc, char *argv[])
 // {
-//     if (argc != 2) si controlla che i parametri siano 2
+//     if (argc != 2) //si controlla che i parametri siano 2
 //     {
-//         write (1, "\n", 1); nel caso si stampa la newline
-//         return 0; si termina il programma
+//         write (1, "\n", 1); //nel caso si stampa la newline
+//         return 0; //si termina il programma
 //     }
-//     int i = 0; si inizializza l'indice a 0
-//     while (argv[1][i] != '\0') e scorriamo argv1 finquando esiste
+//     int i = 0; //si inizializza l'indice a 0
+//     int tmp = 0;
+//     while (argv[1][i] != '\0') //e scorriamo argv1 finquando esiste
 //     {
-//         i++; lo scorriamo
-//     }
-//     i--; sottraiamo di 1 per iniziare la decrementazione
-//     if (argv[1][i] == '\0') una volta arrivati alla fine della stringa
+//         i++; //lo scorriamo
+//     } //sottraiamo di 1 per iniziare la decrementazione
+//     tmp = i - 1;
+//     while (tmp >= 0) //una volta arrivati alla fine della stringa
 //     {
-//         while(i >= 0) si scorre all'indietro finquando non arriviamo all'inizio
-//         {
-//             write(1, &argv[1][i], 1); e stampiamo i char
-//             i--; e decrementiamo
-//         }
+//         write(1, &argv[1][tmp], 1); //e stampiamo i char
+//         tmp--; //e decrementiamo
 //     }
-//     write(1, "\n", 1); stampiamo la newline 
-//     return 0; terminiamo il programma
+//     write(1, "\n", 1); //stampiamo la newline 
+//     return 0; //cwterminiamo il programma
 // }
 
 
 //serach_and_replace -> funzione che cerca un char e lo rimpiazza con un altro
 // int main(int argc, char *argv[])
 // {
-//     if (argc != 4 || argv[2][0] == '\0' || argv[2][1] != '\0' || argv[3][0] == '\0' || argv[3][1] != '\0') facciamo un aserie di controlli 
+//     if (argc != 4 || argv[2][0] == '\0' || argv[2][1] != '\0' || argv[3][0] == '\0' || argv[3][1] != '\0') //facciamo un aserie di controlli 
 //     {
-//         write (1, "\n", 1); stampiamo la newline
-//         return 0; termina il programma
+//         write (1, "\n", 1); //stampiamo la newline
+//         return 0; //termina il programma
 //     }
-//     int i = 0; inizializiamo l'indice a 0
-//     char tmp = argv[3][0]; dichiariamo una temporanea che contiene il char di sostituzione
-//     while (argv[1][i] != '\0') scorriamo tutta argv1
+//     int i = 0; //inizializiamo l'indice a 0
+//     char tmp = argv[3][0]; //dichiariamo una temporanea che contiene il char di sostituzione
+//     while (argv[1][i] != '\0') //scorriamo tutta argv1
 //     {
-//         if (argv[1][i] == argv[2][0]) quando troviamo che un char di argv1 è uguale a uno di argv2 
+//         if (argv[1][i] == argv[2][0]) //quando troviamo che un char di argv1 è uguale a uno di argv2 
 //         {
-//             argv[1][i] = tmp; assegnamo a argv1 la temporanea
+//             argv[1][i] = tmp; //assegnamo a argv1 la temporanea
 //         }
-//         write(1, &argv[1][i], 1); stampiamo argv1
-//         i++; incrementiamo la i
+//         write(1, &argv[1][i], 1); //stampiamo argv1
+//         i++; //incrementiamo la i
 //     }
 //     write(1, "\n", 1);
 //     return 0;
@@ -265,49 +278,51 @@
 //repeat_alpha -> funziona che ristampa la lettera dell'alfabeto in base alla posizione in cui si trova
 // int main(int argc, char *argv[])
 // {
-//     if (argc != 2) si controlla che argv sia 2
+//     if (argc != 2) //si controlla che argv sia 2
 //     {
-//         write(1, "\n", 1); si stampa la newline
-//         return (0); e si termina il programma
+//         write(1, "\n", 1); //si stampa la newline
+//         return (0); //e si termina il programma
 //     }
-//     int i = 0; inizializiamo l'indice a 0
-//     int lettere_da_stampare; creiamo un contatore per le lettere
-//     while (argv[1][i] != '\0') scorriamo tutta argv1
+//     int i = 0; //inizializiamo l'indice a 0
+//     int lettere_da_stampare; //creiamo un contatore per le lettere
+//     while (argv[1][i] != '\0') //scorriamo tutta argv1
 //     {
-//         lettere_da_stampare = 1; inizializiamo il contatore a 1, che ogni volta si resetta
-//         if(argv[1][i] >= 'a' && argv[1][i] <= 'z') controlliamo se il char fa parte dell'alfabeto minuscolo
+//         lettere_da_stampare = 1; //inizializiamo il contatore a 1, che ogni volta si resetta
+//         if(argv[1][i] >= 'a' && argv[1][i] <= 'z') //controlliamo se il char fa parte dell'alfabeto minuscolo
 //         {
-//             lettere_da_stampare = argv[1][i] - 'a' + 1; fa il conteggio di quante lettere stampare
+//             lettere_da_stampare = argv[1][i] - 'a' + 1; //fa il conteggio di quante lettere stampare
 //         }
-//         else if(argv[1][i] >= 'A' && argv[1][i] <= 'Z') controlla se il char in considerazione f aparte dell'alfabeto maiuscolo
+//         else if(argv[1][i] >= 'A' && argv[1][i] <= 'Z') //controlla se il char in considerazione f aparte dell'alfabeto maiuscolo
 //         {
-//             lettere_da_stampare = argv[1][i] - 'A' + 1; fa il conteggio di quante lettere stampare
+//             lettere_da_stampare = argv[1][i] - 'A' + 1; //fa il conteggio di quante lettere stampare
 //         }
-//         while(lettere_da_stampare > 0) si fa un ciclo in cui stampare le lettere finquando sono più di 0, ciclo sempre vero perchè lettere parte da 1
+//         while(lettere_da_stampare > 0) //si fa un ciclo in cui stampare le lettere finquando sono più di 0, ciclo sempre vero perchè lettere parte da 1
 //         {
-//             write(1, &argv[1][i], 1);  si stampano le lettere
-//             lettere_da_stampare--; si decrementano
+//             write(1, &argv[1][i], 1);  //si stampano le lettere
+//             lettere_da_stampare--; //si decrementano
 //         }
-//         i++; avanziamo argv1
+//         i++; //avanziamo argv1
 //     }
-//     write(1, "\n", 1); stampiamo la newline
-//     return 0; si termina il programma
+//     write(1, "\n", 1); //stampiamo la newline
+//     return 0; //si termina il programma
 // }
 
 
 //ft_strcpy -> funzione che copia una stringa in un'altra
-// char *ft_strcpy(char *s1, char * s2) si passano come parametri due stinghe
+// char *ft_strcpy(char *s1, char * s2) //si passano come parametri due stinghe
 // {
-//     int i = 0; inizializiamo un indice a 0
-//     int j = 0; inizializiamo un altro indice a 0
-//     while (s2[i] != '\0') scorriamo la stringa che deve essere copiata
+//     if (!s1 || !s2)
+//         return 0;
+//     int i = 0; //inizializiamo un indice a 0
+//     int j = 0; //inizializiamo un altro indice a 0
+//     while (s2[i] != '\0') //scorriamo la stringa che deve essere copiata
 //     {
-//         s1[j] = s2[i]; e la assegnamo all'altra stringa passata per parametro
-//         i++; incrementiamo un indice
-//         j++; incrementiamo anche l'altro
+//         s1[j] = s2[i]; //e la assegnamo all'altra stringa passata per parametro
+//         i++; //incrementiamo un indice
+//         j++; //incrementiamo anche l'altro
 //     }
-//     s1[j] = '\0'; una volta finito terminiamo la string acon il carattere terminatore
-//     return(s1); e ritorniamo la stringa con la copia
+//     s1[j] = '\0'; //una volta finito terminiamo la stringa con il carattere terminatore
+//     return(s1); //e ritorniamo la stringa con la copia
 // }
 
 // int main(void)
@@ -324,160 +339,162 @@
 //     return (0);
 // }
 
+
 //last_word -> funzione che stampa l'ultima parola di una stringa
 // int main(int argc, char *argv[])
 // {
-//     if (argc != 2) si controlla ceh i parametri passati siano 2
+//     if (argc != 2) //si controlla ceh i parametri passati siano 2
 //     {
-//         write(1, "\n", 1); si stampa la newline
-//         return 0; si termina il programma
+//         write(1, "\n", 1); //si stampa la newline
+//         return 0; //si termina il programma
 //     }
-//     int i = 0; indice che mi serve per scorrere intanto tutta la stringa
-//     int j = 0; indice che mi serve per memorizzare dove si trova l'ultima parola
-//     while(argv[1][i] != '\0') finquando argv1 esiste
+//     int i = 0; //indice che mi serve per scorrere intanto tutta la stringa
+//     int j = 0; //indice che mi serve per memorizzare dove si trova l'ultima parola
+//     while(argv[1][i] != '\0') //finquando argv1 esiste
 //     {
-//         i++; arriva infondo
+//         i++; //arriva infondo
 //     }
-//     i--; e decrementa di uno per stare sull'ultima lettera dell'ultima parola
-//     if (j == 32 || j >= 9 && j <= 13)
+//     i--; //e decrementa di uno per stare sull'ultima lettera dell'ultima parola
+//     if (j == 32 || (j >= 9 && j <= 13))
 //         i--;
-//     printf("il valore di i è %d", i);
-//     while((argv[1][i] >= 1 && argv[1][i] != 32) && !(argv[1][i] >= 9 && argv[1][i] <= 13)) ciclo finchè argv è maggiore= a 1, perchè così si evita ceh stampi roba a caso
-//     in memoria
+//     while((argv[1][i] >= 1 && argv[1][i] != 32) && !(argv[1][i] >= 9 && argv[1][i] <= 13)) //ciclo finchè argv è maggiore= a 1, perchè così si evita che stampi roba a caso
+//     //in memoria
 //     {
-//         i--; si decrementa
+//         i--; //si decrementa
 //     }
-//     j = i + 1; si assegna a j la posizione dell'ultima parola
-//     while(argv[1][j] != '\0') scorriamo argv con la nuova posizione
+//     j = i + 1; //si assegna a j la posizione dell'ultima parola
+//     while(argv[1][j] != '\0') //scorriamo argv con la nuova posizione
 //     {
-//         write(1, &argv[1][j], 1); stampiamo
-//         j++; e si incrementa
+//         write(1, &argv[1][j], 1); //stampiamo
+//         j++; //e si incrementa
 //     }
-//     write(1, "\n", 1); si stampa la newline
-//     return 0; termina il programma
+//     write(1, "\n", 1); //si stampa la newline
+//     return 0; //termina il programma
 // }
+
 
 //inter -> programma che prende due parametri e stampa i caratteri che sono presenti in entrambe
 // int main(int argc, char *argv[])
 // {
-//     if (argc != 3) si controlla che gli argomenti passati siano 2
+//     if (argc != 3) //si controlla che gli argomenti passati siano 2
 //     {
-//         write(1, "\n", 1); si stampa la newline
-//         return 0; termina il programma
+//         write(1, "\n", 1); //si stampa la newline
+//         return 0; //termina il programma
 //     }
-//     int i = 0; dichiariamo l'indice per scorrere argv1
-//     char tmp[256] = {0}; usiamo una temporanea
-//     while(argv[2][i] != '\0') prima si scorre argv2 
+//     int i = 0; //dichiariamo l'indice per scorrere argv1
+//     //int j = 0;
+//     char tmp[256] = {0}; //usiamo una temporanea
+//     while(argv[1][i] != '\0') //prima si scorre argv2 
 //     {
-//         tmp[(int)argv[2][i]] = 1; e si accendono tutte le lettere
-//         i++; e si va avanti
+//         tmp[(int)argv[1][i]] = 1; //e si accendono tutte le lettere
+//         i++; //e si va avanti
 //     }
-//     i = 0; dichiariamo l'indice per argv1
-//     while(argv[1][i] != '\0') lo scorriamo tutto
+//     i = 0; //dichiariamo l'indice per argv1
+//     while(argv[2][i] != '\0') //lo scorriamo tutto
 //     {
-//         if(tmp[(int)argv[2][i]] == 1) se troviamo un carattere acceso
+//         if(tmp[(int)argv[1][i]] == 1) //se troviamo un carattere acceso
 //         {
-//             write(1, &argv[1][i], 1); lo stampiamo 
-//             tmp[(int)argv[2][i]] = 0; e lo impostiamo spento, che lo abbiamo trovato
+//             write(1, &argv[2][i], 1); //lo stampiamo 
+//             tmp[(int)argv[1][i]] = 0; //e lo impostiamo spento, perchè lo abbiamo trovato
 //         }
-//         i++; incrementiamo la i
+//         i++; //incrementiamo la i
 //     }
-//     write(1, "\n", 1); stampiamo la newline
-//     return 0; terminiamo ilprogramma
+//     write(1, "\n", 1); //stampiamo la newline
+//     return 0; //terminiamo ilprogramma
 // }
 
 
-//union -> programma che prende 2 parametri e li unisce senza stampare duplicati
+//union -> programma che prende 2 parametri e li unisce senza stampare duplicati(stesso procedimento di inter, aggiungendo solo un print)
 // int main(int argc, char *argv[])
 // {
-//     if (argc != 3) si controlla che i parametri siano 2
+//     if (argc != 3) //si controlla che i parametri siano 2
 //     {
-//         write(1, "\n", 1); in caso si stampa la new line
-//         return 0; e si termina il programma
+//         write(1, "\n", 1); //in caso si stampa la new line
+//         return 0; //e si termina il programma
 //     }
-//     int i = 0; si inizializza l'indice a 0
-//     char tmp[256] = {0}; si dichiara una temporanea con lunghezza di 256 caratteri(tab ASCII)
-//     while(argv[1][i] != '\0') si fa partire il ciclo finquando esiste
+//     int i = 0; //si inizializza l'indice a 0
+//     char tmp[256] = {0}; //si dichiara una temporanea con lunghezza di 256 caratteri(tab ASCII)
+//     while(argv[1][i] != '\0') //si fa partire il ciclo finquando esiste
 //     {
-//         if(tmp[(int)argv[2][i]] == 0) si fa subito un controllo dei duplicati
+//         if(tmp[(int)argv[2][i]] == 0) //si fa subito un controllo dei duplicati
 //         {
-//             write(1, &argv[2][i], 1); se non ci sono stampa i caratteri di argv
-//             tmp[(int)argv[2][i]] = 1; e li accende per dire che ci è già passata sopra 
+//             write(1, &argv[2][i], 1); //se non ci sono stampa i caratteri di argv
+//             tmp[(int)argv[2][i]] = 1; //e li accende per dire che ci è già passata sopra 
 //         }
-//         i++; si incrementa
+//         i++; //si incrementa
 //     }
-//     i = 0; si resetta a 0 l'indice
-//     while(argv[2][i] != '\0') si scorre argv2 finquando esiste
+//     i = 0; //si resetta a 0 l'indice
+//     while(argv[2][i] != '\0') //si scorre argv2 finquando esiste
 //     {
-//         if(tmp[(int)argv[2][i]] == 0) si controlla che il carattere non sia già stato stampato
+//         if(tmp[(int)argv[2][i]] == 0) //si controlla che il carattere non sia già stato stampato
 //         {
-//             write(1, &argv[2][i], 1); nel caso si stampa
-//             tmp[(int)argv[2][i]] = 1; e si imposta a 1 per accenderlo
+//             write(1, &argv[2][i], 1); //nel caso si stampa
+//             tmp[(int)argv[2][i]] = 1; //e si imposta a 1 per accenderlo
 //         }
-//         i++; si incrementa
+//         i++; //si incrementa
 //     }
-//     write(1, "\n", 1); si stampa la newline
-//     return 0; termina il programma
+//     write(1, "\n", 1); //si stampa la newline
+//     return 0; //termina il programma
 // }
 
 
-// alpha_mirror -> funzion eche stampa lo specchio dell'alfabeto ( a = z)
-// int main(int argc, char *argv[]) funzione che prende i parametri passati dal terminale
+//alpha_mirror -> funzione che stampa lo specchio dell'alfabeto ( a = z)
+// int main(int argc, char *argv[]) //funzione che prende i parametri passati dal terminale
 // {
-//     if (argc != 2) si controlla che sia solo un parametro  
+//     if (argc != 2) //si controlla che sia solo un parametro  
 //     {
-//         write(1, "\n", 1); se sono più di uno si stampa la newline
-//         return 0; si termina il programma
+//         write(1, "\n", 1); //se sono più di uno si stampa la newline
+//         return 0; //si termina il programma
 //     }
-//     int i = 0; si inizializza l'indice a 0
-//     while (argv[1][i] != '\0') si scorre tutta argv1 finquando esiste
+//     int i = 0; //si inizializza l'indice a 0
+//     while (argv[1][i] != '\0') //si scorre tutta argv1 finquando esiste
 //     {
-//         if (argv[1][i] >= 'a' && argv[1][i] <= 'z') si controlla che il suo contenuto sia compreso nell'alfabeto minuscolo
+//         if (argv[1][i] >= 'a' && argv[1][i] <= 'z') //si controlla che il suo contenuto sia compreso nell'alfabeto minuscolo
 //         {
-//             argv[1][i] = 'a' + 'z' - argv[1][i]; se si, lo si trasforma nel suo specchio
+//             argv[1][i] = 'a' + 'z' - argv[1][i]; //se si, lo si trasforma nel suo specchio
 //         }
-//         else if(argv[1][i] >= 'A' && argv[1][i] <= 'Z') si controlla che il suo contenuto sia compreso nell'alfabeto maiuscolo
+//         else if(argv[1][i] >= 'A' && argv[1][i] <= 'Z') //si controlla che il suo contenuto sia compreso nell'alfabeto maiuscolo
 //         {
-//             argv[1][i] = 'A' + 'Z' - argv[1][i]; si trasforma nel suo specchio
+//             argv[1][i] = 'A' + 'Z' - argv[1][i]; //si trasforma nel suo specchio
 //         }
-//         write(1, &argv[1][i], 1); si stampa fuori dai controlli, sennò i numeri o i caratteri speciali non li stampa
-//         i++; si avanza l'indice
+//         write(1, &argv[1][i], 1); //si stampa fuori dai controlli, sennò i numeri o i caratteri speciali non li stampa
+//         i++; //si avanza l'indice
 //     }
-//     write(1, "\n", 1); si stampa la newline
-//     return 0; termina il programma
+//     write(1, "\n", 1); //si stampa la newline
+//     return 0; //termina il programma
 // }
 
 
-// wdmatch -> funzione che stampa i caratteri della prima stringa solo se sono nello stesso ordine nella seconda
-// int main(int argc, char *argv[])
-// {
-//     if (argc != 3) si controlla che i parametri siano 2
-//     {
-//         write(1, "\n", 1); si stampa la newline
-//         return 0; si termina il programma
-//     }
-//     int i = 0; si inizializza l'indice di argv1 a 0
-//     int j = 0; si inizilaizza l'indice di argv2 a 0
-//     while(argv[2][j] != '\0' && argv[1][i] != '\0') si scorre argv2 finquando esiste
-//     {
-//         if(argv[2][j] == argv[1][i]) si controlla che i caratteri dei due parametri siano uguali
-//         {
-//             i++; incrementiamo la i
-//         }
-//         j++; si incrementa
-//     }
-//     if(argv[1][i] == '\0') si controlla che la i si trovi sul carattere nullo
-//     {
-//         int n = 0; si dichiara un nuovo indice per la temporanea
-//         while (argv[1][n] != '\0') si scorre la temporanea finquando esiste
-//         {
-//             write(1, &argv[1][n], 1); si stampa la temporanea
-//             n++; si incrementa
-//         } 
-//     }
-//     write(1, "\n", 1); si stampa la newline 
-//     return 0; si termina il programma
-// }
+//wdmatch -> funzione che stampa i caratteri della prima stringa solo se sono nello stesso ordine nella seconda
+int main(int argc, char *argv[])
+{
+    if (argc != 3) //si controlla che i parametri siano 2
+    {
+        write(1, "\n", 1); //si stampa la newline
+        return 0; //si termina il programma
+    }
+    int i = 0; //si inizializza l'indice di argv1 a 0
+    int j = 0; //si inizilaizza l'indice di argv2 a 0
+    while(argv[2][j] != '\0' && argv[1][i] != '\0') //si scorre argv2 finquando esiste
+    {
+        if(argv[2][j] == argv[1][i]) //si controlla che i caratteri dei due parametri siano uguali
+        {
+            i++; //incrementiamo la i
+        }
+        j++; //si incrementa
+    }
+    if(argv[1][i] == '\0') //si controlla che la i si trovi sul carattere nullo
+    {
+        int n = 0; //si dichiara un nuovo indice per la temporanea
+        while (argv[1][n] != '\0') //si scorre la temporanea finquando esiste
+        {
+            write(1, &argv[1][n], 1); //si stampa la temporanea
+            n++; si incrementa
+        } 
+    }
+    write(1, "\n", 1); si stampa la newline 
+    return 0; si termina il programma
+}
 
 
 // camel_to_snake -> funzione che stampa un trattino basso prima di una maiuscola
@@ -508,26 +525,27 @@
 // // ft_atoi -> funzione che converte una stringa di numeri in int
 // int ft_atoi(const char *str)
 // {
-// 	int i = 0; indice per scorrere la stringa
-// 	int sign = 1; 
-// 	int result = 0; variabile per memorizzare
-// 	if (!str[i]) si controlla che la stringa esista
-// 		return 0; nel caso si termina il programma
-// 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32) ogni volta che c'è uno spazio
-// 		i++; si incrementa
-// 	if (str[i] == '-' || str[i] == '+') si guarda se ha segni
-// 	{
-// 		if(str[i] == '-') se ha il meno
-// 			sign = -1; si imposta il segno a -1
-// 		i++; e si incrementa
-// 	}
-// 	while (str[i] >= 48 && str[i] <= 57) se si trova nel range dei numeri
-// 	{
-// 		result = result * 10 + (str[i] - 48); si salva su result il risultato di tutti i controlli fatti
-// 		i++; si incrementa
-// 	}
-// 	return(result * sign); si ritorna
+// 	   int i = 0; indice per scorrere la stringa
+// 	   int sign = 1; 
+//     int result = 0; variabile per memorizzare
+// 	   if (!str[i]) si controlla che la stringa esista
+// 		   return 0; nel caso si termina il programma
+// 	   while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32) ogni volta che c'è uno spazio
+// 	       i++; si incrementa
+// 	   if (str[i] == '-' || str[i] == '+') si guarda se ha segni
+// 	   {
+// 		   if(str[i] == '-') se ha il meno
+// 			   sign = -1; si imposta il segno a -1
+// 		   i++; e si incrementa
+//      }
+// 	    while (str[i] >= 48 && str[i] <= 57) se si trova nel range dei numeri
+// 	    {
+// 		   result = result * 10 + (str[i] - 48); si salva su result il risultato di tutti i controlli fatti
+// 		   i++; si incrementa
+// 	    }
+// 	    return(result * sign); si ritorna
 // }
+
 
 // int	main()
 // {
@@ -840,7 +858,7 @@ int ft_atoi(const char *str) //passiamo alla funzione una stringa come parametro
 //       return 0; e si termina il programma
 //    }
 //    int i = 2; anche qui si inizializza a 2, perchè 1 è primo
-//    int conv = ft_atoi(argv[1]); facciamo l aconversione di argv
+//    int conv = ft_atoi(argv[1]); facciamo la conversione di argv
 //    int result = 0; e creiamo un avariabile per salvare il risultato
 //    while (i <= conv) stessa condizione del ciclo di is_prime
 //    {
@@ -881,7 +899,7 @@ int ft_atoi(const char *str) //passiamo alla funzione una stringa come parametro
 // lcm -> funzione che calcola l'mcm
 // unsigned int lcm(unsigned int a, unsigned int b)
 // {
-//    if ( a == 0 || b == 0) si controlla ceh i umeri passati non siano 0
+//    if ( a == 0 || b == 0) si controlla che i numeri passati non siano 0
 //       return 0; e si termina il programma
 //    unsigned int n = 0; temporanea per calcolare quale dei 2 numeri passati è maggiore
 //    if (a > b) se il maggiore è a
@@ -900,14 +918,133 @@ int ft_atoi(const char *str) //passiamo alla funzione una stringa come parametro
 // }
 
 
+// collegato alla funzione lcm sopra
 // int main() main per la funzione dell'mcm
 // {
 //    unsigned int a = 256; inizializzo i numeri
-//    unsigned int b = 94; e anceh il secondo
+//    unsigned int b = 94; e anche il secondo
 
 //    printf("%d\n", lcm(a, b)); stampo il risultato
-//    return 0; termino iol programma
+//    return 0; termino il programma
 // }
+
+
+// epur_str -> funzioe che se trova più spazi ne stampa solo uno
+// int epur_str(char *str) prende una stringa come parametro
+// {
+//     if (!str) se la stringa non esiste
+//         return (0); il programma termina
+//     int i = 0; inizializiamo l'indice a 0
+//     int flag = 0; e la flag per il controllo degli spazi
+//     while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32) tutte le volte che incontra uno spazio all'inizio o alla fine della stringa
+//         i++; va avanti senza contarlo
+//     while (str[i] != '\0') finquando esiste la stringa
+//     {
+//         if ((str[i] >= 9 && str[i] <= 13) || str[i] == 32) se trova uno spazio o un carattere speciale
+//         {
+//             flag = 1; la flag  si attiva
+//         }
+//         else altrimenti
+//         {
+//             if (flag == 1) se la flag è attiva e quindi ha trovato uno spazio
+//             {
+//                 write(1, " ", 1); ne stampa solo uno
+//                 flag = 0; e imposta la flag come disattivata
+//             }
+//             write(1, &str[i], 1); scrive la stringa
+//         }
+//         i++; incrementa la stringa
+//     }
+//     write(1, "\n", 1); stampa la newline 
+//     return 0; e termina il programma
+// }
+
+
+// collegato all'esercizio epur_str
+// int main()
+// {
+//     char *str = "ciao  mamma  ";
+//     epur_str(str);
+//     return 0;
+// }
+
+
+// expand_str -> funzione che stampa 3 spazi quando ne incontra 1
+// int expand_str(char *str) prende una stringa come parametro
+// {
+//     if (!str) se non esiste
+//         return (0); il programma termina
+//     int i = 0; si inizializza l'indice a zero
+//     int flag = 0; si setta la flag a spenta
+//     while((str[i] >= 9 && str[i] <= 13) || str[i] == 32) finquando incontra uno spazio o un char speciale
+//         i++; va avanti
+//     while(str[i] != '\0') finquando la stringa esiste
+//     {
+//         if ((str[i] >= 9 && str[i] <= 13) || str[i] == 32) se è uno spazio o una tab
+//         {
+//             flag = 1; si setta la flag come accesa perchè l'ha trovato
+//         }
+//         else altrimenti
+//         {
+//             if (flag == 1) se la flag è 1, quindi accesa
+//             {
+//                 write(1, "   ", 3); stampa 3 spazi
+//                 flag = 0; e la spenge
+//             }
+//             write(1, &str[i],1); si scrive sempre la stringa a prescindere dalle condizioni
+//         }
+//         i++; e si incrementa
+//     }
+//     write(1, "\n", 1); si stampa la newline
+//     return 0; e si termina il programma
+// }
+
+
+// collegato alla funzione expand_str
+// int main()
+// {
+//     char *str = "ciao mamma ";
+//     expand_str(str);
+//     return 0;
+// }
+
+
+// char *ft_split()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
