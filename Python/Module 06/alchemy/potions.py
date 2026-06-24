@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 from alchemy.elements import create_air, create_earth
 from elements import create_fire, create_water
+=======
+from elements import create_air, create_earth
+from .elements import create_fire, create_water
+>>>>>>> temp
 
 def healing_potion() -> str:
     return (f"Healing potion brewed with '{create_earth()}' and '{create_air()}'")
