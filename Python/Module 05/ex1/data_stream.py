@@ -33,10 +33,10 @@ class NumericProcessor(DataProcessor):
             return all(type(x) in (int, float) for x in data)
         return False
 
-    def ingest(self, data: typing.Union[int, float, list[typing.Union[int, float]]]) -> None:
+    def ingest(self, data: typing.Union[int, float]) -> None:
         if not self.validate(data):
             raise ValueError("Improper numeric data")
-        
+
         if isinstance(data, list):
             for item in data:
                 self._storage.append((self._counter, str(item)))
@@ -60,7 +60,7 @@ class TextProcessor(DataProcessor):
     def ingest(self, data: typing.Union[str, list[str]]) -> None:
         if not self.validate(data):
             raise ValueError("Improper text data")
-        
+
         if isinstance(data, list):
             for item in data:
                 self._storage.append((self._counter, item))
@@ -76,22 +76,30 @@ class LogProcessor(DataProcessor):
 
     def validate(self, data: typing.Any) -> bool:
         if isinstance(data, dict):
-            return all(isinstance(k, str) and isinstance(v, str) for k, v in data.items())
+            return all(isinstance(k, str) and
+                       isinstance(v, str)
+                       for k, v in data.items())
         if isinstance(data, list):
-            return all(isinstance(x, dict) and all(isinstance(k, str) and isinstance(v, str) for k, v in x.items()) for x in data)
+            return all(isinstance(x, dict) and
+                       all(isinstance(k, str) and
+                           isinstance(v, str)
+                           for k, v in x.items()) for x in data)
         return False
 
-    def ingest(self, data: typing.Union[dict[str, str], list[dict[str, str]]]) -> None:
+    def ingest(self, data: typing.Union[dict[str, str],
+                                        list[dict[str, str]]]) -> None:
         if not self.validate(data):
             raise ValueError("Improper log data")
-        
+
         if isinstance(data, list):
             for item in data:
-                log_str = f"{item.get('log_level', '')}: {item.get('log_message', '')}"
+                log_str = f"{item.get('log_level', '')}:"
+                f" {item.get('log_message', '')}"
                 self._storage.append((self._counter, log_str))
                 self._counter += 1
         else:
-            log_str = f"{data.get('log_level', '')}: {data.get('log_message', '')}"
+            log_str = f"{data.get('log_level', '')}:"
+            f" {data.get('log_message', '')}"
             self._storage.append((self._counter, log_str))
             self._counter += 1
 
@@ -107,7 +115,8 @@ class DataStream:
         self.processors.append(proc)
 
     def process_stream(self, stream: list[typing.Any]) -> None:
-        # Analizza ogni elemento della lista e lo assegna al primo processore compatibile.
+        # Analizza ogni elemento della lista e lo
+        # assegna al primo processore compatibile.
         for element in stream:
             handled = False
             for proc in self.processors:
@@ -115,19 +124,20 @@ class DataStream:
                 if proc.validate(element):
                     proc.ingest(element)
                     handled = True
-                    break # Elemento gestito, passa al prossimo elemento della lista
-            
+                    break  # Elemento gestito, passa al
+                # prossimo elemento della lista
+
             if not handled:
                 print(f"DataStream error - Can't process "
                       f"element in stream: {element}")
 
     def print_processors_stats(self) -> None:
         # Stampa le statistiche di tutti i processori registrati.
-        print("\n== DataStream statistics ==")
+        print("== DataStream statistics ==")
         if not self.processors:
             print("No processor found, no data")
             return
-        
+
         for proc in self.processors:
             print(f"{proc.processor_name}: total "
                   f"{proc._counter} items processed, remaining "
@@ -138,7 +148,7 @@ class DataStream:
 # --- Scenario di Test ---
 if __name__ == "__main__":
     print("=== Code Nexus - Data Stream ===")
-    
+
     print("\nInitialize Data Stream...")
     stream = DataStream()
     stream.print_processors_stats()
@@ -149,17 +159,23 @@ if __name__ == "__main__":
 
     # Il lotto di dati misti fornito dall'esempio
     datas = [
-        'Hello world', 
-        [3.14, -1, 2.71], 
+        'Hello world',
+        [3.14, -1, 2.71],
         [
-            {'log_level': 'WARNING', 'log_message': 'Telnet access! Use ssh instead'}, 
+            {'log_level': 'WARNING', 'log_message':
+             'Telnet access! Use ssh instead'},
             {'log_level': 'INFO', 'log_message': 'User wil is connected'}
-        ], 
-        42, 
+        ],
+        42,
         ['Hi', 'five']
     ]
 
-    print("\nSend first batch of data on stream: ['Hello world', [3.14, -1, 2.71], [...], 42, ['Hi', 'five']]")
+    print("\nSend first batch of data on stream: "
+          "['Hello world', [3.14, -1, 2.71], "
+          "[{'log_level': 'WARNING', 'log_message': "
+          "'Telnet access! Use ssh instead'}, "
+          "{'log_level': 'INFO', 'log_message': 'User wil is connected'}],"
+          " 42, ['Hi', 'five']]")
     stream.process_stream(datas)
 
     print()
@@ -178,7 +194,8 @@ if __name__ == "__main__":
     print()
     stream.print_processors_stats()
 
-    print("\nConsume some elements from the data processors: Numeric 3, Text 2, Log 1")
+    print("\nConsume some elements from the data processors: "
+          "Numeric 3, Text 2, Log 1")
     # Consuma 3 elementi da Numeric
     for _ in range(3):
         num_processor.output()

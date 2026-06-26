@@ -28,7 +28,6 @@ void ft_putchar(char c) //dichiarazione della funzione con passaggio del paramet
 // }
 
 
-
 // ft_print_reverse_alphabet -> funzione che stampa  l'alfabeto all'incovercio
 // void ft_print_reverse_alphabet(void) // non si passa nessun parametro perchè non ne abbiamo bisogno
 // {
@@ -45,6 +44,7 @@ void ft_putchar(char c) //dichiarazione della funzione con passaggio del paramet
 // {
 // 	ft_print_reverse_alphabet();
 // }
+
 
 // ft_print_numbers -> funzione che stampa i numeri dallo 0 al 9
 // void ft_print_numbers() // non si passa nessun parametro
@@ -798,12 +798,12 @@ int ft_putnbr(int n) //si passa coem parametro un int
     }
     if (n < 10) //se è maggiore di 10
     {
-        ft_putchar(n + 48); //si converte in stringa e si stampa con putchar
+		ft_putnbr(n / 10); //si divide per 10
+		ft_putchar(n % 10 + 48); //e si stampa il resto
     }
     else //altrimenti
     {
-        ft_putnbr(n / 10); //si divide per 10
-        ft_putchar(n % 10 + 48); //e si stampa il resto
+		ft_putchar(n + 48); //si converte in stringa e si stampa con putchar
     }
 	return (n);
 }
@@ -1049,11 +1049,12 @@ int ft_putnbr(int n) //si passa coem parametro un int
 // 	write(1, &c, 1);
 // }
 
+
+
 // int fizzbuzz(void)
 // {
 // 	int n = 1;
-// 	// int end = ft_putnbr(100);
-// 	while (n <= (10 *10))
+// 	while (n <= (10 * 10))
 // 	{
 // 		if(n % 3 == 0 && n % 5 != 0)
 // 			write(1, "fizz", 4);
@@ -1093,6 +1094,8 @@ int ft_putnbr(int n) //si passa coem parametro un int
 // 	return 0;
 // }
 
+
+// rot_13 -> copia di rotone ma aggiungendo 13 anziche' 1
 // char replace_c(char c)
 // {
 // 	if (((c <= 'z') && (c >= 'n')) || ((c <= 'Z') && (c >= 'N')))
@@ -1121,6 +1124,7 @@ int ft_putnbr(int n) //si passa coem parametro un int
 // }
 
 #include <stdlib.h>
+
 
 // int main(int argc, char *argv[])
 // {
@@ -1173,6 +1177,180 @@ int ft_putnbr(int n) //si passa coem parametro un int
 // 	printf("%d\n", ft_strcmp(str1, str2));
 // 	return 0;
 // }
+
+
+
+// int ft_strlen(char *str)
+// {
+// 	int i = 0;
+// 	while (str[i] != '\0')
+// 	{
+// 		i++;
+// 	}
+// 	return (i);
+// }
+
+
+// char *ft_strdup(char *src)
+// {
+// 	int len = 0;
+// 	char *dest = malloc(ft_strlen(src) + 1);
+// 	while (src[len] !='\0')
+// 	{
+// 		dest[len] = src[len];
+// 		len++;
+// 	}
+// 	dest[len] = '\0';
+// 	return dest;
+// }
+
+
+
+// size_t ft_strcspn(const char *s, const char *reject)
+// {
+// 	size_t j;
+// 	size_t i = 0;
+
+// 	while(s[i] != '\0')
+// 	{
+// 		j = 0;
+// 		while(reject[j])
+// 		{
+// 			if (s[i] == reject[j])
+// 				return i;
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	return 1;
+// }
+
+
+// char *ft_strrev(char *str)
+// {
+// 	int len = 0;
+// 	int i = 0;
+// 	char *tmp;
+// 	while (str[len] != '\0')
+// 		len++;
+// 	len -= 1;
+// 	while (len > 1)
+// 	{
+// 		tmp = str[i];
+// 		str[i] = str[len];
+// 		str[len] = tmp;
+// 		i++;
+// 		len--;
+// 	}
+// 	return(str);
+// }
+
+
+// int max(int *tab, unsigned int len)
+// {
+// 	if (len == 0)
+// 		return (0);
+// 	int max = tab[len];
+// 	unsigned int i = 1;
+// 	while(i < len)
+// 	{
+// 		if(tab[i] > max)
+// 			max = tab[i];
+// 		i++;
+// 	}
+// 	return (max);
+// }
+
+
+// int main()
+// {
+// 	int tab[] = {23, 42, 24};
+// 	printf("%d\n", max(tab, 3));
+// 	return 0;
+// }
+
+
+// void print_bits(unsigned char octet)
+// {
+// 	int i = 7;
+// 	char bit;
+// 	while (i >= 0)
+// 	{
+// 		if(octet & (1 << i))
+// 			bit ='1';
+// 		else
+// 			bit = '0';
+// 		write(1, &bit, 1);
+// 		i--;
+// 	}
+// }
+
+
+// unsigned char reverse_bits(unsigned char octet)
+// {
+// 	int i = 0;
+// 	unsigned char bit = 0;
+// 	while (i <= 7)
+// 	{
+// 		if (octet & (1 << i))
+// 			bit = bit | (1 << (7 - i));
+// 		i++;
+// 	}
+// 	return (bit);
+// }
+
+
+// unsigned char swap_bits(unsigned char octet)
+// {
+// 	return((octet << 4) | (octet >> 4));
+// }
+
+// void print_bits(unsigned char octet)
+// {
+// 	int i = 7;
+// 	unsigned char bit;
+// 	while (i >= 0)
+// 	{
+// 		if (octet & (1 << i))
+// 			bit = '1';
+// 		else
+// 			bit = '0';
+// 		i--;
+// 	}
+// }
+
+
+// int main(int argc, char *argv[])
+// {
+// 	if (argc != 2)
+// 	{
+// 		write (1, '0', 1);
+// 		write (1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int i = 0;
+// 	int n = ft_atoi(argv[1]);
+// 	while(n < 0)
+// 	{
+// 		write (1, '0', 1);
+// 		write (1, "\n", 1);
+// 		return 0;
+// 	}
+// 	while (n > 1)
+// 	{
+// 		if (is_prime(n) == 1)
+// 			i += n;
+// 		n--;
+// 	}
+// 	ft_putnbr(i);
+// 	write (1, "\n", 1);
+// 	return 0;
+// }
+
+
+
+
+
 
 
 
