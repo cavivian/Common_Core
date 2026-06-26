@@ -1,3 +1,5 @@
+from maze_gen import il_path, MazeGenerator
+
 def parse(name_file) -> None:
     try:
     #try che serve per controllare effetivamente che ci sia il file
