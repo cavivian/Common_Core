@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-//	ES-1- da rivedere
+//	ES-1- (first word) -> torna!
 // int main(int argc, char *argv[])
 // {
 // 	if (argc != 2)
@@ -135,7 +135,7 @@
 // }
 
 
-//	ES-7- (last_word) -> 
+//	ES-7- (last_word) -> torna!
 // int main(int argc, char *argv[])
 // {
 // 	if (argc != 2)
@@ -222,16 +222,7 @@
 // }
 
 
-//	ES -9- (rot_13) -> fatto
-// char printletters(char c)
-// {
-// 	if ((c >= 'a' && c <= 'm') || (c >= 'n' && c <= 'z'))
-// 		return (c );
-// 	else if ((c >= 'A' && c <= 'M') || (c >= 'N' && c <= 'Z'))
-// 		return (c);
-// 	return 0;
-// }
-
+//	ES -9- (rot_13) -> torna!
 // int main(int argc, char *argv[])
 // {
 // 	if (argc != 2)
@@ -242,10 +233,12 @@
 // 	int i = 0;
 // 	while(argv[1][i] != '\0')
 // 	{
-// 		if ((argv[1][i] >= 'a' && argv[1][i] <= 'z') || (argv[1][i] >= 'A' && argv[1][i] <= 'Z'))
-// 		{
-// 			argv[1][i] = printletters(*argv[1]);
-// 		}
+// 		if ((argv[1][i] >= 'a' && argv[1][i] <= 'm') || (argv[1][i] >= 'A' && argv[1][i] <= 'M'))
+//             argv[1][i] += 13;
+//         else if (argv[1][i] >= 'n' && argv[1][i] <= 'z')
+// 			argv[1][i] = 'a' + (argv[1][i] + 12)  % 'z';
+//         else if (argv[1][i] >= 'N' && argv[1][i] <= 'Z')
+//             argv[1][i] = 'A' + (argv[1][i] + 12) % 'Z';
 // 		write(1, &argv[1][i], 1);
 // 		i++;
 // 	}
@@ -441,8 +434,72 @@
 // }
 
 
-//	ES -6- 
-size_t ft_strcspn(const char *s, const char *reject)
+//	ES -6- -> torna!
+// size_t ft_strcspn(const char *s, const char *reject)
+// {
+// 	size_t i = 0;
+//     size_t j = 0;
+//     while(s[i] != reject[j])
+//     {
+//         i++;
+//     }
+//     return (i);
+// }
+
+// int main()
+// {
+//     char *s = "ciao mamma";
+//     char *reject = "o";
+//     printf("%ld\n", ft_strcspn(s, reject));
+//     return 0;
+// }
+
+
+//  ES -7- -> tecnicamente torna, non so se l'ho testata bene
+// char    *ft_strdup(char *src)
+// {
+//     int i = 0;
+//     int j = 0;
+//     char *dest = malloc(sizeof(src) + 1);
+//     if (!dest)
+//         return NULL;
+//     while (src[i] != '\0')
+//     {
+//         dest[j] = src[i];
+//         i++;
+//         j++;
+//     }
+//     return (dest);
+// }
+
+// int main()
+// {
+//     char *str = "ciao mamma";
+//     printf("%s", ft_strdup(str));
+//     return 0;
+// }
+
+
+//  ES -8- ->  non funziona, da ragionarci per bene
+char	*ft_strpbrk(const char *s1, const char *s2)
 {
-	
+    int i = 0;
+    int j = 0;
+    while (s1[i] != '\0')
+    {
+        if (s1[i] == s2[j])
+        {
+            return ((char *)s1);
+        }
+        i++;
+    }
+    return 0;
+}
+
+int main()
+{
+    char *s1 = "ciao mamma";
+    char *s2 = "ma";
+    printf("%s\n", ft_strpbrk(s1, s2));
+    return 0;
 }
