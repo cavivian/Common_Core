@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
+
 
 //	ES-1- (first word) -> torna!
 // int main(int argc, char *argv[])
@@ -481,25 +483,156 @@
 
 
 //  ES -8- ->  non funziona, da ragionarci per bene
-char	*ft_strpbrk(const char *s1, const char *s2)
-{
-    int i = 0;
-    int j = 0;
-    while (s1[i] != '\0')
-    {
-        if (s1[i] == s2[j])
-        {
-            return ((char *)s1);
-        }
-        i++;
-    }
-    return 0;
-}
+// char	*ft_strpbrk(const char *s1, const char *s2)
+// {
+//     int i = 0;
+//     int j = 0;
+// 	while (s1[i])
+// 	{
+// 		j = 0;
+// 		while(s2[j])
+// 		{
+// 			if (s1[i] == s2[j])
+// 				return ((char *)&s1[i]);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
-int main()
-{
-    char *s1 = "ciao mamma";
-    char *s2 = "ma";
-    printf("%s\n", ft_strpbrk(s1, s2));
-    return 0;
-}
+// int main()
+// {
+//     // char *s1 = "ciao mamma";
+//     // char *s2 = "ma";
+// 	char a[20] = "ciao mondo";
+// 	char *tmp = &a[3];
+// 	printf("a: %s, tmp: %s\n", a, tmp);
+// 	a[5] = 't';
+// 	printf("a: %s, tmp: %s\n", a, tmp);
+//     // 	printf("%s\n", ft_strpbrk(s1, s2));
+//     // printf("%s\n", strpbrk(s1, s2));
+//     return 0;
+// }
+
+
+//	ES -9- -> torna!
+// char *ft_strrev(char *str)
+// {
+// 	int start = 0;
+// 	int end = 0;
+// 	char tmp;
+// 	while (str[end] != '\0')
+// 	{
+// 		end++;
+// 	}
+// 	end--;
+// 	while(start < end)
+// 	{
+// 		tmp = str[start];
+// 		str[start] = str[end];
+// 		str[end] = tmp;
+// 		start++;
+// 		end--;
+// 	}
+// 	return (str);
+// }
+
+// int main()
+// {
+// 	char str[] = "ciao mamma";
+// 	printf("%s\n", ft_strrev(str));
+// 	return 0;
+// }
+
+
+#include <string.h>
+//	ES -10- -> 
+// size_t ft_strspn(const char *s, const char *accept)
+// {
+// 	if (!s || !accept)
+// 		return 0;
+// 	int i = 0;
+// 	int j = 0;
+// 	size_t contatore = 0;
+// 	while(s[i] != '\0')
+// 	{
+// 		j = 0;
+// 		while(accept[j])
+// 		{
+// 			if (s[i] == accept[j])
+// 			{
+// 				contatore++;
+// 				break ;
+// 			}
+// 			j++;
+// 		}
+// 		if (!accept[j])
+// 			return (contatore);
+// 		i++;
+// 	}
+// 	return (0);
+// }
+
+// int main()
+// {
+// 	char *s = "ciao mamma";
+// 	char *accepted = "ica";
+// 	printf("%zu\n", ft_strspn(s, accepted));
+// 	printf("%zu\n", strspn(s, accepted));
+// 	return 0;
+// }
+
+
+//	ES -11- -> torna!
+// int is_power_of_2(unsigned int n)
+// {
+// 	while (n != 0)
+// 	{
+// 		if (n % 2 == 0)
+// 			return 1;
+// 		else
+// 			return 0;
+// 	}
+// 	write(1, "\n", 1);
+// 	return 0;
+// }
+
+// int main()
+// {
+// 	unsigned int n = 97;
+// 	printf("%d", is_power_of_2(n ));
+// 	return 0;
+// }
+
+
+//	ES -12- -> 
+// int max(int *tab, unsigned int len)
+// {
+// 	if (!tab)
+// 		return 0;
+// 	unsigned int i = 0;
+// 	int max_val = tab[i];
+// 	while (i < len)
+// 	{
+// 		printf("Max: %d > tab[i]: %d\n", max_val, tab[i]);
+// 		if (tab[i] > max_val)
+// 		{
+// 			max_val = tab[i];
+// 			printf("Si, max = %d\n", tab[i]);
+// 		}
+// 		else
+// 			printf("No, max = %d\n", max_val);
+// 		i++;
+// 	}
+// 	return max_val;
+// }
+
+
+// int main()
+// {
+// 	int tab[] = {22, 33, 11};
+// 	unsigned int len = 3;
+// 	printf("%d\n", max(tab, len));
+// 	return 0;
+// }

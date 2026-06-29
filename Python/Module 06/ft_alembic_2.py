@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import alchemy.elements
-=======
-import alchemy
->>>>>>> temp
 
 
 if __name__ == "__main__":
