@@ -547,7 +547,7 @@
 
 
 #include <string.h>
-//	ES -10- -> 
+//	ES -10- -> torna!
 // size_t ft_strspn(const char *s, const char *accept)
 // {
 // 	if (!s || !accept)
@@ -606,7 +606,7 @@
 // }
 
 
-//	ES -12- -> 
+//	ES -12- -> torna!
 // int max(int *tab, unsigned int len)
 // {
 // 	if (!tab)
@@ -636,3 +636,86 @@
 // 	printf("%d\n", max(tab, len));
 // 	return 0;
 // }
+
+
+//	ES -13-
+// void print_bits(unsigned char octet)
+// {
+// 	int i = 0;
+// 	unsigned char bit;
+// 	while(i < 8)
+// 	{
+// 		bit = ((octet >> i & 1) + '0');
+// 		write(1, &bit, 1);
+// 		i++;
+// 	}
+// }
+
+// int main()
+// {
+// 	unsigned char octet = 42;
+// 	print_bits(octet);
+// 	return 0;
+// }
+
+
+//	ES -14- -> non torna, c'e' da capire per bene i bit
+// unsigned char reverse_bits(unsigned char octet)
+// {
+// 	int i = 7;
+// 	unsigned char bit;
+// 	while (i--)
+// 	{
+// 		bit = ((octet >> i & 1) + '0');
+// 		write(1, &bit, 1);
+// 	}
+// 	return (0);
+// }
+
+
+// int main()
+// {
+// 	unsigned char octet = 2;
+// 	printf("%d\n", reverse_bits(octet));
+// 	return 0;
+// }
+
+
+//	ES -15- -> da fare quando ho capito i bit
+// unsigned char swap_bits(unsigned char octet)
+// {
+
+// }
+
+
+//	ES -16- (union)
+int main(int argc, char *argv[])
+{
+	if (argc != 2)
+	{
+		write(1, "\n", 1);
+		return 0;
+	}
+	int i = 0;
+	int j = 0;
+	char tmp;
+	while(argv[1][i] != '\0')
+	{
+		while(argv[2][j] != '\0')
+		{
+			if(argv[1][i] == argv[2][j])
+			{
+				tmp = argv[1][i];
+				write(1, &tmp, 1);
+			}
+			else if(argv[1][i] != argv[2][j] && argv[2][j] != tmp)
+			{
+				
+			}
+			j++;
+		}
+		i++;
+	}
+	write(1, "\n", 1);
+	return 0;
+}
