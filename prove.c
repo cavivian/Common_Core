@@ -691,7 +691,7 @@
 //	ES -16- (union)
 int main(int argc, char *argv[])
 {
-	if (argc != 2)
+	if (argc != 3)
 	{
 		write(1, "\n", 1);
 		return 0;
@@ -699,20 +699,23 @@ int main(int argc, char *argv[])
 	int i = 0;
 	int j = 0;
 	char tmp;
+	char check;
 	while(argv[1][i] != '\0')
 	{
 		while(argv[2][j] != '\0')
 		{
-			if(argv[1][i] == argv[2][j])
+			if(argv[1][i] == argv[2][j] && argv[1][i] != check)
 			{
 				tmp = argv[1][i];
 				write(1, &tmp, 1);
 			}
 			else if(argv[1][i] != argv[2][j] && argv[2][j] != tmp)
 			{
-				
+				check = argv[2][j];
+				write(1, &check, 1);
 			}
 			j++;
+			i++;
 		}
 		i++;
 	}
