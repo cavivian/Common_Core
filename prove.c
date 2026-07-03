@@ -4,7 +4,8 @@
 #include <string.h>
 
 
-//	ES-1- (first word) -> torna!
+//	- LIVELLO 1 -
+//	ES -1- (first word) -> torna!
 // int main(int argc, char *argv[])
 // {
 // 	if (argc != 2)
@@ -25,7 +26,7 @@
 // }
 
 
-//	ES-2- -> torna!
+//	ES -2- -> torna!
 // char print_numb(int c)
 // {
 // 	if (c >= 10)
@@ -58,7 +59,7 @@
 // }
 
 
-//	ES-3- -> torna!
+//	ES -3- -> torna!
 // void ft_putstr(char *str)
 // {
 // 	int i = 0;
@@ -77,7 +78,7 @@
 // }
 
 
-//	ES-4- -> torna!
+//	ES -4- -> torna!
 // char *ft_strcpy(char *s1, char *s2)
 // {
 // 	int i = 0;
@@ -98,7 +99,7 @@
 // }
 
 
-//	ES-5- -> torna!
+//	ES -5- -> torna!
 // int ft_strlen(char *str)
 // {
 // 	int i = 0;
@@ -400,7 +401,7 @@
 // }
 
 
-//	ES -4- -> da fare quando sono piu' concentrata
+//	ES -4- -> torna!
 // int ft_atoi(const char *str)
 // {
 // 	if (!str)
@@ -408,8 +409,23 @@
 // 	int sign = 1;
 // 	int result = 0;
 // 	int i = 0;
-// 	if (str[i] < 0)
-
+// 	while(str[i] == 32 || str[i] >= 9 && str[i] <= 13)
+// 		i++;
+// 	while (str[i] == '+' ||  str[i] == '-')
+// 	{
+// 		if (str[i] == '-')
+// 		{
+// 			write(1, "-", 1);
+// 			sign *= -1;
+// 		}
+// 		i++;
+// 	}
+// 	while(str[i] >= '0' && str[i] <= '9')
+// 	{
+// 		result = result * 10 + (str[i] - 48);
+// 		i++;
+// 	}
+// 	return(result * sign);
 // }
 
 
@@ -457,7 +473,7 @@
 // }
 
 
-//  ES -7- -> tecnicamente torna, non so se l'ho testata bene
+//  ES -7- -> torna!
 // char    *ft_strdup(char *src)
 // {
 //     int i = 0;
@@ -476,17 +492,19 @@
 
 // int main()
 // {
-//     char *str = "ciao mamma";
-//     printf("%s", ft_strdup(str));
+//     char *str = "ciao mamma ";
+//     printf("%s\n", ft_strdup(str));
+//     printf("%s\n", strdup(str));
+
 //     return 0;
 // }
 
 
-//  ES -8- ->  non funziona, da ragionarci per bene
+//  ES -8- ->  torna!
 // char	*ft_strpbrk(const char *s1, const char *s2)
 // {
 //     int i = 0;
-//     int j = 0;
+//     int j;
 // 	while (s1[i])
 // 	{
 // 		j = 0;
@@ -510,8 +528,8 @@
 // 	printf("a: %s, tmp: %s\n", a, tmp);
 // 	a[5] = 't';
 // 	printf("a: %s, tmp: %s\n", a, tmp);
-//     // 	printf("%s\n", ft_strpbrk(s1, s2));
-//     // printf("%s\n", strpbrk(s1, s2));
+//     printf("%s\n", ft_strpbrk(a, tmp));
+//     printf("%s\n", strpbrk(a, tmp));
 //     return 0;
 // }
 
@@ -601,7 +619,7 @@
 // int main()
 // {
 // 	unsigned int n = 97;
-// 	printf("%d", is_power_of_2(n ));
+// 	printf("%d", is_power_of_2(n));
 // 	return 0;
 // }
 
@@ -689,37 +707,66 @@
 
 
 //	ES -16- (union) -> scambia due lettere, da capire perchè
+int main(int argc, char *argv[])
+{
+	if (argc != 3)
+	{
+		write(1, "\n", 1);
+		return 0;
+	}
+	int i = 0;
+	//int j = 0;
+	char tmp[256] = {0};
+	while(argv[1][i] != '\0')
+	{
+		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 0)
+		{
+			write(1, &argv[1][i], 1);
+			tmp[(int)argv[1][i]] = 1;
+			//j++;
+		}
+		i++;
+	}
+	while(argv[2][i] != '\0')
+	{
+		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 1)
+		{
+			write(1, &argv[2][i], 1);
+			tmp[(int)argv[2][i]] = 1;
+		}
+		i++;
+	}
+	i = 0;
+	write(1, "\n", 1);
+	return 0;
+}
+
 // int main(int argc, char *argv[])
 // {
-// 	if (argc != 3)
+// 	if(argc != 3)
 // 	{
 // 		write(1, "\n", 1);
 // 		return 0;
 // 	}
 // 	int i = 0;
-// 	//int j = 0;
-// 	char tmp[256] = {0};
-// 	while(argv[1][i] != '\0')
+// 	int j;
+// 	while (argv[2][i])
 // 	{
-// 		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 0)
+// 		j = 0;
+// 		while(argv[1][j] != '\0')
 // 		{
-// 			write(1, &argv[1][i], 1);
-// 			tmp[(int)argv[1][i]] = 1;
-// 			//j++;
+// 			if (argv[1][j] == argv[2][i])
+// 			 	i++;
+// 			if (argv[1][j] == '\0')
+// 				break ;
+// 			j++;
 // 		}
 // 		i++;
 // 	}
-// 	i = 0;
-// 	while(argv[2][i] != '\0')
-// 	{
-// 		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 1)
-// 		{
-// 			write(1, &argv[2][i], 1);
-// 			tmp[(int)argv[2][i]] = 1;
-// 		}
-// 		i++;
-// 	}
-// 	write(1, "\n", 1);
+// 	if (argv[1][j] == '\0')
+// 		write(1, &argv[1][j], 1);
+// 	else
+// 		write (1, "\n", 1);
 // 	return 0;
 // }
 
@@ -1066,14 +1113,14 @@
 
 
 //	ES -10- 
-int main(int argc, char *argv[])
-{
-	if (argc == 1)
-	{
-		write(1, "0\n", 2);
-		return 0;
-	}
-	else
-		write(1, &argc, 1);
-	return 0;
-}
+// int main(int argc, char *argv[])
+// {
+// 	if (argc == 1)
+// 	{
+// 		write(1, "0\n", 2);
+// 		return 0;
+// 	}
+// 	else
+// 		write(1, &argc, 1);
+// 	return 0;
+// }
