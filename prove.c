@@ -688,37 +688,392 @@
 // }
 
 
-//	ES -16- (union)
+//	ES -16- (union) -> scambia due lettere, da capire perchè
+// int main(int argc, char *argv[])
+// {
+// 	if (argc != 3)
+// 	{
+// 		write(1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int i = 0;
+// 	//int j = 0;
+// 	char tmp[256] = {0};
+// 	while(argv[1][i] != '\0')
+// 	{
+// 		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 0)
+// 		{
+// 			write(1, &argv[1][i], 1);
+// 			tmp[(int)argv[1][i]] = 1;
+// 			//j++;
+// 		}
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while(argv[2][i] != '\0')
+// 	{
+// 		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 1)
+// 		{
+// 			write(1, &argv[2][i], 1);
+// 			tmp[(int)argv[2][i]] = 1;
+// 		}
+// 		i++;
+// 	}
+// 	write(1, "\n", 1);
+// 	return 0;
+// }
+
+
+//	ES -17- (wdmatch) -> stessa cosa di union solo che stampa solo argv[1]
+
+
+//	- - - LIVELLO 3 - - -
+//	ES -1- (add_prime_sum) -> funzione is_prime non va bene, fatto male
+// int ft_atoi(char *str)
+// {
+// 	int i = 0;
+// 	int sign = 1;
+// 	int result = 0;
+// 	while(str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+// 		i++;
+// 	while(str[i] == '+' || str[i] == '-')
+// 	{
+// 		if (str[i] == '-')
+// 			sign *= -1;
+// 		i++;
+// 	}
+// 	while(str[i] >= '0' && str[i] <= '9')
+// 	{
+// 		result = result * 10 + (str[i] - 48);
+// 		i++;
+// 	}
+// 	return (result * sign);
+// }
+
+// void ft_putnbr(int n)
+// {
+// 	char c;
+// 	long nbr = (long)n;
+// 	if (n < 0)
+// 	{
+// 		write(1, "-", 1);
+// 		nbr = -nbr;
+// 	}
+// 	if (nbr > 9)
+// 	{
+// 		ft_putnbr(nbr / 10);
+// 	}
+// 	c = nbr % 10 + 48;
+// 	write(1, &c, 1);
+// }
+
+// int is_prime(int n)
+// {
+// 	int i = 2;
+// 	if (n <= 1)
+// 		return 0;
+// 	while (i < n)
+// 	{
+// 		if (n % i == 0)
+// 			return 0;
+// 		i++;
+// 	}
+
+// 	return 1;
+// }
+
+// int main(int argc, char *argv[])
+// {
+// 	if(argc != 2)
+// 	{
+// 		write(1, "\n", 1);
+// 		return 0;
+// 	}
+// 	//int i = 0;
+// 	int conv = ft_atoi(argv[1]);
+// 	int result;
+// 	while(0 >= conv)
+// 	{
+// 		write(1, "0\n", 2);
+// 		return 0;
+// 	}
+// 	while(conv > 1)
+// 	{
+// 		if(is_prime(conv) == 1)
+// 			result += conv;
+// 		conv--;
+// 	}
+// 	ft_putnbr(result);
+// 	write(1, "\n", 1);
+// 	return 0;
+// }
+
+
+//	ES -2- (epur str) -> torna!
+// int main(int argc, char *argv[])
+// {
+// 	if (argc != 2)
+// 	{
+// 		write (1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int i = 0;
+// 	int flag = 0;
+// 	while (argv[1][i] == 32 || (argv[1][i] >= 9 && argv[1][i] <= 13))
+// 		i++;
+// 	while (argv[1][i] != '\0')
+// 	{
+// 		while (argv[1][i] != '\0' && argv[1][i] != 32 && !(argv[1][i] >= 9 && argv[1][i] <= 13))
+// 		{
+// 				if (flag == 1)
+// 				{
+// 					write(1, " ", 1);
+// 					flag = 0;
+// 				}
+// 				write(1, &argv[1][i], 1);
+// 				i++;
+// 		}
+// 		while (argv[1][i] == 32 || (argv[1][i] >= 9 && argv[1][i] <= 13))
+// 		{
+// 			flag = 1;
+// 			i++;
+// 		}
+// 	}
+// 	write(1, "\n", 1);
+// 	return 0;
+// }
+
+
+//	ES -3- (expand str) -> torna!
+// int main(int argc, char *argv[])
+// {
+// 	if (argc != 2)
+// 	{
+// 		write(1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int i = 0;
+// 	int flag = 0;
+// 	while (argv[1][i] == 32 || (argv[1][i] >= 9  && argv[1][i] <= 13))
+// 		i++;
+// 	while (argv[1][i] != '\0')
+// 	{
+// 		while(argv[1][i] != '\0' && argv[1][i] != 32 && !(argv[1][i] >= 9 && argv[1][i] <= 13))
+// 		{
+// 			if (flag == 1)
+// 			{
+// 				write(1,"   ", 3);
+// 				flag = 0;
+// 			}
+// 			write(1, &argv[1][i], 1);
+// 			i++;
+// 		}
+// 		while(argv[1][i] == 32 || (argv[1][i] >= 9  && argv[1][i] <= 13))
+// 		{
+// 			flag = 1;
+// 			i++;
+// 		}
+// 	}
+// 	write(1, "\n", 1);
+// 	return 0;
+// }
+
+
+//	ES -4- -> torna!
+// int uc_lc(char c, int  str_len)
+// {
+// 	char *uc = "0123456789ABCDEF";
+// 	char *lc = "01234567890abcdef";
+// 	int i = 0;
+// 	while (i < str_len)
+// 	{
+// 		if(c == uc[i] || c == lc[i])
+// 			return (i);
+// 		i++;
+// 	}
+// 	return (-1);
+// }
+
+
+// int	ft_atoi_base(const char *str, int str_base)
+// {
+// 	int i = 0;
+// 	int sign = 1;
+// 	int result = 0;
+// 	while (str[i] == 32 || str[i] >= 9 && str[i] <= 13)
+// 		i++;
+// 	if(str[i] == '+' || str[i] == '-')
+// 	{
+// 		if (str[i] == '-')
+// 			sign *= -1;
+// 		i++;
+// 	}
+// 	while(str[i] != '\0' && uc_lc(str[i], str_base) != -1)
+// 	{
+// 		result = result * str_base + uc_lc(str[i], str_base);
+// 		i++;
+// 	}
+// 	return (result * sign);
+// }
+
+
+//	ES -5- 
+// unsigned int lcm(unsigned int a, unsigned int b)
+// {
+// 	if(a == 0 || b == 0)
+// 		return 0;
+// 	unsigned int n = 0;
+// 	if (a > b)
+// 		n = a;
+// 	else if (a < b)
+// 		n = b;
+// 	while (n > 0)
+// 	{
+// 		if (n % a == 0 && n % b == 0)
+// 		{
+// 			return n;
+// 		}
+// 		n++;
+// 	}
+// 	return 0;
+// }
+
+// int main()
+// {
+// 	unsigned int a = 256;
+// 	unsigned int b = 94;
+// 	printf("%d\n", lcm(a, b));
+// 	return 0;
+// }
+
+#include "ft_list.h"
+//	ES -6- -> torna!
+// int ft_list_size(t_list *begin_list)
+// {
+// 	t_list *current = begin_list;
+// 	int contatore = 0;
+// 	while (current)
+// 	{
+// 		current = current->next;
+// 		contatore++;
+// 	}
+// 	return (contatore);
+// }
+
+// int main()
+// {
+// 	t_list a;
+// 	t_list b;
+// 	t_list c;
+
+// 	a.next = &b;
+// 	b.next = &c;
+// 	c.next = NULL;
+// 	printf("%d\n", ft_list_size(&a));
+// 	return 0;
+// }
+
+
+//	ES -7- -> torna!
+// int *ft_range(int start, int end)
+// {
+// 	int *arr;
+// 	int tmp;
+// 	int i = 0;
+// 	if (start < end)
+// 		arr = malloc(((end - start) + 1) * sizeof(int));
+// 	else if (start > end)
+// 		arr = malloc(((start - end) + 1) * sizeof(int));
+// 	else
+// 		arr = malloc(sizeof(int));
+// 	if (!arr)
+// 		return 0;
+// 	tmp = start;
+// 	if (end > start)
+// 		while(tmp <= end)
+// 			arr[i++] = tmp++;
+// 	else if (start > end)
+// 		while (tmp >= end)
+// 			arr[i++] = tmp--;
+// 	else
+// 		arr[i] = start;
+// 	return arr;
+// }
+
+
+//	ES -8- -> torna!
+// int *ft_rrange(int start, int end)
+// {
+// 	int tmp;
+// 	int i = 0;
+// 	int *arr;
+// 	if (start > end)
+// 		arr = malloc(((start - end) + 1) * sizeof(int));
+// 	else if(start < end)
+// 		arr = malloc(((end - start) + 1) * sizeof(int));
+// 	else
+// 		arr = malloc(sizeof(int));
+// 	tmp = end;
+// 	if (start > end)
+// 		while (tmp <= start)
+// 			arr[i++] = tmp++;
+// 	if (start < end)
+// 		while (tmp > start)
+// 			arr[i++] = tmp--;
+// 	else
+// 		arr[i] = tmp;
+// 	return (arr);
+// }
+
+
+// int main()
+// {
+// 	int *nums = ft_rrange(0, -2);
+// 	int i = 0;
+// 	while (i < 3)
+// 	{
+// 		printf("%d\n", nums[i]);
+// 		i++;
+// 	}
+// 	return 0;
+// }
+
+
+//	ES -9-(hidenp) -> torna!
+// int main(int argc, char *argv[])
+// {
+// 	if (argc != 3)
+// 	{
+// 		write (1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int i = 0;
+// 	int j = 0;
+// 	while (argv[2][j] != '\0')
+// 	{
+// 		if (argv[1][i] == argv[2][j])
+// 			i++;
+// 		if (argv[1][i] == '\0')
+// 			break ;
+// 		j++;
+// 	}
+// 	if (argv[1][i] == '\0')
+// 		write (1, "1\n", 2);
+// 	else
+// 		write (1, "0\n", 2);
+// 	return (0);
+// }
+
+
+//	ES -10- 
 int main(int argc, char *argv[])
 {
-	if (argc != 3)
+	if (argc == 1)
 	{
-		write(1, "\n", 1);
+		write(1, "0\n", 2);
 		return 0;
 	}
-	int i = 0;
-	int j = 0;
-	char tmp;
-	char check;
-	while(argv[1][i] != '\0')
-	{
-		while(argv[2][j] != '\0')
-		{
-			if(argv[1][i] == argv[2][j] && argv[1][i] != check)
-			{
-				tmp = argv[1][i];
-				write(1, &tmp, 1);
-			}
-			else if(argv[1][i] != argv[2][j] && argv[2][j] != tmp)
-			{
-				check = argv[2][j];
-				write(1, &check, 1);
-			}
-			j++;
-			i++;
-		}
-		i++;
-	}
-	write(1, "\n", 1);
+	else
+		write(1, &argc, 1);
 	return 0;
 }
