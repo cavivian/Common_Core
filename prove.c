@@ -707,39 +707,39 @@
 
 
 //	ES -16- (union) -> scambia due lettere, da capire perchè
-int main(int argc, char *argv[])
-{
-	if (argc != 3)
-	{
-		write(1, "\n", 1);
-		return 0;
-	}
-	int i = 0;
-	//int j = 0;
-	char tmp[256] = {0};
-	while(argv[1][i] != '\0')
-	{
-		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 0)
-		{
-			write(1, &argv[1][i], 1);
-			tmp[(int)argv[1][i]] = 1;
-			//j++;
-		}
-		i++;
-	}
-	while(argv[2][i] != '\0')
-	{
-		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 1)
-		{
-			write(1, &argv[2][i], 1);
-			tmp[(int)argv[2][i]] = 1;
-		}
-		i++;
-	}
-	i = 0;
-	write(1, "\n", 1);
-	return 0;
-}
+// int main(int argc, char *argv[])
+// {
+// 	if (argc != 3)
+// 	{
+// 		write(1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int i = 0;
+// 	//int j = 0;
+// 	char tmp[256] = {0};
+// 	while(argv[1][i] != '\0')
+// 	{
+// 		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 0)
+// 		{
+// 			write(1, &argv[1][i], 1);
+// 			tmp[(int)argv[1][i]] = 1;
+// 			//j++;
+// 		}
+// 		i++;
+// 	}
+// 	while(argv[2][i] != '\0')
+// 	{
+// 		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 1)
+// 		{
+// 			write(1, &argv[2][i], 1);
+// 			tmp[(int)argv[2][i]] = 1;
+// 		}
+// 		i++;
+// 	}
+// 	i = 0;
+// 	write(1, "\n", 1);
+// 	return 0;
+// }
 
 // int main(int argc, char *argv[])
 // {
@@ -1124,3 +1124,76 @@ int main(int argc, char *argv[])
 // 		write(1, &argc, 1);
 // 	return 0;
 // }
+
+
+//	ES -11- (paramsum) -> torna!
+// void ft_putnbr(int n)
+// {
+// 	char c;
+// 	if (n > 9)
+// 		ft_putnbr(n / 10);
+// 	c = (n % 10) + 48;
+// 	write(1, &c, 1);
+// }
+
+// int main(int argc, char *argv[])
+// {
+// 	if (argc <= 1)
+// 	{ 
+// 		write(1, "0\n", 2);
+// 		return 0;
+// 	}
+// 	int args = 1;
+// 	while(argv[args])
+// 	{ 
+// 		args++;
+// 	}
+// 	args -= 1;
+// 	ft_putnbr(args);
+// 	write(1, "\n", 1);
+// 	return 0;
+// }
+
+
+//	ES -12- (pgcd) ->
+int ft_atoi(const char *str)
+{
+	int sign = 1;
+	int result;
+	int i = 0;
+	if (!str)
+		return 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	while (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	while(str[i] >= '0' && str[i] <= '9')
+	{ 
+		result = result * 10 + (str[i] - 48);
+		i++;
+	}
+	return(result * sign);
+}
+int main(int argc, char *argv[])
+{
+	if (argc != 2)
+	{
+		write(1, "\n", 1);
+		return 0;
+	}
+	int divisore = argv[1];
+	int dividendo = argv[2];
+	int tmp;
+	if (divisore > dividendo)
+		tmp = divisore;
+	if (divisore < dividendo)
+		tmp = dividendo;
+	while (argv[1] && argv[2])
+	{
+		
+	}
+}

@@ -3,5 +3,4 @@ def validate_ingredients(ingredients: str) -> str:
     for ingredient in valid:
         if ingredient.casefold() in ingredients.casefold():
             return (f"{ingredients} - VALID")
-        else:
-            return (f"{ingredients} - INVALID")
+    return (f"{ingredients} - INVALID")
