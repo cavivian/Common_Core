@@ -1155,45 +1155,183 @@
 // }
 
 
-//	ES -12- (pgcd) ->
-int ft_atoi(const char *str)
-{
-	int sign = 1;
-	int result;
-	int i = 0;
-	if (!str)
-		return 0;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	while (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
-	}
-	while(str[i] >= '0' && str[i] <= '9')
-	{ 
-		result = result * 10 + (str[i] - 48);
-		i++;
-	}
-	return(result * sign);
-}
-int main(int argc, char *argv[])
-{
-	if (argc != 2)
-	{
-		write(1, "\n", 1);
-		return 0;
-	}
-	int divisore = argv[1];
-	int dividendo = argv[2];
-	int tmp;
-	if (divisore > dividendo)
-		tmp = divisore;
-	if (divisore < dividendo)
-		tmp = dividendo;
-	while (argv[1] && argv[2])
-	{
-		
-	}
-}
+//	ES -12- (pgcd) -> torna! (il mio atoi ha un piccolo problema)
+// int ft_atoi(const char *str)
+// {
+// 	int sign = 1;
+// 	int result;
+// 	int i = 0;
+// 	if (!str)
+// 		return 0;
+// 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+// 		i++;
+// 	while (str[i] == '+' || str[i] == '-')
+// 	{
+// 		if (str[i] == '-')
+// 			sign = -1;
+// 		i++;
+// 	}
+// 	while(str[i] >= '0' && str[i] <= '9')
+// 	{ 
+// 		result = result * 10 + (str[i] - 48);
+// 		i++;
+// 	}
+// 	return(result * sign);
+// }
+
+// int main(int argc, char *argv[])
+// {
+// 	if (argc != 3)
+// 	{
+// 		write(1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int divisore = atoi(argv[1]);
+// 	int dividendo = atoi(argv[2]);
+// 	int tmp;
+// 	if (divisore > dividendo)
+// 		tmp = divisore;
+// 	if (divisore < dividendo)
+// 		tmp = dividendo;
+// 	while (tmp > 0)
+// 	{
+// 		if (divisore % tmp == 0 && dividendo % tmp == 0)
+// 		{
+// 			printf("%d\n", tmp);
+// 			return 0;
+// 		}
+// 		tmp--;
+// 	}
+// 	return 0;
+// }
+
+
+//	ES -13- (print hex) -> torna!
+// int ft_atoi(const char *str)
+// {
+// 	int i = 0;
+// 	int sign = 1;
+// 	int result = 0;
+// 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+// 		i++;
+// 	if(str[i] == '-' || str[i] == '+')
+// 	{
+// 		if (str[i] == '-')
+// 			sign = -1;
+// 		i++;
+// 	}
+// 	while(str[i] >= '0' && str[i] <= '9')
+// 	{ 
+// 		result = result * 10 + (str[i] - 48);
+// 		i++;
+// 	}
+// 	return (sign * result);
+// }
+
+// void ft_print_hex(int n)
+// {
+// 	char *base = "0123456789abcdef";
+// 	if  (n > 16)
+// 		ft_print_hex(n / 16);
+// 	write(1, &base[n % 16], 1);
+// }
+
+// int main(int argc, char *argv[])
+// {
+// 	if (argc != 2)
+// 	{
+// 		write(1, "\n", 1);
+// 		return 0;
+// 	}
+// 	//int i = 0;
+// 	int conv = ft_atoi(argv[1]);
+// 	write(1, "0x", 2);
+// 	ft_print_hex(conv);
+// 	write(1, "\n", 1);
+// 	return 0;
+// }
+
+
+//	ES -14- (rstr capitalizer) -> da finire pk non ho voglia
+// int main(int argc, char *argv[])
+// {
+// 	if (argc < 1)
+// 	{ 
+// 		write(1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int args = 1;
+// 	int i = 0;
+// 	while (argv[args])
+// 	{
+// 		while (argv[args][i] != '\0')
+// 		{
+// 			while ((argv[args][i] >= 'a' && argv[args][i] <= 'z') || (argv[args][i] >= 'A' && argv[args][i] <= 'Z'))
+// 			{
+// 				if (argv[args][i + 1] == 32 || (argv[args][i + 1] >= 9 && argv[args][i + 1] <= 13))
+// 				argv[args][i] -= 32;
+// 			}
+// 			i++;
+// 		}
+// 		args++;
+// 	}
+// 	write(1, "\n", 1);
+// 	return 0;
+// }
+
+
+//	ES -15- (tab mult) -> torna!
+// int ft_atoi(const char *str)
+// {
+// 	int i = 0;
+// 	int sign = 1;
+// 	int result = 0;
+// 	while(str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+// 		i++;
+// 	if (str[i] == '+' || str[i] == '-')
+// 	{
+// 		if (str[i] == '-')
+// 			sign = -1;
+// 		i++; 
+// 	}
+// 	while (str[i] >= '0' && str[i] <= '9')
+// 	{
+// 		result = result * 10 + (str[i] - 48);
+// 		i++;
+// 	}
+// 	return (result * sign);
+// }
+
+// void ft_putnbr(int n)
+// {
+// 	char c;
+// 	if (n > 10)
+// 		ft_putnbr(n / 10);
+// 	c = (n % 10) + 48;
+// 	write(1, &c, 1);
+// }
+
+
+// int main(int argc, char *argv[])
+// {
+// 	if (argc != 2)
+// 	{
+// 		write(1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int conv = ft_atoi(argv[1]);
+// 	int n = 1;
+// 	while(n < 10)
+// 	{
+// 		ft_putnbr(n);
+// 		write(1, " x ", 3);
+// 		ft_putnbr(conv);
+// 		write(1, " = ", 3);
+// 		ft_putnbr(n * conv);
+// 		write(1, "\n", 1);
+// 		n++;
+// 	}
+// 	return 0;
+// }
+
+
