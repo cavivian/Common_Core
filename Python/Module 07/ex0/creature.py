@@ -8,16 +8,15 @@ class Creature(ABC):
 
     def describe(self) -> str:
         return(f"{self.name} is a {self.type} type Creature")
-    
+
     @abstractmethod
-    def attack(self):
+    def attack(self) -> str:
         pass
 
 
 class Flameling(Creature):
     def __init__(self):
         super().__init__('Flameling', 'Fire')
-
 
     def attack(self) -> str:
         return (f"{self.name} uses Ember!")
@@ -34,16 +33,14 @@ class Pyrodon(Creature):
 class Aquabub(Creature):
     def __init__(self):
         super().__init__('Aquabub', 'Water')
-       
 
     def attack(self) -> str:
         return (f"{self.name} uses Water Gun!")
-    
+
 
 class Torragon(Creature):
     def __init__(self):
         super().__init__('Torragon', 'Water')
-        
 
     def attack(self) -> str:
         return (f"{self.name} uses Hydro Pump!")

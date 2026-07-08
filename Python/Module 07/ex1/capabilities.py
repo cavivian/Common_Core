@@ -1,19 +1,21 @@
 from abc import ABC, abstractmethod
 
+
 class HealCapability(ABC):
 
     @abstractmethod
-    def heal(self):
+    def heal(self) -> str:
         pass
+
 
 class TransformCapability(ABC):
     def __init__(self):
         self.bloom = False
 
     @abstractmethod
-    def transform(self):
+    def transform(self) -> str:
         pass
 
     @abstractmethod
-    def revert(self):
+    def revert(self) -> str:
         pass

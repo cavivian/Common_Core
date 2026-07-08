@@ -1,9 +1,10 @@
-from ex1 import CreatureFactory, HealingCreatureFactory, TransformCreatureFactory
+from ex1 import (HealingCreatureFactory,
+                 TransformCreatureFactory)
 
 
-def prova_factory(CreatureFactory):
-    print ("Testing Creature with healing capability")
-    print (" base:")
+def prova_factory(CreatureFactory) -> None:
+    print("Testing Creature with healing capability")
+    print(" base:")
     primo = CreatureFactory.create_base()
     print(primo.describe())
     print(primo.attack())
@@ -15,9 +16,9 @@ def prova_factory(CreatureFactory):
     print(secondo.heal())
 
 
-def prova_transform(CreatureFactory):
+def prova_transform(CreatureFactory) -> None:
     print()
-    print ("Testing Creature with transform capability")
+    print("Testing Creature with transform capability")
     print(" base:")
     base = CreatureFactory.create_base()
     print(base.describe())
@@ -25,7 +26,7 @@ def prova_transform(CreatureFactory):
     print(base.transform())
     print(base.attack())
     print(base.revert())
-    print (" evolved:")
+    print(" evolved:")
     evo = CreatureFactory.create_evolved()
     print(evo.describe())
     print(evo.attack())
@@ -39,7 +40,3 @@ if __name__ == "__main__":
     transform = TransformCreatureFactory()
     prova_factory(heal)
     prova_transform(transform)
-    
-
-    
-

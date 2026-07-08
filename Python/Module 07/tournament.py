@@ -1,12 +1,12 @@
-from ex0.factory import CreatureFactory, FlameFactory, AquaFactory
-from ex1.creature import Creature
-from ex1.factory import CreatureFactory, HealingCreatureFactory, TransformCreatureFactory
-from ex2.strategy import BattleStrategy, NormalStrategy, AggressiveStrategy, DefensiveStrategy, menage_error
+from ex0.factory import FlameFactory, AquaFactory
+from ex1.factory import HealingCreatureFactory, TransformCreatureFactory
+from ex2.strategy import (NormalStrategy, AggressiveStrategy,
+                          DefensiveStrategy, menage_error)
 from typing import List
 
 
-def battle(opp: List):
-    print ("*** Tournament ***")
+def battle(opp: List) -> None:
+    print("*** Tournament ***")
     print(f"{len(opp)} opponents involved")
     coppie = []
     for factory, strategy in opp:
@@ -14,7 +14,7 @@ def battle(opp: List):
         coppie.append((crea, strategy))
     for i, (opp_1, strat_1) in enumerate(coppie):
         for (opp_2, strat_2) in coppie[i + 1:]:
-            print(f"\n* Battle *")
+            print("\n* Battle *")
             print(opp_1.describe())
             print(" vs.")
             print(opp_2.describe())
@@ -25,7 +25,6 @@ def battle(opp: List):
             except menage_error as e:
                 print(f"Battle error, aborting tournament: {e}")
                 return
-    
 
 
 if __name__ == "__main__":
@@ -44,4 +43,4 @@ if __name__ == "__main__":
     battle([(fuoco, agg), (heal, defe)])
     print("\nTournament 2 (multiple)")
     print("[(Aquabub+Normal), (Healing+Defensive), (Transform+Aggressive) ]")
-    battle([(acqua, norm), (heal, defe), (transform,agg)])
+    battle([(acqua, norm), (heal, defe), (transform, agg)])

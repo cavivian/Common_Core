@@ -1337,64 +1337,301 @@
 
 //	- - - - LIVELLO 4 - - - -
 //	ES -1- (flood fill)
-void fill_helper(char **tab, t_point size, int y, int x, char base)
+// void fill_helper(char **tab, t_point size, int y, int x, char base)
+// {
+// 	if (y < 0 || y >= size.y)
+// 		return ;
+// 	else if (x < 0 || y >= size.x)
+// 		return ;
+// 	else if (tab[x][y] != base)
+// 		return ;
+// 	else
+// 	{
+// 		tab[y][x] = 'F';
+// 		fill_helper(tab, size, y, x + 1, base);
+//         fill_helper(tab, size, y, x - 1, base);
+//         fill_helper(tab, size, y + 1, x, base);
+//         fill_helper(tab, size, y - 1, x, base);
+// 	}
+// }
+// void flood_fill(char **tab, t_point size, t_point begin)
+// {
+// 	char base = tab[begin.y, begin.x];
+// 	fill_helper(tab, size, begin.y, begin.x, base);
+// }
+
+// char** make_area(char** zone, t_point size)
+// {
+// 	char** new;
+
+// 	new = malloc(sizeof(char*) * size.y);
+// 	for (int i = 0; i < size.y; ++i)
+// 	{
+// 		new[i] = malloc(size.x + 1);
+// 		for (int j = 0; j < size.x; ++j)
+// 			new[i][j] = zone[i][j];
+// 		new[i][size.x] = '\0';
+// 	}
+
+// 	return new;
+// }
+
+// int main(void)
+// {
+// 	t_point size = {8, 5};
+// 	char *zone[] = {
+// 		"11111111",
+// 		"10001001",
+// 		"10010001",
+// 		"10110001",
+// 		"11100001",
+// 	};
+
+// 	char**  area = make_area(zone, size);
+// 	for (int i = 0; i < size.y; ++i)
+// 		printf("%s\n", area[i]);
+// 	printf("\n");
+
+// 	t_point begin = {7, 4};
+// 	flood_fill(area, size, begin);
+// 	for (int i = 0; i < size.y; ++i)
+// 		printf("%s\n", area[i]);
+// 	return (0);
+// }
+
+
+//	ES -2- (fprime)
+// void is_prime(int n)
+// {
+// 	int i = 2;
+// 	int first = 1;
+// 	if (n == 1)
+// 	{
+// 		printf("1");
+// 		return ;
+// 	}
+// 	while (n > 1)
+// 	{
+// 		if (n % i == 0)
+// 		{
+// 			if (!first)
+// 				printf("*");
+// 			printf("%d", i);
+// 			n /= i;
+// 			first = 0;
+// 		}
+// 		else
+// 			n++;
+// 	}
+// }
+
+// int main(int argc, char *argv[])
+// {
+// 	if(argc != 2)
+// 	{
+// 		write(1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int conv = atoi(argv[1]);
+// 	is_prime(conv);
+// 	printf("\n");
+// 	return 0;
+// }
+
+
+//	ES -3- (ft itoa)
+// int count_digits(int n)
+// {
+// 	int count = 0;
+// 	if (n <= 0)
+// 		count++;
+// 	while (n)
+// 	{
+// 		n /= 10;
+// 		count++;
+// 	}
+// 	return count;
+// }
+
+// char *ft_atoi(int n)
+// {
+// 	int len = count_digits;
+// 	char *str = malloc(sizeof(char) * (len + 1));
+// 	long nbr = n;
+// 	if (!str)
+// 		return 0;
+// 	str[len] = '\0';
+// 	while(nbr < 0)
+// 	{
+// 		str[0] = '-';
+// 		nbr = -nbr;
+// 	}
+// 	if (nbr == 0)
+// 		str[0] = '0';
+// 	if (nbr > 0)
+// 	{
+// 		str[len - 1] = (nbr % 10) + 48;
+// 		nbr /= 10;
+// 		len--; 
+// 	}
+// 	return (str);
+// }
+
+
+//	ES -4- (ft list foreach) -> torna!
+// void	ft_list_foreach(t_list *begin_list, void(*f)(void *))
+// {
+// 	t_list *list_ptr = begin_list;
+// 	if (!begin_list || !f)
+// 		return ;
+// 	while (list_ptr)
+// 	{
+// 		(*f)(list_ptr->data);
+// 		list_ptr = list_ptr->next;
+// 	}
+// }
+
+
+//	ES -5- (ft list remove if) -> torna!
+// void ft_list_remove_if(t_list **begin_list, void *data_ref, int(*cmp)())
+// {
+// 	t_list *current;
+// 	t_list *tmp;
+// 	while(*begin_list && (*cmp)((*begin_list)->data, data_ref) == 0)
+// 	{
+// 		tmp = *begin_list;
+// 		*begin_list = (*begin_list)->next;
+// 		free(tmp);
+// 	}
+// 	current = *begin_list;
+// 	while(current && current->next)
+// 	{
+// 		if((*cmp)(current->next->data, data_ref) == 0)
+// 		{
+// 			tmp = current->next;
+// 			current->next = tmp->next;
+// 			free(tmp);
+// 		}
+// 		else
+// 			current = current->next;
+// 	}
+// }
+
+
+//	ES -6- (ft split) -> torna!
+// int count_words(char *str)
+// {
+// 	int words = 0;
+// 	int letters = 0;
+// 	int i = 0;
+// 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+// 		i++;
+// 	while(str[i])
+// 	{
+// 		while (str[i] != 32 && !(str[i] >= 9 && str[i] <= 13))
+// 		{
+// 			letters++;
+// 			i++;
+// 		}
+// 		i++;
+// 		words++;
+// 	}
+// 	return (words);
+// }
+
+// int count_letters(char *str, int i)
+// {
+// 	int letters = 0;
+// 	while (str[i] && str[i] != 32 && !(str[i] >= 9 && str[i] <= 13))
+// 	{
+// 		letters++;
+// 		i++;
+// 	}
+// 	return (letters);
+// }
+
+// char **ft_split(char *str)
+// {
+// 	int i = 0;
+// 	int j = 0;
+// 	int k;
+// 	int len = 0;
+// 	char **mem = malloc(sizeof(char *) * (count_words(str) + 1));
+// 	if (!mem)
+// 		return 0;
+// 	while (str[i])
+// 	{
+// 		if (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+// 			i++;
+// 		if(str[i])
+// 		{
+// 			len = count_letters(str, i);
+// 			mem[j] = malloc(sizeof(char *) * (len + 1));
+// 			if (!mem[j])
+// 				return NULL;
+// 			k = 0;
+// 			while(k < len)
+// 			{
+// 				mem[j][k++] = str[i++];
+// 			}
+// 			mem[j][k] = '\0';
+// 			j++;
+// 		}
+// 	}
+// 	mem[j] = NULL;
+// 	return mem;
+// }
+
+// int main()
+// {
+// 	char *str = "ciao mamma io sono camilla";
+// 	printf("%d\n", count_words(str));
+// 	return 0;
+// }
+
+
+//	ES -7- (rev wstr)
+ int count_letters(char *str, int i)
 {
-	if (y < 0 || y >= size.y)
-		return ;
-	else if (x < 0 || y >= size.x)
-		return ;
-	else if (tab[x][y] != base)
-		return ;
-	else
+	int letters = 0;
+	while (str[i] && str[i] != 32 && !(str[i] >= 9 && str[i] <= 13))
 	{
-		tab[y][x] = 'F';
-		fill_helper(tab, size, y, x + 1, base);
-        fill_helper(tab, size, y, x - 1, base);
-        fill_helper(tab, size, y + 1, x, base);
-        fill_helper(tab, size, y - 1, x, base);
+		letters++;
+		i++;
 	}
-}
-void flood_fill(char **tab, t_point size, t_point begin)
-{
-	char base = tab[begin.y, begin.x];
-	fill_helper(tab, size, begin.y, begin.x, base);
+	return (letters);
 }
 
-char** make_area(char** zone, t_point size)
+int main(int argc, char *argv[])
 {
-	char** new;
-
-	new = malloc(sizeof(char*) * size.y);
-	for (int i = 0; i < size.y; ++i)
+	if(argc < 1)
 	{
-		new[i] = malloc(size.x + 1);
-		for (int j = 0; j < size.x; ++j)
-			new[i][j] = zone[i][j];
-		new[i][size.x] = '\0';
+		write(1, "\n", 1);
+		return 0;
 	}
-
-	return new;
-}
-
-int main(void)
-{
-	t_point size = {8, 5};
-	char *zone[] = {
-		"11111111",
-		"10001001",
-		"10010001",
-		"10110001",
-		"11100001",
-	};
-
-	char**  area = make_area(zone, size);
-	for (int i = 0; i < size.y; ++i)
-		printf("%s\n", area[i]);
-	printf("\n");
-
-	t_point begin = {7, 4};
-	flood_fill(area, size, begin);
-	for (int i = 0; i < size.y; ++i)
-		printf("%s\n", area[i]);
-	return (0);
+	int i = 0;
+	int args = 1;
+	int len;
+	int j = 0;
+	char *mem = malloc(sizeof(char *) * (len + 1));
+	while(argv[args])
+	{
+		while(argv[args][i])
+		{
+			while(argv[args][i] == 32 || (argv[args][i] >= 9 && argv[args][i] <= 13))
+				i++;
+			if (argv[args][i] == '\0' && argv[args][i] != 32 && !(argv[args][i] >= 9 && argv[args][i] <= 13))
+			{
+				i--;
+			}
+			j = i + 1;
+			while (argv[args][j] != '\0' && argv[args][j] != 32 && !(argv[args][j] >= 9 && argv[args][j] <= 13))
+			{
+				mem = argv[args][j];
+				j++;
+			}
+			i++;
+		}
+		args++;
+	}
 }

@@ -1,4 +1,3 @@
-import sys
 import os
 from dotenv import load_dotenv
 
@@ -40,7 +39,7 @@ def output(cose: dict):
     else:
         print("non c'è")
     if cose["api_key"]:
-        print(f"API Access: Autenticated")
+        print("API Access: Autenticated")
     else:
         print("niente API")
     if cose["log_level"]:

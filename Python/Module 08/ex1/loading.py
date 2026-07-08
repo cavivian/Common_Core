@@ -14,22 +14,22 @@ def dip(nome: str):
     return (True, versione)
 
 
-def piango():
+def grafico():
     print("Analyzing Matrix data")
     data = numpy.random.randn(1000)
     print("Processing 1000 data points...")
     graphic = pandas.DataFrame(data, columns=["Matrix_Data"])
     print("Generating visualizations...")
     matplotlib.pyplot.figure(figsize=(7, 4))
-    matplotlib.pyplot.hist(graphic["Matrix_Data"], bins=30, 
+    matplotlib.pyplot.hist(graphic["Matrix_Data"], bins=30,
                            color="green", alpha=0.8, edgecolor="black")
     matplotlib.pyplot.title("Matrix Data Distribution")
     matplotlib.pyplot.xlabel("Values")
     matplotlib.pyplot.ylabel("Frequency")
-    
+
     matplotlib.pyplot.savefig("matrix_analysis.png")
     matplotlib.pyplot.close()
-    
+
     print("Analysis complete!")
     print("Results saved to: matrix_analysis.png")
 
@@ -37,7 +37,7 @@ def piango():
 def cntr_dip():
     print("Checking dependencies:")
     presenti = True
-    frasi = {"pandas": "data manipulation ready", 
+    frasi = {"pandas": "data manipulation ready",
              "numpy": "Numerical computation ready",
              "requests": "Network acces ready",
              "matplotlib": "visualization ready"}
@@ -69,4 +69,4 @@ if __name__ == "__main__":
     import pandas
     import numpy
     import matplotlib.pyplot
-    piango()
+    grafico()

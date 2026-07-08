@@ -1,8 +1,8 @@
 from ex0 import CreatureFactory, FlameFactory, AquaFactory
 
 
-def prova_factory(CreatureFactory):
-    print ("Testing factory")
+def prova_factory(CreatureFactory) -> None:
+    print("Testing factory")
     primo = CreatureFactory.create_base()
     secondo = CreatureFactory.create_evolved()
     print(primo.describe())
@@ -11,18 +11,16 @@ def prova_factory(CreatureFactory):
     print(secondo.attack())
 
 
-
-def prova_battle(uno: CreatureFactory, due: CreatureFactory):
-    print ("Testing battle")
+def prova_battle(uno: CreatureFactory, due: CreatureFactory) -> None:
+    print("Testing battle")
     base_1 = uno.create_base()
     base_2 = due.create_base()
     print(base_1.describe())
     print(" vs.")
     print(base_2.describe())
-    print("Fight!")
+    print(" Fight!")
     print(base_1.attack())
     print(base_2.attack())
-
 
 
 if __name__ == "__main__":
@@ -33,8 +31,3 @@ if __name__ == "__main__":
     prova_factory(acqua)
     print()
     prova_battle(fuoco, acqua)
-
-    
-
-    
-
