@@ -659,11 +659,14 @@
 //	ES -13-
 // void print_bits(unsigned char octet)
 // {
-// 	int i = 0;
+// 	int i = 7;
 // 	unsigned char bit;
-// 	while(i < 8)
+// 	while(i >= 0)
 // 	{
-// 		bit = ((octet >> i & 1) + '0');
+//		if (octet & (1 << i))
+//			bit = '1';
+//		else
+//			bit = '0';
 // 		write(1, &bit, 1);
 // 		i++;
 // 	}
@@ -680,14 +683,15 @@
 //	ES -14- -> non torna, c'e' da capire per bene i bit
 // unsigned char reverse_bits(unsigned char octet)
 // {
-// 	int i = 7;
+// 	int i = 0;
 // 	unsigned char bit;
-// 	while (i--)
+// 	while (i <= 7)
 // 	{
-// 		bit = ((octet >> i & 1) + '0');
-// 		write(1, &bit, 1);
+//		if (octet & (1 << 1))
+// 			bit = bit | (1 << (7 - i));
+// 		i++;
 // 	}
-// 	return (0);
+// 	return (bit);
 // }
 
 
@@ -702,7 +706,7 @@
 //	ES -15- -> da fare quando ho capito i bit
 // unsigned char swap_bits(unsigned char octet)
 // {
-
+//		return((octet << 4) | (octet >> 4));
 // }
 
 
@@ -801,7 +805,7 @@
 // {
 // 	char c;
 // 	long nbr = (long)n;
-// 	if (n < 0)
+// 	if (nbr < 0)
 // 	{
 // 		write(1, "-", 1);
 // 		nbr = -nbr;
@@ -825,7 +829,6 @@
 // 			return 0;
 // 		i++;
 // 	}
-
 // 	return 1;
 // }
 
@@ -1168,7 +1171,7 @@
 // 	while (str[i] == '+' || str[i] == '-')
 // 	{
 // 		if (str[i] == '-')
-// 			sign = -1;
+// 			sign *= -1;
 // 		i++;
 // 	}
 // 	while(str[i] >= '0' && str[i] <= '9')
@@ -1453,7 +1456,7 @@
 // 	return count;
 // }
 
-// char *ft_atoi(int n)
+// char *ft_itoa(int n)
 // {
 // 	int len = count_digits;
 // 	char *str = malloc(sizeof(char) * (len + 1));
@@ -1590,48 +1593,33 @@
 // }
 
 
-//	ES -7- (rev wstr)
- int count_letters(char *str, int i)
-{
-	int letters = 0;
-	while (str[i] && str[i] != 32 && !(str[i] >= 9 && str[i] <= 13))
-	{
-		letters++;
-		i++;
-	}
-	return (letters);
-}
-
-int main(int argc, char *argv[])
-{
-	if(argc < 1)
-	{
-		write(1, "\n", 1);
-		return 0;
-	}
-	int i = 0;
-	int args = 1;
-	int len;
-	int j = 0;
-	char *mem = malloc(sizeof(char *) * (len + 1));
-	while(argv[args])
-	{
-		while(argv[args][i])
-		{
-			while(argv[args][i] == 32 || (argv[args][i] >= 9 && argv[args][i] <= 13))
-				i++;
-			if (argv[args][i] == '\0' && argv[args][i] != 32 && !(argv[args][i] >= 9 && argv[args][i] <= 13))
-			{
-				i--;
-			}
-			j = i + 1;
-			while (argv[args][j] != '\0' && argv[args][j] != 32 && !(argv[args][j] >= 9 && argv[args][j] <= 13))
-			{
-				mem = argv[args][j];
-				j++;
-			}
-			i++;
-		}
-		args++;
-	}
-}
+//	ES -7- (rev wstr) -> torna!
+// int main(int argc, char *argv[])
+// {
+// 	if (argc != 2)
+// 	{
+// 		write(1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int i = 0;
+// 	int end = 0;
+// 	while(argv[1][i])
+// 		i++;
+// 	i--;
+// 	while (i >= 0)
+// 	{
+// 		while (i >= 0 && argv[1][i] != 32 && (argv[1][i] >= 9 && argv[1][i] <= 13))
+// 			i--;
+// 		end = i;
+// 		while (i >= 0 && argv[1][i] != 32 && !(argv[1][i] >= 9 && argv[1][i] <= 13))
+// 			i--;
+// 		if (end >= 0)
+// 		{
+// 			write(1, &argv[1][i + 1], end - i);
+// 			if (i > 0)
+// 				write(1, " ", 1);
+// 		}
+// 	}
+// 	write(1, "\n", 1);
+// 	return 0;
+// }
