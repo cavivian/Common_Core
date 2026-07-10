@@ -428,26 +428,34 @@
 // 	return(result * sign);
 // }
 
-
+#include <stdlib.h>
 //	ES -5- -> torna!
 // int ft_strcmp(char *s1, char *s2)
 // {
 // 	int i = 0;
 // 	int j = 0;
-// 	while(s1[i])
+// 	while(s1[j] || s2[i])
 // 	{
+// 		while (s1[j] == s2[i])
+// 		{
+// 			if (s1[j] == '\0' && s2[i] == '\0')
+// 				return 0;
+// 			i++;
+// 			j++;
+// 		}
+// 		return (s1[j] - s2[i]);
+// 		j++;
 // 		i++;
 // 	}
-// 	while (s2[j])
-// 		j++;
-// 	return (i - j);
+// 	return (s1[j] - s2[i]);
 // }
 
 // int main()
 // {
-// 	char *s1 = "ciao";
-// 	char *s2 = "ciao mamma";
-// 	printf("%d", ft_strcmp(s2, s1));
+// 	char *s1 = "";
+// 	char *s2 = "";
+// 	printf("%d\n", strcmp(s2, s1));
+// 	printf("%d\n", ft_strcmp(s2, s1));
 // 	return 0;
 // }
 
@@ -592,6 +600,7 @@
 // 	return (0);
 // }
 
+
 // int main()
 // {
 // 	char *s = "ciao mamma";
@@ -633,15 +642,12 @@
 // 	int max_val = tab[i];
 // 	while (i < len)
 // 	{
-// 		printf("Max: %d > tab[i]: %d\n", max_val, tab[i]);
 // 		if (tab[i] > max_val)
 // 		{
 // 			max_val = tab[i];
-// 			printf("Si, max = %d\n", tab[i]);
 // 		}
 // 		else
-// 			printf("No, max = %d\n", max_val);
-// 		i++;
+// 			i++;
 // 	}
 // 	return max_val;
 // }
@@ -710,7 +716,7 @@
 // }
 
 
-//	ES -16- (union) -> scambia due lettere, da capire perchè
+//	ES -16- (union) -> torna!
 // int main(int argc, char *argv[])
 // {
 // 	if (argc != 3)
@@ -719,28 +725,30 @@
 // 		return 0;
 // 	}
 // 	int i = 0;
-// 	//int j = 0;
+// 	int j = 0;
 // 	char tmp[256] = {0};
-// 	while(argv[1][i] != '\0')
+// 	while(argv[1][i])
 // 	{
-// 		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 0)
+// 		while(tmp[(int)argv[1][i]] == 0)
 // 		{
 // 			write(1, &argv[1][i], 1);
 // 			tmp[(int)argv[1][i]] = 1;
-// 			//j++;
+// 			i++;
 // 		}
-// 		i++;
+// 		if (tmp[(int)argv[1][i]] == 1)
+// 			i++;
 // 	}
-// 	while(argv[2][i] != '\0')
+// 	while (argv[2][j])
 // 	{
-// 		if(tmp[(int)argv[2][i]] == 0 && tmp[(int)argv[1][i]] == 1)
+// 		while(tmp[(int)argv[1][i]] == 0 && tmp[(int)argv[2][j]] == 0)
 // 		{
-// 			write(1, &argv[2][i], 1);
-// 			tmp[(int)argv[2][i]] = 1;
+// 			write(1, &argv[2][j], 1);
+// 			tmp[(int)argv[2][j]] = 1;
+// 			j++;
 // 		}
-// 		i++;
+// 		if (tmp[(int)argv[2][j]] == 1)
+// 			j++;
 // 	}
-// 	i = 0;
 // 	write(1, "\n", 1);
 // 	return 0;
 // }
@@ -776,6 +784,40 @@
 
 
 //	ES -17- (wdmatch) -> stessa cosa di union solo che stampa solo argv[1]
+int main(int argc, char *argv[])
+{
+	if (argc != 3)
+	{
+		write(1, "\n", 1);
+		return 0;
+	}
+	int i = 0;
+	int j = 0;
+	char tmp[256];
+	while(argv[1][i])
+	{
+		while(tmp[(int)argv[1][i]] == 0)
+		{
+			write(1, &argv[1][i], 1);
+			tmp[(int)argv[1][i]] = 1;
+			i++;
+		}
+		if (tmp[(int)argv[1][i]] == 1)
+			i++;
+	}
+	while (argv[2][j])
+	{
+		while(tmp[(int)argv[1][i]] == 0 && tmp[(int)argv[2][j]] == 0)
+		{
+			tmp[(int)argv[2][j]] = 1;
+			j++;
+		}
+		if (tmp[(int)argv[2][j]] == 1)
+			j++;
+	}
+	write(1, "\n", 1);
+	return 0;
+}
 
 
 //	- - - LIVELLO 3 - - -
