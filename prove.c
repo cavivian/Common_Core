@@ -45,7 +45,7 @@
 // 		else if (n % 5 == 0 && n % 3 != 0)
 // 			write(1, "buzz", 4);
 // 		else if (n % 5 == 0 && n % 3 == 0)
-// 			write(1, "fizzbuzz", 1);
+// 			write(1, "fizzbuzz", 8);
 // 		else
 // 			print_numb(n);
 // 		n++;
