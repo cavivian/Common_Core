@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV=/home/camilla/Desktop/Common_Core/matrix_env
+VIRTUAL_ENV=/home/cavivian/Desktop/Common_Core/matrix_env
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

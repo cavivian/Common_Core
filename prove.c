@@ -360,10 +360,11 @@
 // 	int i = 0;
 // 	while (argv[1][i] != '\0')
 // 	{
-// 		if (argv[1][i] >= 'A' && argv[1][i] <= 'Z')
+// 		if (i != 0 && argv[1][i] >= 'A' && argv[1][i] <= 'Z')
+// 		{
 // 			write(1, "_", 1);
-// 		if (argv[1][i] >= 'A' && argv[1][i] <= 'Z')
 // 			argv[1][i] += 32;
+// 		}
 // 		write(1, &argv[1][i], 1);
 // 		i++;
 // 	}
@@ -686,14 +687,14 @@
 // }
 
 
-//	ES -14- -> non torna, c'e' da capire per bene i bit
+//	ES -14- -> torna!
 // unsigned char reverse_bits(unsigned char octet)
 // {
 // 	int i = 0;
 // 	unsigned char bit;
 // 	while (i <= 7)
 // 	{
-//		if (octet & (1 << 1))
+//		if (octet & (1 << i))
 // 			bit = bit | (1 << (7 - i));
 // 		i++;
 // 	}
@@ -709,7 +710,7 @@
 // }
 
 
-//	ES -15- -> da fare quando ho capito i bit
+//	ES -15- -> torna!
 // unsigned char swap_bits(unsigned char octet)
 // {
 //		return((octet << 4) | (octet >> 4));
@@ -753,71 +754,42 @@
 // 	return 0;
 // }
 
+
+//	ES -17- (wdmatch) -> stessa cosa di union solo che stampa solo argv[1]
+// int ft_strlen(char *str)
+// {
+// 	int i = 0;
+// 	while (str && str[i])
+// 	{
+// 		i++;
+// 	}
+// 	return (i);
+// }
 // int main(int argc, char *argv[])
 // {
-// 	if(argc != 3)
+// 	if (argc != 3)
 // 	{
 // 		write(1, "\n", 1);
 // 		return 0;
 // 	}
 // 	int i = 0;
-// 	int j;
-// 	while (argv[2][i])
+// 	int j = 0;
+// 	while (argv[2][j])
 // 	{
-// 		j = 0;
-// 		while(argv[1][j] != '\0')
+// 		if (argv[2][j] == argv[1][i])
 // 		{
-// 			if (argv[1][j] == argv[2][i])
-// 			 	i++;
-// 			if (argv[1][j] == '\0')
-// 				break ;
-// 			j++;
+// 			i++;
 // 		}
-// 		i++;
+// 		j++;
+// 		if (argv[1][i] == '\0')
+// 		{
+// 			write(1, argv[1], ft_strlen(argv[1]));
+// 			break ;
+// 		}
 // 	}
-// 	if (argv[1][j] == '\0')
-// 		write(1, &argv[1][j], 1);
-// 	else
-// 		write (1, "\n", 1);
+// 	write(1, "\n", 1);
 // 	return 0;
 // }
-
-
-//	ES -17- (wdmatch) -> stessa cosa di union solo che stampa solo argv[1]
-int main(int argc, char *argv[])
-{
-	if (argc != 3)
-	{
-		write(1, "\n", 1);
-		return 0;
-	}
-	int i = 0;
-	int j = 0;
-	char tmp[256];
-	while(argv[1][i])
-	{
-		while(tmp[(int)argv[1][i]] == 0)
-		{
-			write(1, &argv[1][i], 1);
-			tmp[(int)argv[1][i]] = 1;
-			i++;
-		}
-		if (tmp[(int)argv[1][i]] == 1)
-			i++;
-	}
-	while (argv[2][j])
-	{
-		while(tmp[(int)argv[1][i]] == 0 && tmp[(int)argv[2][j]] == 0)
-		{
-			tmp[(int)argv[2][j]] = 1;
-			j++;
-		}
-		if (tmp[(int)argv[2][j]] == 1)
-			j++;
-	}
-	write(1, "\n", 1);
-	return 0;
-}
 
 
 //	- - - LIVELLO 3 - - -
@@ -865,7 +837,7 @@ int main(int argc, char *argv[])
 // 	int i = 2;
 // 	if (n <= 1)
 // 		return 0;
-// 	while (i < n)
+// 	while (i * i <= n)
 // 	{
 // 		if (n % i == 0)
 // 			return 0;
@@ -878,7 +850,7 @@ int main(int argc, char *argv[])
 // {
 // 	if(argc != 2)
 // 	{
-// 		write(1, "\n", 1);
+// 		write(1, "0\n", 2);
 // 		return 0;
 // 	}
 // 	//int i = 0;

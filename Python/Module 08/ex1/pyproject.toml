@@ -3,7 +3,7 @@ name = "matrix-loading"
 version = "0.1.0"
 description = "Matrix dependency loader and data visualizer"
 authors = ["Camilla <camilla@student.42.fr>"]
-readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"

@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/camilla/Desktop/Common_Core/matrix_env
+set -gx VIRTUAL_ENV /home/cavivian/Desktop/Common_Core/matrix_env
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

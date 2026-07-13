@@ -15,7 +15,7 @@ def dip(nome: str):
 
 
 def grafico():
-    print("Analyzing Matrix data")
+    print("\nAnalyzing Matrix data")
     data = numpy.random.randn(1000)
     print("Processing 1000 data points...")
     graphic = pandas.DataFrame(data, columns=["Matrix_Data"])
@@ -30,12 +30,12 @@ def grafico():
     matplotlib.pyplot.savefig("matrix_analysis.png")
     matplotlib.pyplot.close()
 
-    print("Analysis complete!")
+    print("\nAnalysis complete!")
     print("Results saved to: matrix_analysis.png")
 
 
 def cntr_dip():
-    print("Checking dependencies:")
+    print("\nChecking dependencies:")
     presenti = True
     frasi = {"pandas": "data manipulation ready",
              "numpy": "Numerical computation ready",
@@ -58,7 +58,7 @@ def cntr_dip():
 
 
 if __name__ == "__main__":
-    print("LOADING STATUS: Loading programs...")
+    print("\nLOADING STATUS: Loading programs...")
     verificate = cntr_dip()
     if not verificate:
         print("Missing dependencies")

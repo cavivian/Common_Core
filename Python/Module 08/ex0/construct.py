@@ -10,7 +10,7 @@ def in_venv():
 def se_venv():
     path = sys.prefix
     version = sys.executable
-    package = site.getsitepackages()
+    package = site.getsitepackages()[0]
     nome = info_env(path)
     print("MATRIX STATUS: Welcome to the construct")
     print()
