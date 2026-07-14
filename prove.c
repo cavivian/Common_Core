@@ -824,7 +824,7 @@
 // 		write(1, "-", 1);
 // 		nbr = -nbr;
 // 	}
-// 	if (nbr > 9)
+// 	if (nbr >= 10)
 // 	{
 // 		ft_putnbr(nbr / 10);
 // 	}
@@ -841,7 +841,7 @@
 // 	{
 // 		if (n % i == 0)
 // 			return 0;
-// 		i++;
+// 		++i;
 // 	}
 // 	return 1;
 // }
@@ -853,7 +853,6 @@
 // 		write(1, "0\n", 2);
 // 		return 0;
 // 	}
-// 	//int i = 0;
 // 	int conv = ft_atoi(argv[1]);
 // 	int result;
 // 	while(0 >= conv)
@@ -861,10 +860,12 @@
 // 		write(1, "0\n", 2);
 // 		return 0;
 // 	}
-// 	while(conv > 1)
+// 	while(conv > 0)
 // 	{
-// 		if(is_prime(conv) == 1)
+// 		if(is_prime(conv))
+// 		{
 // 			result += conv;
+// 		}
 // 		conv--;
 // 	}
 // 	ft_putnbr(result);
@@ -1129,21 +1130,7 @@
 // }
 
 
-//	ES -10- 
-// int main(int argc, char *argv[])
-// {
-// 	if (argc == 1)
-// 	{
-// 		write(1, "0\n", 2);
-// 		return 0;
-// 	}
-// 	else
-// 		write(1, &argc, 1);
-// 	return 0;
-// }
-
-
-//	ES -11- (paramsum) -> torna!
+//	ES -10- (paramsum) -> torna!
 // void ft_putnbr(int n)
 // {
 // 	char c;
@@ -1172,7 +1159,7 @@
 // }
 
 
-//	ES -12- (pgcd) -> torna! (il mio atoi ha un piccolo problema)
+//	ES -11- (pgcd) -> torna! (il mio atoi ha un piccolo problema)
 // int ft_atoi(const char *str)
 // {
 // 	int sign = 1;
@@ -1223,7 +1210,7 @@
 // }
 
 
-//	ES -13- (print hex) -> torna!
+//	ES -12- (print hex) -> torna!
 // int ft_atoi(const char *str)
 // {
 // 	int i = 0;
@@ -1269,7 +1256,7 @@
 // }
 
 
-//	ES -14- (rstr capitalizer) -> da finire pk non ho voglia
+//	ES -13- (rstr capitalizer) -> da finire pk non ho voglia
 // int main(int argc, char *argv[])
 // {
 // 	if (argc < 1)
@@ -1297,7 +1284,7 @@
 // }
 
 
-//	ES -15- (tab mult) -> torna!
+//	ES -14- (tab mult) -> torna!
 // int ft_atoi(const char *str)
 // {
 // 	int i = 0;
