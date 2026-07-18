@@ -2,9 +2,10 @@ import sys
 from mazegen import MazeGenerator, il_path
 
 NORTH = 1
-EAST  = 2
+EAST = 2
 SOUTH = 4
-WEST  = 8
+WEST = 8
+
 
 def parse(nomefile: str) -> dict:
     config = {}
@@ -37,7 +38,7 @@ def parse(nomefile: str) -> dict:
     return config
 
 
-def valida(config: dict):
+def valida(config: dict) -> tuple:
 
     required = ['WIDTH', 'HEIGHT', 'ENTRY', 'EXIT', 'OUTPUT_FILE', 'PERFECT']
     for requi in required:
@@ -52,11 +53,9 @@ def valida(config: dict):
         print("Error: HEIGHT must be an integer")
         sys.exit(1)
 
-
-    if config['OUTPUT_FILE'].endswith('.txt') == False:
+    if not config['OUTPUT_FILE'].endswith('.txt'):
         print("Error: OUTPUT_FILE must be a .txt file")
         sys.exit(1)
-        
     width = int(config['WIDTH'])
     height = int(config['HEIGHT'])
 
@@ -122,9 +121,23 @@ def valida(config: dict):
                 sys.exit(1)
             seed = int(config['SEED'])
 
-    return width, height, (entrx, entry), (uscix, usciy), config['OUTPUT_FILE'], perfect, seed
+    return (width,
+            height,
+            (entrx, entry),
+            (uscix, usciy),
+            config['OUTPUT_FILE'],
+            perfect,
+            seed
+            )
 
-def writeoutput(filepath: str, grid: list, entry: tuple, exit_: tuple, path: str):
+
+def writeoutput(
+        filepath: str,
+        grid: list,
+        entry: tuple,
+        exit_: tuple,
+        path: str
+        ) -> None:
 
     try:
         file = open(filepath, 'w')
@@ -149,7 +162,13 @@ def writeoutput(filepath: str, grid: list, entry: tuple, exit_: tuple, path: str
     file.close()
 
 
-def display(grid: list, entry: tuple, exit_: tuple, path: str = None, mostrapath: bool = False, murocolore: str = 'white'):
+def display(
+        grid: list,
+        entry: tuple,
+        exit_: tuple,
+        path: str | None = None,
+        mostrapath: bool = False,
+        murocolore: str = 'white') -> None:
 
     colori = {
         'white':  '\033[97m',
@@ -244,7 +263,6 @@ if __name__ == "__main__":
 
     config = parse(nomefile)
 
-
     width, height, entry, exit_, outputfile, perfect, seed = valida(config)
 
     gen = MazeGenerator(width, height, seed, perfect)
@@ -285,10 +303,7 @@ if __name__ == "__main__":
             display(grid, entry, exit_, path, mostrapath, murocolor)
 
         elif cmd == '2':
-            if mostrapath == False:
-                mostrapath = True
-            else:
-                mostrapath = False
+            mostrapath = not mostrapath
             display(grid, entry, exit_, path, mostrapath, murocolor)
 
         elif cmd == '3':

@@ -3,7 +3,7 @@ MAIN = a_maze_ing.py
 CONFIG = config.txt
 
 install:
-	pip install -r pyproject.toml
+	pip install -e .
 
 run:
 	$(PYTHON) $(MAIN) $(CONFIG)
@@ -15,14 +15,12 @@ clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	find . -type d -name ".mypy_cache" -exec rm -rf {} +
 	find . -type f -name "*.pyc" -delete
+	find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null; true
 	find . -type f -name "maze.txt" -delete
-    find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null; true
 
 lint:
 	flake8
-	mypy . --warn-return-any --warn-unused-ignores \ 
-		   --ignore-missing-imports --disallow-untyped-defs \
-		   --check-untyped-defs
+	mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
 
 build:
 	pip install build
