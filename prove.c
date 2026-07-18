@@ -1067,41 +1067,41 @@
 
 
 //	ES -8- -> torna!
-// int *ft_rrange(int start, int end)
-// {
-// 	int tmp;
-// 	int i = 0;
-// 	int *arr;
-// 	if (start > end)
-// 		arr = malloc(((start - end) + 1) * sizeof(int));
-// 	else if(start < end)
-// 		arr = malloc(((end - start) + 1) * sizeof(int));
-// 	else
-// 		arr = malloc(sizeof(int));
-// 	tmp = end;
-// 	if (start > end)
-// 		while (tmp <= start)
-// 			arr[i++] = tmp++;
-// 	if (start < end)
-// 		while (tmp > start)
-// 			arr[i++] = tmp--;
-// 	else
-// 		arr[i] = tmp;
-// 	return (arr);
-// }
+int *ft_rrange(int start, int end)
+{
+	int tmp;
+	int i = 0;
+	int *arr;
+	if (start > end)
+		arr = malloc(((start - end) + 1) * sizeof(int));
+	else if(start < end)
+		arr = malloc(((end - start) + 1) * sizeof(int));
+	else
+		arr = malloc(sizeof(int));
+	tmp = end;
+	if (start > end)
+		while (tmp <= start)
+			arr[i++] = tmp++;
+	if (start < end)
+		while (tmp > start)
+			arr[i++] = tmp--;
+	else
+		arr[i] = tmp;
+	return (arr);
+}
 
 
-// int main()
-// {
-// 	int *nums = ft_rrange(0, -2);
-// 	int i = 0;
-// 	while (i < 3)
-// 	{
-// 		printf("%d\n", nums[i]);
-// 		i++;
-// 	}
-// 	return 0;
-// }
+int main()
+{
+	int *nums = ft_rrange(1558056871, 1558056892);
+	int i = 0;
+	while (i < 3)
+	{
+		printf("%d\n", nums[i]);
+		i++;
+	}
+	return 0;
+}
 
 
 //	ES -9-(hidenp) -> torna!
@@ -1256,7 +1256,41 @@
 // }
 
 
-//	ES -13- (rstr capitalizer) -> da finire pk non ho voglia
+//	ES -13- (rstr capitalizer) -> torna!
+// char to_lower(char c)
+// {
+// 	if (c >= 'A' && c <= 'Z')
+// 		c += 32;
+// 	return (c);
+// }
+
+// char to_upper(char c)
+// {
+// 	if (c >= 'a' && c <= 'z')
+// 		c -= 32;
+// 	return c;	
+// }
+
+// int is_space(char c)
+// {
+// 	if(c == 32 || (c >= 9 && c <= 13))
+// 		return(1);
+// 	return 0;
+// }
+
+// void capitalizer(char *str)
+// {
+// 	int i = 0;
+// 	while(str[i])
+// 	{
+// 		if(is_space(str[i + 1]) || str[i + 1] == '\0')
+// 			str[i] = to_upper(str[i]);
+// 		else
+// 			str[i] = to_lower(str[i]);
+// 		write(1, &str[i], 1);
+// 		i++;
+// 	}
+// }
 // int main(int argc, char *argv[])
 // {
 // 	if (argc < 1)
@@ -1265,26 +1299,70 @@
 // 		return 0;
 // 	}
 // 	int args = 1;
-// 	int i = 0;
-// 	while (argv[args])
+// 	while (args < argc)
 // 	{
-// 		while (argv[args][i] != '\0')
-// 		{
-// 			while ((argv[args][i] >= 'a' && argv[args][i] <= 'z') || (argv[args][i] >= 'A' && argv[args][i] <= 'Z'))
-// 			{
-// 				if (argv[args][i + 1] == 32 || (argv[args][i + 1] >= 9 && argv[args][i + 1] <= 13))
-// 				argv[args][i] -= 32;
-// 			}
-// 			i++;
-// 		}
+// 		capitalizer(argv[args]);
+// 		write(1, "\n", 1);
 // 		args++;
 // 	}
-// 	write(1, "\n", 1);
 // 	return 0;
 // }
 
 
-//	ES -14- (tab mult) -> torna!
+//	ES -14- (str capitalizer)
+// char to_upper(char c)
+// {
+// 	if (c >= 'a' && c <= 'z')
+// 		c -= 32;
+// 	return c;
+// }
+
+// char to_lower(char c)
+// {
+// 	if (c >= 'A' && c <= 'Z')
+// 		c += 32;
+// 	return c;
+// }
+
+// int is_space(char c)
+// {
+// 	if (c == 32 || (c >= 9 && c <= 13))
+// 		return 1;
+// 	return 0;
+// }
+
+// void capitalizer(char *str)
+// {
+// 	int i = 0;
+// 	while(str[i])
+// 	{
+// 		if(i == 0 || is_space(str[i - 1]))
+// 			str[i] = to_upper(str[i]);
+// 		else
+// 			str[i] = to_lower(str[i]);
+// 		write(1, &str[i], 1);
+// 		i++;
+// 	}
+// }
+
+// int main(int argc, char *argv[])
+// {
+// 	if (argc <= 1)
+// 	{
+// 		write(1, "\n", 1);
+// 		return 0;
+// 	}
+// 	int args = 1;
+// 	while (args < argc)
+// 	{
+// 		capitalizer(argv[args]);
+// 		write(1, "\n", 1);
+// 		args++;
+// 	}
+// 	return 0;
+// }
+
+//	ES -15- (tab mult) -> torna!
 // int ft_atoi(const char *str)
 // {
 // 	int i = 0;
@@ -1358,11 +1436,14 @@
 //         fill_helper(tab, size, y - 1, x, base);
 // 	}
 // }
+
+
 // void flood_fill(char **tab, t_point size, t_point begin)
 // {
 // 	char base = tab[begin.y, begin.x];
 // 	fill_helper(tab, size, begin.y, begin.x, base);
 // }
+
 
 // char** make_area(char** zone, t_point size)
 // {
@@ -1609,7 +1690,7 @@
 // 	i--;
 // 	while (i >= 0)
 // 	{
-// 		while (i >= 0 && argv[1][i] != 32 && (argv[1][i] >= 9 && argv[1][i] <= 13))
+// 		while (i >= 0 && argv[1][i] == 32 && (argv[1][i] >= 9 && argv[1][i] <= 13))
 // 			i--;
 // 		end = i;
 // 		while (i >= 0 && argv[1][i] != 32 && !(argv[1][i] >= 9 && argv[1][i] <= 13))
@@ -1620,7 +1701,101 @@
 // 			if (i > 0)
 // 				write(1, " ", 1);
 // 		}
+// 		i--;
 // 	}
 // 	write(1, "\n", 1);
 // 	return 0;
+// }
+
+
+//	ES -8- (rostring)
+// int main(int argc, char *argv[])
+// {
+// 	if (argc < 2)
+// 	{
+// 		write (1,"\n", 1);
+// 		return 0;
+// 	}
+// 	int i = 0;
+// 	int flag = 0;
+// 	int word_end = 0;
+// 	int word_start = 0;
+// 	while(argv[1][i] == 32 && argv[1][i] >= 9 && argv[1][i] <= 13)
+// 		i++;
+// 	while(argv[1][i] != 32 && !(argv[1][i] >= 9 && argv[1][i] <= 13))
+// 	{
+// 		word_start = i;
+// 	}
+// 	while(argv[1][i] && argv[1][i] != 32 && !(argv[1][i] >= 9 && argv[1][i] <= 13))
+// 	{
+// 		i++;
+// 	}
+// 	word_end = i - 1;
+// 	while(argv[1][i])
+// 	{
+// 		while(argv[1][i] && argv[1][i] == 32 && argv[1][i] >= 9 && argv[1][i] <= 13)
+// 			i++;
+// 		if(argv[1][i])
+// 		{
+// 			if(flag)
+// 				write(1, " ", 1);
+// 			while(argv[1][i] && argv[1][i] != 32 && !(argv[1][i] >= 9 && argv[1][i] <= 13))
+// 				write(1, &argv[1][i++], 1);
+// 			flag = 1;
+// 		}
+// 	}
+// 	if(flag)
+// 		write(1, " ", 1);
+// 	while(word_start <= word_end)
+// 		write(1, &argv[1][word_start++], 1);
+// 	write(1, "\n", 1);
+// 	return 0;
+// }
+
+
+//	ES -9-
+// void sort_int_tab(int *tab, unsigned int size)
+// {
+// 	unsigned int i = 0;
+// 	unsigned int j = 0;
+// 	int tmp;
+// 	while(i < size)
+// 	{
+// 		j = i + 1;
+// 		while(j < size)
+// 		{
+// 			if(tab[i] > tab[j])
+// 			{
+// 				tmp = tab[i];
+// 				tab[i] = tab[j];
+// 				tab[j] = tmp;
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
+
+
+//	ES -10-
+// t_list *sort_list(t_list *lst, int(*cmp)(int, int))
+// {
+// 	t_list *tmp = lst;
+// 	int swap;
+// 	if(!lst)
+// 		return 0;
+// 	while (lst->next)
+// 	{
+// 		if(((*cmp)(lst->data, lst->next->data)) == 0)
+// 		{
+// 			swap = lst->data;
+// 			lst->data = lst->next->data;
+// 			lst->next->data = swap;
+// 			lst = tmp;
+// 		}
+// 		else
+// 			lst = lst->next;
+// 	}
+// 	lst = tmp;
+// 	return (lst);
 // }

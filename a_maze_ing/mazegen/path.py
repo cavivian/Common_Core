@@ -13,7 +13,7 @@ def il_path(grid, start, end):
     width = len(grid[0])
     height = len(grid)
 
-    sx, sy = start #per coord di patenza
+    sx, sy = start #per coord di partenza
     ex, ey = end
 
     # giri per vedere le celle visitate
@@ -49,7 +49,7 @@ def il_path(grid, start, end):
 
             if dentro_x and dentro_y:
                 if not visited[ny][nx]:
-                    visited[ny][nx] = True #sega come visitata
+                    visited[ny][nx] = True #segna come visitata
                     parent[(nx, ny)] = (x, y, direction) # ricorda arrivo
                     stack.append((nx, ny)) # aggiunge a pila
 
@@ -60,9 +60,9 @@ def ricostruz_percor(parent, start, end):
     strada = []
     current = end
 
-    while current != start: # risale al percc seguedo paret
+    while current != start: # risale al percc seguendo paret
         x, y, direction = parent[current]
-        il_path.append(DIR_LETTERA[direction]) # aggiuge lettera direz
+        strada.append(DIR_LETTERA[direction]) # aggiuge lettera direz
         current = (x, y)
 
     strada.reverse() #percorso al contrario quindi inverte

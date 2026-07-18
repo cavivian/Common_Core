@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 
 
 def diz():
@@ -12,11 +11,7 @@ def diz():
 
 def alternativa(cosa: dict):
     if cosa['mode'] == "production":
-        pass
-
-
-def carica():
-    load_dotenv()
+        pass    
 
 
 def security():
@@ -55,8 +50,11 @@ def output(cose: dict):
 if __name__ == "__main__":
     print()
     print("ORACLE STATUS: Reading the Matrix...")
-
-    carica()
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except ModuleNotFoundError as e:
+        print(e)
     cosi = diz()
     if cosi['mode'] == "production":
         print("miao")
