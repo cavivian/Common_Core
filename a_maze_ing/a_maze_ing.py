@@ -161,7 +161,8 @@ def writeoutput(
 
     file.close()
 
-
+""" funzione che mostra a schermo il labirinto, proponendo anche i possibili colori con i quali può essere
+visto."""
 def display(
         grid: list,
         entry: tuple,
@@ -175,7 +176,7 @@ def display(
         'red':    '\033[91m',
         'green':  '\033[92m',
         'blue':   '\033[94m',
-        'yelow': '\033[93m',
+        'yellow': '\033[93m',
     }
     reset = '\033[0m'
 

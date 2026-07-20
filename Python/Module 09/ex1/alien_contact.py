@@ -3,11 +3,13 @@ from enum import Enum
 from datetime import datetime
 from typing import Optional
 
+
 class ContactType(Enum):
     RADIO = "radio"
     VISUAL = "visual"
     PHYSICAL = "physical"
     TELEPATHIC = "telepathic"
+
 
 class aliencontact(BaseModel):
     contact_id: str = Field(min_length=5, max_length=15)
@@ -20,23 +22,24 @@ class aliencontact(BaseModel):
     message_received: Optional[str] = Field(default=None, max_length=500)
     is_verified: bool = Field(default=False)
 
-
     @model_validator(mode='after')
     def verifica(self) -> str:
         if not self.contact_id.startswith("AC"):
-            raise ValueError ("Contact ID must start with 'AC'")
+            raise ValueError("Contact ID must start with 'AC'")
         phisico = self.contact_type == self.contact_type.PHYSICAL
         veri = self.is_verified
-        if phisico and veri == False:
-            raise ValueError ("Physical contact reports must be verified")
+        if not phisico and veri:
+            raise ValueError("Physical contact reports must be verified")
         tele = self.contact_type == self.contact_type.TELEPATHIC
         testimoni = self.witness_count
         if tele and testimoni < 3:
-            raise ValueError ("Telepathic contact requires at least 3 witnesses")
+            raise ValueError("Telepathic contact requires at least "
+                             "3 witnesses")
         segnale = self.signal_strength
         mess = self.message_received
-        if segnale <= 7.0 and mess == None:
-            raise ValueError ("Strong signals (> 7.0) should include received messages")
+        if segnale <= 7.0 and mess is None:
+            raise ValueError("Strong signals (> 7.0) should "
+                             "include received messages")
         return (self)
 
 
@@ -69,7 +72,7 @@ if __name__ == "__main__":
             contact_id="AC_2024_001",
             timestamp="2026-06-22",
             location="Area 51, Nevada",
-            contact_type= ContactType.TELEPATHIC,
+            contact_type=ContactType.TELEPATHIC,
             signal_strength=8.5,
             duration_minutes=45,
             witness_count=2,

@@ -10,6 +10,7 @@ class Rank(Enum):
     CAPTAIN = "captain"
     COMMANDER = "commander"
 
+
 class Crewmember(BaseModel):
     member_id: str = Field(min_length=3, max_length=10)
     name: str = Field(min_length=2, max_length=50)
@@ -18,6 +19,7 @@ class Crewmember(BaseModel):
     specialization: str = Field(min_length=3, max_length=30)
     years_experience: int = Field(ge=0, le=50)
     is_active: bool = Field(default=True)
+
 
 class SpaceMission(BaseModel):
     mission_id: str = Field(min_length=5, max_length=15)
@@ -29,12 +31,12 @@ class SpaceMission(BaseModel):
     mission_status: str = Field(default="planned")
     budget_millions: float = Field(ge=1.0, le=10000.0)
 
-
     @model_validator(mode='after')
-    def verifica(self):
+    def verifica(self) -> str:
         if not self.mission_id.startswith("M"):
-            raise ValueError ("Mission ID must start with 'M'")
-        ha_leader = any(membro.rank in (Rank.COMMANDER, Rank.CAPTAIN) for membro in self.crew)
+            raise ValueError("Mission ID must start with 'M'")
+        ha_leader = any(membro.rank in (Rank.COMMANDER, Rank.CAPTAIN)
+                        for membro in self.crew)
         if not ha_leader:
             raise ValueError("Must have at least one Commander or Captain")
         missione = self.duration_days > 365
@@ -45,10 +47,11 @@ class SpaceMission(BaseModel):
                     esperti += 1
             perc = (len(self.crew) / esperti) * 100
             if perc < 50:
-                raise ValueError ("Long missions (> 365 days) need 50% experienced crew (5+ years)")
+                raise ValueError("Long missions (> 365 days) need 50% "
+                                 "experienced crew (5+ years)")
         for member in self.crew:
             if not member.is_active:
-                raise ValueError ("All crew members must be active")
+                raise ValueError("All crew members must be active")
         return (self)
 
 
@@ -101,7 +104,8 @@ if __name__ == "__main__":
     print(f"Crew size: {len(mission.crew)}")
     print("Crew members:")
     for member in mission.crew:
-        print(f"- {member.name} ({member.rank.value}) - {member.specialization}")
+        print(f"- {member.name} ({member.rank.value}) -"
+              f" {member.specialization}")
     print("=========================================")
     try:
         sbagliato = SpaceMission(

@@ -29,7 +29,7 @@ PATTERN_42 = [
 PATTERN_HEIGHT = len(PATTERN_42)
 PATTERN_WIDTH = len(PATTERN_42[0])
 
-
+"""classe creatrice del maze"""
 class MazeGenerator:
 
     def __init__(

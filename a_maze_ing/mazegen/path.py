@@ -8,7 +8,9 @@ DY = {NORTH: -1, SOUTH: 1, EAST: 0, WEST: 0}
 
 DIR_LETTERA = {NORTH: 'N', EAST: 'E', SOUTH: 'S', WEST: 'W'}
 
-
+""" algoritmo dfs per calcolare il perocorso che il maze deve fare, quando arriva in fondo si rintraccia il 
+percorso. algoritmo dfs perchè va a tentativi, prova a entrare in una cella se vede che non ha altri sbocchi
+torna indietro e cerca in un'altra cella"""
 def il_path(grid: list, start: tuple, end: tuple) -> str | None:
     width = len(grid[0])
     height = len(grid)
@@ -56,7 +58,7 @@ def il_path(grid: list, start: tuple, end: tuple) -> str | None:
 
     return None  # se pila vuota e niente fine non esiste percorso
 
-
+"""funzione che stampa nel file maze.txt la sequenza del percorso """
 def ricostruz_percor(parent: dict[tuple, tuple],
                      start: tuple, end: tuple) -> str:
     strada = []
