@@ -1067,41 +1067,41 @@
 
 
 //	ES -8- -> torna!
-int *ft_rrange(int start, int end)
-{
-	int tmp;
-	int i = 0;
-	int *arr;
-	if (start > end)
-		arr = malloc(((start - end) + 1) * sizeof(int));
-	else if(start < end)
-		arr = malloc(((end - start) + 1) * sizeof(int));
-	else
-		arr = malloc(sizeof(int));
-	tmp = end;
-	if (start > end)
-		while (tmp <= start)
-			arr[i++] = tmp++;
-	if (start < end)
-		while (tmp > start)
-			arr[i++] = tmp--;
-	else
-		arr[i] = tmp;
-	return (arr);
-}
+// int *ft_rrange(int start, int end)
+// {
+// 	int tmp;
+// 	int i = 0;
+// 	int *arr;
+// 	if (start > end)
+// 		arr = malloc(((start - end) + 1) * sizeof(int));
+// 	else if(start < end)
+// 		arr = malloc(((end - start) + 1) * sizeof(int));
+// 	else
+// 		arr = malloc(sizeof(int));
+// 	tmp = end;
+// 	if (start > end)
+// 		while (tmp <= start)
+// 			arr[i++] = tmp++;
+// 	if (start < end)
+// 		while (tmp > start)
+// 			arr[i++] = tmp--;
+// 	else
+// 		arr[i] = tmp;
+// 	return (arr);
+// }
 
 
-int main()
-{
-	int *nums = ft_rrange(1558056871, 1558056892);
-	int i = 0;
-	while (i < 3)
-	{
-		printf("%d\n", nums[i]);
-		i++;
-	}
-	return 0;
-}
+// int main()
+// {
+// 	int *nums = ft_rrange(1558056871, 1558056892);
+// 	int i = 0;
+// 	while (i < 3)
+// 	{
+// 		printf("%d\n", nums[i]);
+// 		i++;
+// 	}
+// 	return 0;
+// }
 
 
 //	ES -9-(hidenp) -> torna!
@@ -1799,3 +1799,123 @@ int main()
 // 	lst = tmp;
 // 	return (lst);
 // }
+
+
+// int count_len(int n)
+// {
+// 	int count = 1;
+// 	if (n < 0)
+// 	{
+// 		count++;
+// 		n = -n;
+// 	}
+// 	if (n > 9)
+// 	{
+// 		n /= 10;
+// 		count++;
+// 	}
+// 	return (count);
+// }
+
+// char *ft_itoa(int n)
+// {
+// 	int len = count_len(n) + 1;
+// 	char *mem = malloc(sizeof(char) * len);
+// 	mem[len] = '\0';
+// 	len--;
+// 	if (n < 0)
+// 	{
+// 		mem[0] = '-';
+// 		n *= -1;
+// 	}
+// 	if (n == 0)
+// 	{
+// 		mem[0] = '0';
+// 		return mem;
+// 	}
+// 	while(n > 0)
+// 	{
+// 		mem[--len] = n % 10 + 48; 
+// 		n /= 10;
+// 	}
+// 	return (mem);
+// }
+
+
+
+
+int count_len(int n)
+{
+	int count = 1;
+	if (n < 0 )
+		count++;
+	if(n > 9)
+	{
+		n /= 10;
+		count++;
+	}
+	return count;
+}
+
+char *ft_itoa(int n)
+{
+	int len = count_len(n) + 1;
+	char *mem = malloc(sizeof(char) * len);
+	if (!mem)
+		return 0;
+	mem[len] = '\0';
+	if (n < 0)
+	{
+		mem[0] = '-';
+		n = -n;
+	}
+	if (n == 0)
+	{
+		mem[0] = '0';
+		return (mem);
+	}
+	while(n > 0)
+	{
+		mem[--len] = n % 10 + 48;
+		n /= 10;
+	}
+	return (mem);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+	int n = 0;
+	printf("%s\n", ft_itoa(n));
+	return 0;
+}
