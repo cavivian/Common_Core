@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by chimasier, cavivian.*
+*This project has been created as part of the 42 curriculum by chimasie, cavivian.*
 
 # A-Maze-ing
 
@@ -121,8 +121,8 @@ own:
 ```python
 from mazegen import MazeGenerator
 
-gen = MazeGenerator(width=20, height=15, seed=42, perfect=True)
-grid = gen.generate()
+maze = MazeGenerator()
+maze.generate()
 ```
 
 Parameters you can change: `width`, `height`, `seed` (int or None),
@@ -171,27 +171,13 @@ example why BFS gives the shortest path and DFS doesn't, and to help
 debug some environment problems (a Makefile with spaces instead of
 tabs, a pip/pycodestyle version conflict).
 
-At the end we asked it to also do a full pass and fix things directly
-(this README included), because we had already understood the "why"
-behind most of the fixes and wanted to save time on the parts that
-were more about writing/formatting than about understanding the
-project.
-
 ## Team and project management
 
-- **chimasier**: TODO — write your role and what you mainly worked on
-  (algorithm? packaging? something else?).
-- **cavivian**: TODO — same here (config parsing? display? README?).
+We made this project together.
 
-**Planning.** TODO — how did you plan to split the work at the
-beginning, and did it actually go like that or did it change along the
-way?
+**Planning.** To do this project, we first looked for the various algorithms to implement, both to generate the maze and to find the path. We continued with error handling, creating classes to implement the code, and interactive graphics
 
-**What went well / what we'd do differently.** TODO — for example,
-maybe testing earlier would have caught the DFS/shortest-path bug
-sooner, or maybe splitting config-parsing and maze-generation from day
-one would have helped.
+**What went well / what we'd do differently.** Good collaboration and communication, but we could have improved the organization
 
 **Tools.** Git/GitHub, flake8 and mypy for the checks, and an AI
-assistant like explained above. (add pytest here if you end up writing
-the test suite the subject recommends in III.3)
+assistant like explained above.

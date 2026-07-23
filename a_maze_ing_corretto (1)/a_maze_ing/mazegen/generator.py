@@ -1,6 +1,6 @@
 """Reusable maze generation module.
 
-This module exposes a single class, ``MazeGenerator``, which builds a
+This module exposes a single class, ``Maze``, which builds a
 rectangular maze using a recursive-backtracker algorithm (a randomized
 depth-first search over the grid of cells). Each cell is represented as
 one integer whose 4 lowest bits encode its closed walls:
@@ -16,9 +16,9 @@ its West wall closed too), so the grid always stays coherent.
 
 Basic usage::
 
-    from mazegen import MazeGenerator
+    from mazegen import Maze
 
-    gen = MazeGenerator(width=20, height=15, seed=42, perfect=True)
+    gen = Maze(width=20, height=15, seed=42, perfect=True)
     grid = gen.generate()  # grid[y][x] is the wall value of that cell
 
 Passing the same ``seed`` twice always produces the same maze, which
@@ -58,7 +58,7 @@ PATTERN_HEIGHT = len(PATTERN_42)
 PATTERN_WIDTH = len(PATTERN_42[0])
 
 
-class MazeGenerator:
+class Maze:
     """Generate a maze on a rectangular grid of cells.
 
     The generator can produce either a perfect maze (exactly one path
