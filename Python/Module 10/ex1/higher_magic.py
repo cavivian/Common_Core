@@ -1,10 +1,16 @@
 from typing import Callable, Tuple
 
-# def fireball(target: str, power: int) -> str:
-#     return f"Fireball hits {target}"
 
-# def heal(target: str, power: int) -> str:
-#     return f"Heals {target}"
+def fireball(target: str, power: int) -> str:
+    return f"Fireball hits {target}"
+
+
+def heal(target: str, power: int) -> str:
+    return f"Heals {target}"
+
+
+def powerino(target: str, power: int) -> int:
+    return power
 
 
 def spell_combiner(spell1: Callable, spell2: Callable) -> Callable:
@@ -48,5 +54,19 @@ if __name__ == "__main__":
     print(f"Combined spell result: {result[0]}, {result[1]}")
 
     print("\nTesting power amplifier...")
-    mega_fireball = power_amplifier(fireball, 3)
-    print(f"Original: 10, Amplified: {10 * 3}") #da riguardare
+    mega_power = power_amplifier(powerino, 3)
+    print(f"Original: {powerino('Dragon', 10)}, "
+          f"Amplified: {mega_power('Dragon', 10)}")
+
+    print("\nTesting conditional caster...")
+
+    def is_powerful(target: str, power: int) -> bool:
+        return power > 50
+
+    cast_if_strong = conditional_caster(is_powerful, fireball)
+    print(cast_if_strong("Goblin", 80))
+    print(cast_if_strong("Goblin", 20))
+
+    print("\nTesting spell sequence...")
+    sequence = spell_sequence([fireball, heal, powerino])
+    print(sequence("Orc", 15))

@@ -3,6 +3,7 @@ from typing import Callable
 
 def mage_counter() -> Callable:
     count = 0
+
     def counter() -> int:
         nonlocal count
         count += 1
@@ -12,6 +13,7 @@ def mage_counter() -> Callable:
 
 def spell_accumulator(initial_power: int) -> Callable:
     total = initial_power
+
     def accumul(quant: int) -> int:
         nonlocal total
         total += quant
@@ -27,13 +29,16 @@ def enchantment_factory(enchantment_type: str) -> Callable:
 
 def memory_vault() -> dict[str, Callable]:
     memory = {}
+
     def store(key: str, value) -> None:
-        nonlocal memory
+        # nonlocal memory
         memory[key] = value
-    def recall(key: str):
+
+    def recall(key: str) -> object:
         if key in memory:
             return memory[key]
-        return "Memory non found "
+        return "Memory not found"
+
     return {'store': store, 'recall': recall}
 
 
