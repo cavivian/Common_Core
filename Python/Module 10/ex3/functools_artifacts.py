@@ -1,13 +1,13 @@
 import functools
 import operator
-from typing import Callable
+from typing import Callable, Any
 
 
 def spell_reducer(spells: list[int], operation: str) -> int:
     if not spells:
         return 0
 
-    operations = {
+    operations: dict[str, Callable[[int, int], int]] = {
         "add": operator.add,
         "multiply": operator.mul,
         "max": max,
@@ -16,9 +16,6 @@ def spell_reducer(spells: list[int], operation: str) -> int:
 
     if operation not in operations:
         raise ValueError(f"Unknown operation: {operation}")
-
-    if operation in ("max", "min"):
-        return operations[operation](spells)
 
     return functools.reduce(operations[operation], spells)
 
@@ -45,9 +42,9 @@ def memoized_fibonacci(n: int) -> int:
     return memoized_fibonacci(n - 1) + memoized_fibonacci(n - 2)
 
 
-def spell_dispatcher() -> Callable[[any], str]:
+def spell_dispatcher() -> Callable[[Any], str]:
     @functools.singledispatch
-    def dispatch(spell: any) -> str:
+    def dispatch(spell: Any) -> str:
         return "Unknown spell type"
 
     @dispatch.register(int)
