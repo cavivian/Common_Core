@@ -6,7 +6,22 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/07/31 15:04:05 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/08/05 16:36:05 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "codexion.h"
+
+int main(int argc, char *argv[])
+{
+	if(argc != 2)
+	{
+		return 0;
+	}
+	int i = 0;
+	//int 
+	while (i < argc)
+	{
+		
+	}
+}
