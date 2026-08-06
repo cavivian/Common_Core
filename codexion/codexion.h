@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/05 16:30:43 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/08/06 12:06:36 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@
 #include <time.h>
 
 
-struct Coders{
-	int *number_of_coders;
-		
-};
+
 
 
 #endif
