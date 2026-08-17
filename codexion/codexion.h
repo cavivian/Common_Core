@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/14 16:15:46 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/17 17:23:01 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,28 @@
 #include <sys/time.h>
 #include <time.h>
 
-struct controllo
+// struct perche' i coders non possono comunicare tra loro e ho bisogno che qualcuno
+// controlli i tempi di esecuzione. Deve stampare anche il messaggio di errore entro 10ms.
+// e deve stoppare l'eseuzione del programma.
+typedef struct s_controllo
 {
     pthread_t time_to_burnout;
     pthread_t number_of_compiles_required;
-};
+	pthread_t dongle_cooldown;
+}	t_controllo;
 
-struct Coders
+
+
+// struct dei coders, che contiene le azioni che devono fare nel tempo stabilito
+typedef struct s_coders
 {
-    pthread_t numbers_of_coders;
-    pthread_t time_to_compile;
-    pthread_t time_to_debug;
-    pthread_t time_to_refactor;
+	int index;
+    pthread_t coder_thread;
+    pthread_mutex_t time_to_compile;
+    pthread_mutex_t time_to_debug;
+    pthread_mutex_t time_to_refactor;
     
-};
+}	t_coders;
 
 
 
