@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/06 17:18:25 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/08/11 15:47:36 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void *coders(void *args)
-{
+// void *coders(void *args)
+// {
 	
-}
+// }
 
 int	main(int argc, char *argv[])
 {
@@ -34,7 +34,7 @@ int	main(int argc, char *argv[])
 		return (0);
 	while(i < conv && conv > 0)
 	{
-		arr[i] = pthread_create(&number_of_coders, NULL, &coders, NULL);
+		arr[i] = pthread_create(&number_of_coders, NULL, NULL, NULL);
 		i++;
 	}
 	return (0);
