@@ -8,7 +8,7 @@ class Creature(ABC):
         self.type = types
 
     def describe(self) -> str:
-        return(f"{self.name} is a {self.type} type Creature")
+        return (f"{self.name} is a {self.type} type Creature")
 
     @abstractmethod
     def attack(self) -> str:
@@ -34,7 +34,7 @@ class Bloomelle(Creature, HealCapability):
         return (f"{self.name} uses Petal Dance!")
 
     def heal(self) -> str:
-        return(f"{self.name} heals itself and others for a large amount")
+        return (f"{self.name} heals itself and others for a large amount")
 
 
 class Shiftling(Creature, TransformCapability):
@@ -66,11 +66,11 @@ class Morphagon(Creature, TransformCapability):
         if self.bloom is True:
             return (f"{self.name} unleashes a devastating morph strike!")
         else:
-            return(f"{self.name} attacks normally.")
+            return (f"{self.name} attacks normally.")
 
     def transform(self) -> str:
         self.bloom = True
-        return(f"{self.name} morphs into a dragonic battle form!")
+        return (f"{self.name} morphs into a dragonic battle form!")
 
     def revert(self) -> str:
         self.bloom = False
