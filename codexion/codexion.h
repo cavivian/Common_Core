@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/18 15:46:57 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/24 11:53:03 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ typedef struct s_coders
 	int index;
     pthread_t coder_thread;
     pthread_mutex_t time_to_compile;
-    pthread_mutex_t time_to_debug;
     pthread_mutex_t time_to_refactor;
+    pthread_mutex_t time_to_debug;
     
 }	t_coders;
 

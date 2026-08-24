@@ -18,7 +18,7 @@ void print_coders(t_coders *coders, int size) {
 }
 
 t_coders *init_vals(int size) {
-	t_coders *c = malloc(sizeof(t_coders) * size);
+	t_coders *c = malloc(sizeof(t_coders) * size); // c'è da capire se in questo caso c è un array o una struct
 	int i = 0;
 	while (i < size) {
 		c[i].index = i + 1;

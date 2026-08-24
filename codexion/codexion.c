@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/23 18:38:40 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/24 12:05:23 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void *coderses(void *arg)
 
 int creation_thread(t_coders *coders)
 {
-	t_coders *codx = malloc(sizeof(t_coders)); // edo lo aveva scritto con un (coders[1] * sizeof(t_coders))
+	t_coders *codx = malloc(sizeof(t_coders)); // Edo lo aveva scritto con un (coders[1] * sizeof(t_coders))
 	int i;
 
 	i = 0;
@@ -59,7 +59,7 @@ int parse(int argc, char *argv[])
 		{
 			if (!(atoi(argv[args][i]) >= 0 && atoi(argv[args][i]) <= 9))
 				return 0;
-			else if (argv[1][i]) // condizione per controllare i parametri dei millisecondi dei tempi 
+			else if (argv[args][i]) // condizione per controllare i parametri dei millisecondi dei tempi 
 			i++;
 		}
 		args++;
@@ -96,16 +96,49 @@ int *prova(int argc, char *argv[])
 	return (arr);
 }
 
+
+// qui dentro ci dovrebbe essere la creazione della struct con i thread dei vari elementi
+// che servono al coder per esistere
+// la funzione che viene passata ai create è il "main" del progetto
+t_coders *init_array(int size) 
+{
+	t_coders *cod = malloc(sizeof(t_coders) * size);
+	int i;
+
+	i = 0;
+	while(i < size)
+	{
+		if (pthread_create(cod[i].coder_thread, NULL, &coderses, NULL) != 0)
+			return NULL;
+		else if (pthread_mutex_create(cod[i].time_to_compile, NULL, &coderses, NULL) != 0)
+			return NULL;
+		else if (pthread_mutex_create(cod[i].time_to_refactor, NULL, &coderses, NULL) != 0)
+			return NULL;
+		else if (pthread_mutex_create(cod[i].time_to_debug, NULL, &coderses, NULL) != 0)
+			return NULL;
+		i++;
+	}
+	if (pthread_join(cod, NULL) != 0)
+		return NULL;
+	return (cod);
+}
+
+
 //qua dentro ci  stanno le chiamate alle funzioni. prima parse
 // poi creazione thread, e la creazione dell'array preso dal parse
 int	main(int argc, char *argv[])
 {
-	if (argc != 2)
+	if (argc != 9)
 		return 0;
-	t_coders	*coders;
+	parse(argc, argv);
+	// qui va passato il parse, se va a buon fine prosegue, altrimenti si ferma il programma
+	t_coders	*coders; // array di struct che contiene i thread che compongono le struct con i vari  dati dei vari coders
 
 	// assegni variabili
-	coders = prova(argc, argv);
-	creation_thread(coders);
+	// argv[1] rappresenta il numero delle struct dentro l'array che devono essere create
+	coders = init_array(atoi(argv[1])); // in questa funzione quindi vanno creati i thread veri e propri,
+	// sia per i coders, sia per i vari parametri che devono avere
+	// ! alcuni thread sono di tipo mutex (specificato dal subject)
+	//creation_thread(coders);
 	return (0);
 }
