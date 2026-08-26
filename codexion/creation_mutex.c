@@ -6,11 +6,33 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/08/26 17:28:53 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/26 23:50:34 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+pthread_t	*init_threads(int size)
+{
+	int	i;
+	pthread_t	*cod_thread;
+
+	cod_thread = malloc(sizeof(pthread_t) * size);
+	if (!cod_thread)
+		return (NULL);
+	i = 0;
+	while(i < size)
+	{
+		if (pthread_create(&cod_thread[i], NULL, coderses, NULL) != 0)
+		{
+			free(cod_thread);
+			return (NULL);
+		}
+		i++;
+	}
+	return (cod_thread);
+}
+
 
 t_dongle	*init_array_dongle(t_quantum *q)
 {
@@ -51,6 +73,8 @@ t_coders *init_array_coders(t_quantum *q)
 	i = 0;
 	while (i < coders)
 	{
-		
+		coders[i].index = i;
+		coders[i].coder_thread = init_threads(num);
+		coders[i].mutex = "ciao";
 	}	
 }

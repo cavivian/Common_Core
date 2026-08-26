@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/26 17:05:21 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/26 23:19:56 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ int	main(int argc, char *argv[])
 	{
 			// assegni variabili
 			// argv[1] rappresenta il numero delle struct dentro l'array che devono essere create
-		coders = init_array(&q); // in questa funzione quindi vanno creati i thread veri e propri,
+		coders = init_array(&q, 9); // in questa funzione quindi vanno creati i thread veri e propri,
 			// sia per i coders, sia per i vari parametri che devono avere
 			// ! alcuni thread sono di tipo mutex (specificato dal subject)
 			//creation_thread(coders); // questa funzione ormai non serve più perchè l'ho fatto dentro init array
