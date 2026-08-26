@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/25 23:13:52 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/26 17:10:34 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,85 @@
 #include <sys/time.h>
 #include <time.h>
 
+
+// enum per semplificare il parse dello scheduler 
+typedef enum e_algorithm
+{
+	FIFO,
+	EDF
+}	t_algorithm;
+
+
+// struct che contine tutte le impostazioni riguardanti i coders e anche l'algoritmo 
+// che va scelto
+// sono di tipo int e non pthread perchè sono tempi
+typedef struct s_settings
+{
+	int			n_of_coders;	
+	int			burnout;
+	int 		compile;
+	int 		debug;
+	int 		refactor;
+	int			number_of_compiles_required;
+	int 		dongle_cooldown;
+
+	t_algorithm	algorithm;
+	
+}	t_settings;
+
+
+// struct che dentro di sè contiene le info che ripesca da settings
+// non va mallocato, alloca e freea da sè
+typedef struct s_quantum
+{
+	t_settings		config;
+	pthread_mutex_t	m_print;
+}	t_quantum;
+
+
 // struct perche' i coders non possono comunicare tra loro e ho bisogno che qualcuno
 // controlli i tempi di esecuzione. Deve stampare anche il messaggio di errore entro 10ms.
-// e deve stoppare l'eseuzione del programma.
+// e deve stoppare l'esecuzione del programma.
 typedef struct s_check
 {
-    pthread_t time_to_burnout;
-    pthread_t number_of_compiles_required;
-	pthread_t dongle_cooldown;
+	
 }	t_check;
 
 
+// struct che ci serve per capire lo stato di una chiavetta
+// per rendere sicuro che un coder alla volta la prenda
+// anche perchè dentro il suo lock e unlock ci vanno tutti i tempi di esecuzione, e la chiavetta non 
+// può essere usata dal coder accanto e per evitare che venga duplicata
+typedef struct s_dongle
+{
+	pthread_mutex_t m_dongle;
+	// altre info
+}	t_dongle;
 
-// struct dei coders, che contiene le azioni che devono fare nel tempo stabilito
+
+// struct dei coders, che ripesca dentro quantum i parametri
+// che i coders devono rispettare per eseguire le azioni 
 typedef struct s_coders
 {
-	int index;
-    pthread_t coder_thread;
-    pthread_mutex_t time_to_compile;
-    pthread_mutex_t time_to_refactor;
-    pthread_mutex_t time_to_debug;
-    
+	int				index;
+	pthread_t		coder_thread;
+	pthread_mutex_t	mutex; // mutex per ogni coder che si crea
+
+	t_dongle		*dongle_sx; // controllo per la dongle sx
+	t_dongle		*dongle_dx; // controllo per la dongle dx
+	
+	
+	
+	t_quantum		*quantum; // ripescaggio di tutti i parametri di esecuzione
 }	t_coders;
 
-t_coders *init_array(int size);
-int parse(int argc, char **argv);
+t_coders *init_array(t_quantum *quantum, int size);
+int parse(t_quantum *q, int argc, char **argv);
 void *coderses(void *arg);
 int join_threads(t_coders *cod, int i);
 void	cleanup_all(t_coders *cod, int size);
-void	cleanup(t_coders *cod, int i, int status);
+void	cleanup(t_dongle *dongle, int i);
+int validation(int argc, char **argv);
+t_dongle	*init_array_dongle(t_quantum *q);
 
 #endif

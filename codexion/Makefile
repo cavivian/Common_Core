@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
+#    By: camilla <camilla@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/31 14:52:25 by cavivian          #+#    #+#              #
-#    Updated: 2026/07/31 15:00:38 by cavivian         ###   ########.fr        #
+#    Updated: 2026/08/26 14:38:58 by camilla          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,22 +14,16 @@ NAME = codexion
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -pthread
 
 SRCS = codexion.c
 
-OBJS = $(SRCS:.c=.o)
-
 all: $(NAME)
 
-$(NAME): $(OBJS)
-		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+$(NAME): $(SRCS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-	
 clean:
-	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
