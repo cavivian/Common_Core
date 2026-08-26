@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/24 11:53:03 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/25 23:13:52 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ typedef struct s_coders
     
 }	t_coders;
 
-
+t_coders *init_array(int size);
+int parse(int argc, char **argv);
+void *coderses(void *arg);
+int join_threads(t_coders *cod, int i);
+void	cleanup_all(t_coders *cod, int size);
+void	cleanup(t_coders *cod, int i, int status);
 
 #endif

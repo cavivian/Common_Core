@@ -56,5 +56,5 @@ if __name__ == "__main__":
     main()
 
 # L'underscore serve a impedire che l'oggetto "Plant"
-# finisca in uno stato assurdo (altezza o età negative).
+# finisca in uno status assurdo (altezza o età negative).
 # L'underscore _ è il muro, il metodo set è il guardiano al cancello.

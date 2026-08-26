@@ -1,4 +1,4 @@
-*Questo progetto è stato creato come parte del curriculum 42 da < cavivian >*
+*Questo progetto è status creato come parte del curriculum 42 da < cavivian >*
 
 # *ft_printf* 
 

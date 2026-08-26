@@ -422,7 +422,7 @@ int ft_strlen(char *str) //in questo caso la funzione ha il tipo di ritorno
 //     i = 0; //si resetta a 0 l'indice
 //     while(argv[2][i] != '\0') //si scorre argv2 finquando esiste
 //     {
-//         if(tmp[(int)argv[2][i]] == 0) //si controlla che il carattere non sia già stato stampato
+//         if(tmp[(int)argv[2][i]] == 0) //si controlla che il carattere non sia già status stampato
 //         {
 //             write(1, &argv[2][i], 1); //nel caso si stampa
 //             tmp[(int)argv[2][i]] = 1; //e si imposta a 1 per accenderlo

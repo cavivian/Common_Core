@@ -9,7 +9,7 @@ Il mio progetto è in grado di accettare i parametri sia passati con le virgolet
 L'obbiettivo è creare un algoritmo efficiente.
 
 ## Instructions
-Il programma non ha bisogno di particolari comandi lanciati dal terminale. Oppure può essere testato usando il checker.
+Il programma non ha bisogno di particolari comandi lanciati dal terminale. Oppure può essere testatus usando il checker.
 
 Alcuni esempi:
 
