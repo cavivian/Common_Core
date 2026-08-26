@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/26 10:44:29 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/26 11:08:04 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // manca un free da qualche parte
 
-// funzione "main"  che conterra' tutto il loop delle azioni dei vari coders
+// funzione "main" che conterra' tutto il loop delle azioni dei vari coders
 void *coderses(void *arg)
 {
 	//t_coders *coders = (t_coders *)arg;
@@ -116,6 +116,20 @@ void	cleanup_all(t_coders *cod, int size) // funzione che distrugge i mutex crea
 		i++;
 	}
 	free(cod);
+}
+
+int parse(int argc, char *argv[])
+{
+	int args;
+	int i;
+	
+	i = 0;
+	args = 0;
+	while(args < argc)
+	{
+		
+		args++;
+	}
 }
 
 
