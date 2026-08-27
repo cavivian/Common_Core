@@ -6,34 +6,31 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/08/26 23:50:34 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/27 17:55:04 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-pthread_t	*init_threads(int size)
+// funzione che mi crea i thread per ogni coder, che poi vanno assegnati, ogni coder ha il suo
+// crea già tutti i thread dell'array.
+int	init_threads(t_coders *cod, int size)
 {
 	int	i;
-	pthread_t	*cod_thread;
 
-	cod_thread = malloc(sizeof(pthread_t) * size);
-	if (!cod_thread)
-		return (NULL);
 	i = 0;
 	while(i < size)
 	{
-		if (pthread_create(&cod_thread[i], NULL, coderses, NULL) != 0)
+		if (pthread_create(&cod[i].coder_thread, NULL, coderses, NULL) != 0)
 		{
-			free(cod_thread);
-			return (NULL);
+			return (1);
 		}
 		i++;
 	}
-	return (cod_thread);
+	return (0);
 }
 
-
+// funzion eche crea gli array per le dongle dei coders
 t_dongle	*init_array_dongle(t_quantum *q)
 {
 	int	number;
@@ -58,7 +55,7 @@ t_dongle	*init_array_dongle(t_quantum *q)
 	return (dongle);
 }
 
-
+// funzione che crea l'array di coders, e assegna a ogni cella il proprio valore
 t_coders *init_array_coders(t_quantum *q)
 {
 	int i;
@@ -71,10 +68,13 @@ t_coders *init_array_coders(t_quantum *q)
 		return (NULL);
 	memset(coders, 0, num * sizeof(t_coders));
 	i = 0;
-	while (i < coders)
+	while (i < num)
 	{
 		coders[i].index = i;
-		coders[i].coder_thread = init_threads(num);
-		coders[i].mutex = "ciao";
+		coders[i].quantum = q;
+		i++;
 	}	
+	coders[i].coder_thread = init_threads(coders, num);
+	coders[i].mutex = i;
+	return (coders);
 }
