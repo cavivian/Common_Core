@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/26 17:10:34 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/28 11:22:02 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef struct s_coders
 	t_quantum		*quantum; // ripescaggio di tutti i parametri di esecuzione
 }	t_coders;
 
-t_coders *init_array(t_quantum *quantum, int size);
+t_coders *init_array_coders(t_quantum *q);
 int parse(t_quantum *q, int argc, char **argv);
 void *coderses(void *arg);
 int join_threads(t_coders *cod, int i);
@@ -100,5 +100,7 @@ void	cleanup_all(t_coders *cod, int size);
 void	cleanup(t_dongle *dongle, int i);
 int validation(int argc, char **argv);
 t_dongle	*init_array_dongle(t_quantum *q);
+void	cleanup_coders(t_coders *cod, int size);
+void	cleanup_thread(t_coders *cod, int i);
 
 #endif

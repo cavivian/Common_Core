@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/26 23:19:56 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/28 17:50:56 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,21 @@ int validation(int argc, char **argv)
 		i = 0;
 		while(argv[args][i]) 
 		{
-			if (!(argv[args][i] >= 48 && argv[args][i] <= 57))
-				return (1);
+			if (!(argv[args][i] >= '0' && argv[args][i] <= '9'))
+				return (0);
 			i++;
 		}
 		args++;
 	}
 	if (strcmp(argv[7], "FIFO") && strcmp(argv[7], "fifo")
 		&& strcmp(argv[7], "EDF") && strcmp(argv[7], "edf"))
-			return (0);
-	return (0);
+			return (1);
+	return (1);
 }
 
 // parse che chiama validation
+// controlla che tutti i parametri passati siano int
+// e li assegna a ogni variabile della struct quantum 
 int parse(t_quantum *q, int argc, char **argv)
 {
 	if (!validation(argc, argv))
@@ -106,37 +108,7 @@ int parse(t_quantum *q, int argc, char **argv)
 	return (1);	
 }
 
-void	cleanup(t_dongle *dongle, int i) // funzione che gestisce gli errori di creazione dei mutex
-{
-	// Distrugge i 3 mutex dei coder precedenti, già completamente inizializzati
-	int j;
-	
-	j = 0;
-	while (j < i)
-	// I coder con indice < i sono già completamente inizializzati
-	{
-		pthread_mutex_destroy(&dongle[j]);
-		j++;
-	}
-	free(dongle);
-}
-
-
-void	cleanup_all(t_coders *cod, int size) // funzione che distrugge i mutex creati se si ha problemi con il join dei thread
-{
-	int i;
-	
-	i = 0;
-	while (i < size)
-	{
-		i++;
-	}
-	free(cod);
-}
-
-
-
-int join_threads(t_coders *cod, int i)
+int join_threads(t_coders *cod, int i) // finita
 {
 	int j;
 
@@ -144,47 +116,11 @@ int join_threads(t_coders *cod, int i)
 	while(j < i)
 	{
 		if (pthread_join(cod[j].coder_thread, NULL) != 0)
-		{
-			cleanup_all(cod, i);
-			return (1);
-		}
+			return (0);
 		j++;
 	}
-	return (0);
+	return (1);
 }
-
-// qui dentro ci dovrebbe essere la creazione della struct con i thread dei vari elementi (troppo lunga)
-// che servono al coder per esistere
-// la funzione che viene passata ai create è il "main" del progetto
-// size è la conversione in int del num passato da argc che rappresenta il numero dei coders
-
-t_coders *init_array(t_quantum *quantum, int size) 
-{
-	t_coders *cod = malloc(sizeof(t_coders) * size); // si alloca una struct per quanti sono i coders
-	if (!cod)
-		return NULL;
-	int i;
-	int status; // variabile che mi serve per capire quanti mutex di cod[i] sono stati inizializzati con successo
-	
-	i = 0;
-	while(i < size)
-	{
-		status = 0; // mi serve per la funzione cleanup()
-		cod[i].index = i;
-		
-		status++;
-		if (pthread_create(&cod[i].coder_thread, NULL, coderses, &cod[i]) != 0)
-		{
-			cleanup(cod, i);
-			return NULL;
-		}
-		i++;
-	}
-	if (join_threads(cod, i) != 0)
-		return NULL;
-	return (cod);
-}
-
 
 //qua dentro ci  stanno le chiamate alle funzioni. prima parse
 // poi creazione thread, e la creazione dell'array preso dal parse
@@ -193,19 +129,20 @@ int	main(int argc, char *argv[])
 {
 	t_quantum q;
 	
-	if (argc != 2)
+	if (argc != 9)
 		return 0;
 		// qui va passato il parse, se va a buon fine prosegue, altrimenti si ferma il programma
 	t_coders	*coders; // array di struct che contiene i thread che compongono le struct con i vari  dati dei vari coders
-	if (parse(&q, argc, argv) != 0)
+	if (parse(&q, argc, argv) != 1)
 	{
 			// assegni variabili
 			// argv[1] rappresenta il numero delle struct dentro l'array che devono essere create
-		coders = init_array(&q, 9); // in questa funzione quindi vanno creati i thread veri e propri,
+		coders = init_array_coders(&q); // in questa funzione quindi vanno creati i thread veri e propri,
+		if (coders == NULL)
+			return (0);
 			// sia per i coders, sia per i vari parametri che devono avere
 			// ! alcuni thread sono di tipo mutex (specificato dal subject)
 			//creation_thread(coders); // questa funzione ormai non serve più perchè l'ho fatto dentro init array
-	}
-	printf("%ld", coders->coder_thread);	
+	}	
 	return 0;
 }
