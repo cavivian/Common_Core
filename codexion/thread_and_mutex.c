@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   thread_and_mutex.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/08/28 17:36:07 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/31 11:16:39 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// funzione che mi crea i thread per ogni coder, che poi vanno assegnati, ogni coder ha il suo
+// funzione che mi crea i thread per ogni coder, che poi vanno assegnati, ogni coder ha il suo thread
 // crea già tutti i thread dell'array.
 int	init_threads(t_coders *cod, int size, int *count) // finita
 {
@@ -49,7 +49,7 @@ int	init_mutex(t_coders *cod, int size) // finita
 	return (1);
 }
 
-// funzion eche crea gli array per le dongle dei coders
+// funzione che crea gli array per le dongle dei coders
 t_dongle	*init_array_dongle(t_quantum *q) // finita
 {
 	int	number;

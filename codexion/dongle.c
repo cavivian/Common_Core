@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dongle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/08/28 17:45:52 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/31 11:15:25 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size)
 	int	i;
 
 	i = 0;
-	if (size == 1)
+	if (size == 1) // se abbiamo un solo coder, abbiamo anche una sola dongle
 	{
 		cod[i].dongle_dx = &dongle[0];
 		cod[i].dongle_sx = &dongle[0];
@@ -26,7 +26,7 @@ t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size)
 	{
 		while (i < size)
 		{
-			if (i == 0)
+			if (i == 0) // se e' il primo coder
 			{
 				cod[i].dongle_sx = &dongle[size - 1];
 				cod[i].dongle_dx = &dongle[i + 1];

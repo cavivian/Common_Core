@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error_management.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 10:18:46 by camilla           #+#    #+#             */
-/*   Updated: 2026/08/28 11:10:58 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/31 11:16:00 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	cleanup(t_dongle *dongle, int i) // funzione che gestisce gli errori di creazione dei mutex
+void	cleanup(t_dongle *dongle, int i) // funzione che gestisce gli errori di creazione dei mutex della dongle
 {
 	int j;
 	
@@ -26,7 +26,7 @@ void	cleanup(t_dongle *dongle, int i) // funzione che gestisce gli errori di cre
 }
 
 
-void	cleanup_coders(t_coders *cod, int size)
+void	cleanup_coders(t_coders *cod, int size) // gestisce gli errori del mutex del coder
 {
 	int i;
 

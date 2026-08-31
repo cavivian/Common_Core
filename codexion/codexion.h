@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/28 11:22:02 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/31 13:58:09 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct s_settings
 // non va mallocato, alloca e freea da sè
 typedef struct s_quantum
 {
+	int			simulation_stop;
+	pthread_mutex_t m_simulation_stop;
 	t_settings		config;
 	pthread_mutex_t	m_print;
 }	t_quantum;

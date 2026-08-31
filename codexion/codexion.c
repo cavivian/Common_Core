@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/28 17:50:56 by camilla          ###   ########.fr       */
+/*   Updated: 2026/08/31 17:41:47 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
-
-// --------------------
-
-// array dongle, va allocato e inizializzazione dei mutex e memset -> FATTO!
-// array coders , allocati n coders e inizializzati i mutex e memset(dopo allocazione)
-// creazione pthread_mutex
-// in quantum -> mutex stampa
-// tutti i mutex della dongle
-
-// --------------------
 
 
 // manca un free da qualche parte
@@ -63,7 +53,7 @@ void *coderses(void *arg)
 
 // parte del parse per controllare che i primi 7 arg siano int
 // e che l'ultimo sia una stringa, controllo con strcmp
-int validation(int argc, char **argv)
+int validation(int argc, char **argv) // finita
 {
 	int args;
 	int	i;
@@ -73,6 +63,8 @@ int validation(int argc, char **argv)
 	while(args < argc - 1) // si scorre args finchè è minore di argc
 	{
 		i = 0;
+		if (argv[args][i] == '\0') // controlla che non venga passata una stringa vuota
+			return (0);
 		while(argv[args][i]) 
 		{
 			if (!(argv[args][i] >= '0' && argv[args][i] <= '9'))
@@ -81,22 +73,21 @@ int validation(int argc, char **argv)
 		}
 		args++;
 	}
-	if (strcmp(argv[7], "FIFO") && strcmp(argv[7], "fifo")
-		&& strcmp(argv[7], "EDF") && strcmp(argv[7], "edf"))
-			return (1);
+	if (strcmp(argv[8], "edf") != 0 && strcmp(argv[8], "fifo") != 0)
+			return (0);
 	return (1);
 }
 
 // parse che chiama validation
 // controlla che tutti i parametri passati siano int
 // e li assegna a ogni variabile della struct quantum 
-int parse(t_quantum *q, int argc, char **argv)
+int parse(t_quantum *q, int argc, char **argv) // finita
 {
 	if (!validation(argc, argv))
 		return (0);
-	if (!strcmp(argv[7], "FIFO") || !strcmp(argv[7], "fifo"))
+	if (!strcmp(argv[8], "fifo"))
 		q->config.algorithm = FIFO;
-	else if (!strcmp(argv[7], "edf") || !strcmp(argv[7], "EDF"))
+	else if (!strcmp(argv[8], "edf"))
 		q->config.algorithm = EDF;
 	q->config.n_of_coders = atoi(argv[1]);
 	q->config.burnout = atoi(argv[2]);
@@ -131,18 +122,74 @@ int	main(int argc, char *argv[])
 	
 	if (argc != 9)
 		return 0;
-		// qui va passato il parse, se va a buon fine prosegue, altrimenti si ferma il programma
-	t_coders	*coders; // array di struct che contiene i thread che compongono le struct con i vari  dati dei vari coders
-	if (parse(&q, argc, argv) != 1)
+	if (validation(argc, argv) == 1)
 	{
+		t_coders	*coders; // array di struct che contiene i thread che compongono le struct con i vari  dati dei vari coders
+		if (parse(&q, argc, argv) == 1)
+		{
 			// assegni variabili
 			// argv[1] rappresenta il numero delle struct dentro l'array che devono essere create
-		coders = init_array_coders(&q); // in questa funzione quindi vanno creati i thread veri e propri,
-		if (coders == NULL)
+			q.simulation_stop = 0;
+			pthread_mutex_init(&q.m_simulation_stop, NULL);
+			coders = init_array_coders(&q); // in questa funzione quindi vanno creati i thread veri e propri,
+			if (coders == NULL)
+				return (0);
+			if(join_threads(coders, q.config.n_of_coders) != 1)
+			{
+				pthread_mutex_lock(&q.m_simulation_stop);
+				q.simulation_stop = 1;
+				pthread_mutex_unlock(&q.m_simulation_stop);
+			}
+			cleanup_all(coders, q.config.n_of_coders);
 			return (0);
-			// sia per i coders, sia per i vari parametri che devono avere
-			// ! alcuni thread sono di tipo mutex (specificato dal subject)
-			//creation_thread(coders); // questa funzione ormai non serve più perchè l'ho fatto dentro init array
-	}	
+		}
+		return (0);
+	}	// qui va passato il parse, se va a buon fine prosegue, altrimenti si ferma il programma
 	return 0;
+}
+
+// sia per i coders, sia per i vari parametri che devono avere
+				// ! alcuni thread sono di tipo mutex (specificato dal subject)
+				//creation_thread(coders); // questa funzione ormai non serve più perchè l'ho fatto dentro init array
+void	cleanup_all(t_coders *cod, int size) // funzione che distrugge i mutex creati se si ha problemi con il join dei thread
+{
+	int i;
+	
+	i = 0;
+	while (i < size)
+	{
+		pthread_mutex_destroy(&cod[i]);
+		i++;
+	}
+	free(cod);
+}
+
+void	cleanup(t_coders *cod, int i, int status) // funzione che gestisce gli errori di creazione dei mutex
+{
+	// Distrugge i 3 mutex dei coder precedenti, già completamente inizializzati
+	int j;
+	
+	j = 0;
+	while (j < i)
+	// I coder con indice < i sono già completamente inizializzati
+	{
+		pthread_mutex_destroy(&cod[j].time_to_compile);
+		pthread_mutex_destroy(&cod[j].time_to_refactor);
+		pthread_mutex_destroy(&cod[j].time_to_debug);
+		j++;
+	}
+	if (status == 1)
+		pthread_mutex_destroy(&cod[i].time_to_compile);
+	else  if (status == 2)
+	{
+		pthread_mutex_destroy(&cod[i].time_to_compile);
+		pthread_mutex_destroy(&cod[i].time_to_refactor);
+	}
+	else if(status == 3)
+	{
+		pthread_mutex_destroy(&cod[i].time_to_compile);
+		pthread_mutex_destroy(&cod[i].time_to_refactor);
+		pthread_mutex_destroy(&cod[i].time_to_debug);
+	}
+	free(cod);
 }
