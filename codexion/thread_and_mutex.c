@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread_and_mutex.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/08/31 11:16:39 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/01 16:22:16 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ t_coders *init_array_coders(t_quantum *q) // finita , va solo spezzata perchè t
 	{
 		coders[i].index = i;
 		coders[i].quantum = q;
+		coders[i].last_compile_start = q->simulation_start;
 		i++;
 	}	
 	if (init_mutex(coders, num) != 1)

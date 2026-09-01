@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/31 17:41:47 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:39:51 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,44 @@ int join_threads(t_coders *cod, int i) // finita
 	while(j < i)
 	{
 		if (pthread_join(cod[j].coder_thread, NULL) != 0)
-			return (0);
+			return (-(j + 1));
 		j++;
 	}
 	return (1);
 }
 
+void	cleanup_all(t_coders *cod, int size, int result) // funzione che distrugge i mutex creati se si ha problemi con il join dei thread
+{
+	int i;
+	
+	i = 0;
+	if (result == 1) // vuoldire che il join è andato bene
+		result = size;
+	while (i < result)
+	{
+		pthread_mutex_destroy(&cod[i].mutex);
+		i++;
+	}
+	free(cod);
+}
+
+void	init_check_monitor(t_check *check, t_quantum *q, t_coders *cod)
+{
+	check->number_of_compiles_required = &q->config.number_of_compiles_required;
+	check->burnout = &q->config.burnout;
+	check->dongle_cooldown = &q->config.dongle_cooldown;
+	check->n_of_coders = q->config.n_of_coders;
+	check->coders = cod;
+}
 //qua dentro ci  stanno le chiamate alle funzioni. prima parse
 // poi creazione thread, e la creazione dell'array preso dal parse
 // se il parse fallisce il programma deve terminare
 int	main(int argc, char *argv[])
 {
-	t_quantum q;
+	t_quantum		q;
+	int				result; // risultato del tentativo di tutti i join
+	struct timeval	tv;
+	t_check			check;
 	
 	if (argc != 9)
 		return 0;
@@ -130,17 +156,14 @@ int	main(int argc, char *argv[])
 			// assegni variabili
 			// argv[1] rappresenta il numero delle struct dentro l'array che devono essere create
 			q.simulation_stop = 0;
+			gettimeofday(&tv, NULL);
+			q.simulation_start = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 			pthread_mutex_init(&q.m_simulation_stop, NULL);
 			coders = init_array_coders(&q); // in questa funzione quindi vanno creati i thread veri e propri,
 			if (coders == NULL)
 				return (0);
-			if(join_threads(coders, q.config.n_of_coders) != 1)
-			{
-				pthread_mutex_lock(&q.m_simulation_stop);
-				q.simulation_stop = 1;
-				pthread_mutex_unlock(&q.m_simulation_stop);
-			}
-			cleanup_all(coders, q.config.n_of_coders);
+			init_check_monitor(&check, &q, coders);
+			cleanup_all(coders, q.config.n_of_coders, result);
 			return (0);
 		}
 		return (0);
@@ -151,45 +174,33 @@ int	main(int argc, char *argv[])
 // sia per i coders, sia per i vari parametri che devono avere
 				// ! alcuni thread sono di tipo mutex (specificato dal subject)
 				//creation_thread(coders); // questa funzione ormai non serve più perchè l'ho fatto dentro init array
-void	cleanup_all(t_coders *cod, int size) // funzione che distrugge i mutex creati se si ha problemi con il join dei thread
-{
-	int i;
-	
-	i = 0;
-	while (i < size)
-	{
-		pthread_mutex_destroy(&cod[i]);
-		i++;
-	}
-	free(cod);
-}
 
-void	cleanup(t_coders *cod, int i, int status) // funzione che gestisce gli errori di creazione dei mutex
-{
-	// Distrugge i 3 mutex dei coder precedenti, già completamente inizializzati
-	int j;
+// void	cleanup(t_coders *cod, int i, int status) // funzione che gestisce gli errori di creazione dei mutex
+// {
+// 	// Distrugge i 3 mutex dei coder precedenti, già completamente inizializzati
+// 	int j;
 	
-	j = 0;
-	while (j < i)
-	// I coder con indice < i sono già completamente inizializzati
-	{
-		pthread_mutex_destroy(&cod[j].time_to_compile);
-		pthread_mutex_destroy(&cod[j].time_to_refactor);
-		pthread_mutex_destroy(&cod[j].time_to_debug);
-		j++;
-	}
-	if (status == 1)
-		pthread_mutex_destroy(&cod[i].time_to_compile);
-	else  if (status == 2)
-	{
-		pthread_mutex_destroy(&cod[i].time_to_compile);
-		pthread_mutex_destroy(&cod[i].time_to_refactor);
-	}
-	else if(status == 3)
-	{
-		pthread_mutex_destroy(&cod[i].time_to_compile);
-		pthread_mutex_destroy(&cod[i].time_to_refactor);
-		pthread_mutex_destroy(&cod[i].time_to_debug);
-	}
-	free(cod);
-}
+// 	j = 0;
+// 	while (j < i)
+// 	// I coder con indice < i sono già completamente inizializzati
+// 	{
+// 		pthread_mutex_destroy(cod[j].quantum->config.compile);
+// 		pthread_mutex_destroy(cod[j].quantum->config.refactor);
+// 		pthread_mutex_destroy(cod[j].quantum->config.debug);
+// 		j++;
+// 	}
+// 	if (status == 1)
+// 		pthread_mutex_destroy(cod[i].quantum->config.compile);
+// 	else  if (status == 2)
+// 	{
+// 		pthread_mutex_destroy(cod[i].quantum->config.compile);
+// 		pthread_mutex_destroy(cod[i].quantum->config.refactor);
+// 	}
+// 	else if(status == 3)
+// 	{
+// 		pthread_mutex_destroy(cod[i].quantum->config.compile);
+// 		pthread_mutex_destroy(cod[i].quantum->config.refactor);
+// 		pthread_mutex_destroy(cod[i].quantum->config.debug);
+// 	}
+// 	free(cod);
+// }

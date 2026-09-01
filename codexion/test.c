@@ -39,14 +39,14 @@ void modify_value_one(t_coders **coders, int value, int index) {
 	coders[0][index].value = value;
 }
 
-int main(int ac, char **av) {
-	if (ac < 2)
-		return (printf("Passa come parametro al programma il numero di strutture che vuoi creare\n"), 1);
-	t_coders *coders = init_vals(atoi(av[1]));
-	print_coders(coders, atoi(av[1]));
-	// modifica dei valori, tramite funzione o tramite array
-	coders[0].value = 42;
-	modify_value_one(&coders, 43, 1);
-	modify_value_two(coders, 44, 2);
-	print_coders(coders, atoi(av[1]));
-}
+// int main(int ac, char **av) {
+// 	if (ac < 2)
+// 		return (printf("Passa come parametro al programma il numero di strutture che vuoi creare\n"), 1);
+// 	t_coders *coders = init_vals(atoi(av[1]));
+// 	print_coders(coders, atoi(av[1]));
+// 	// modifica dei valori, tramite funzione o tramite array
+// 	coders[0].value = 42;
+// 	modify_value_one(&coders, 43, 1);
+// 	modify_value_two(coders, 44, 2);
+// 	print_coders(coders, atoi(av[1]));
+// }

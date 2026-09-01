@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/08/31 13:58:09 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/01 17:41:55 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <sys/time.h>
 #include <time.h>
+#include <string.h>
 
 
 // enum per semplificare il parse dello scheduler 
@@ -36,11 +37,11 @@ typedef struct s_settings
 {
 	int			n_of_coders;	
 	int			burnout;
-	int 		compile;
-	int 		debug;
-	int 		refactor;
+	int			compile;
+	int			debug;
+	int			refactor;
 	int			number_of_compiles_required;
-	int 		dongle_cooldown;
+	int			dongle_cooldown;
 
 	t_algorithm	algorithm;
 	
@@ -51,20 +52,18 @@ typedef struct s_settings
 // non va mallocato, alloca e freea da sè
 typedef struct s_quantum
 {
-	int			simulation_stop;
+	int				simulation_stop;
+	long			simulation_start;
 	pthread_mutex_t m_simulation_stop;
 	t_settings		config;
 	pthread_mutex_t	m_print;
+	pthread_t		monitor_thread;
 }	t_quantum;
 
 
 // struct perche' i coders non possono comunicare tra loro e ho bisogno che qualcuno
 // controlli i tempi di esecuzione. Deve stampare anche il messaggio di errore entro 10ms.
 // e deve stoppare l'esecuzione del programma.
-typedef struct s_check
-{
-	
-}	t_check;
 
 
 // struct che ci serve per capire lo stato di una chiavetta
@@ -85,24 +84,36 @@ typedef struct s_coders
 	int				index;
 	pthread_t		coder_thread;
 	pthread_mutex_t	mutex; // mutex per ogni coder che si crea
-
+	
 	t_dongle		*dongle_sx; // controllo per la dongle sx
 	t_dongle		*dongle_dx; // controllo per la dongle dx
-	
+	long			last_compile_start;
 	
 	
 	t_quantum		*quantum; // ripescaggio di tutti i parametri di esecuzione
 }	t_coders;
 
+typedef struct s_check
+{
+	int			*number_of_compiles_required;
+	int			*burnout;
+	int			*dongle_cooldown;
+	t_coders	*coders;
+	int			n_of_coders;
+}	t_check;
+
+
+
+
 t_coders *init_array_coders(t_quantum *q);
 int parse(t_quantum *q, int argc, char **argv);
 void *coderses(void *arg);
 int join_threads(t_coders *cod, int i);
-void	cleanup_all(t_coders *cod, int size);
+void	cleanup_all(t_coders *cod, int size, int result);
 void	cleanup(t_dongle *dongle, int i);
 int validation(int argc, char **argv);
 t_dongle	*init_array_dongle(t_quantum *q);
 void	cleanup_coders(t_coders *cod, int size);
-void	cleanup_thread(t_coders *cod, int i);
+
 
 #endif
