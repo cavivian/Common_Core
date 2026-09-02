@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/01 16:22:16 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/02 14:14:07 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_coders *init_array_coders(t_quantum *q) // finita , va solo spezzata perchè t
 		coders[i].index = i;
 		coders[i].quantum = q;
 		coders[i].last_compile_start = q->simulation_start;
+		coders[i].n_of_compiles = 0;
 		i++;
 	}	
 	if (init_mutex(coders, num) != 1)

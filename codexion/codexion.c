@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/01 17:39:51 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/02 09:24:13 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,14 +128,7 @@ void	cleanup_all(t_coders *cod, int size, int result) // funzione che distrugge 
 	free(cod);
 }
 
-void	init_check_monitor(t_check *check, t_quantum *q, t_coders *cod)
-{
-	check->number_of_compiles_required = &q->config.number_of_compiles_required;
-	check->burnout = &q->config.burnout;
-	check->dongle_cooldown = &q->config.dongle_cooldown;
-	check->n_of_coders = q->config.n_of_coders;
-	check->coders = cod;
-}
+
 //qua dentro ci  stanno le chiamate alle funzioni. prima parse
 // poi creazione thread, e la creazione dell'array preso dal parse
 // se il parse fallisce il programma deve terminare

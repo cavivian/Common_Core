@@ -6,7 +6,7 @@
 #    By: camilla <camilla@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/31 14:52:25 by cavivian          #+#    #+#              #
-#    Updated: 2026/08/28 14:56:30 by camilla          ###   ########.fr        #
+#    Updated: 2026/09/02 16:00:52 by camilla          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,11 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread
 
 SRCS = codexion.c \
-	thread_and_mutex.c \
+	init_thread_and_mutex.c \
 	error_management.c \
 	dongle.c \
+	monitor.c \
+	actions.c \
 		
 
 all: $(NAME)
