@@ -6,23 +6,22 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/02 09:24:13 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/03 12:19:23 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-
-// manca un free da qualche parte
-
 // funzione "main" che conterra' tutto il loop delle azioni dei vari coders
 void *coderses(void *arg)
 {
-	//t_coders *coders = (t_coders *)arg;
-	arg = (void *)arg;
+	t_coders *coders = (t_coders *)arg;
+	if (compile(coders) != 1)
+		return (NULL);
 	printf("\nthread creato!\n");
-	return NULL;
+	return (NULL);
 }
+
 
 // funzione pressochè inutile, perchè è già stata fatta
 // int creation_thread(t_coders *coders)

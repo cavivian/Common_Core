@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/02 17:34:39 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/03 11:20:43 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size)
 }
 
 // controlla se è possibile prendere due dongle in contemporanea
-int	if_dongle_is_available(t_coders *coders) // finita
+int	if_dongle_is_available(t_coders *coders) // finita per davvero
 {
 	struct timeval	tv;
 	gettimeofday(&tv, NULL);
@@ -59,6 +59,10 @@ int	if_dongle_is_available(t_coders *coders) // finita
 	(coders->last_compile_start + coders->quantum->config.burnout))
 	{
 		gettimeofday(&tv, NULL);
+		if (((tv.tv_sec * 1000) + (tv.tv_usec / 1000)) < coders->dongle_dx->t_available_dongle)
+			continue;
+		if (((tv.tv_sec * 1000) + (tv.tv_usec / 1000)) < coders->dongle_sx->t_available_dongle)
+			continue;
 		if(pthread_mutex_trylock(&coders->dongle_dx->m_dongle) != 0)
 			continue;
 		if (pthread_mutex_trylock(&coders->dongle_sx->m_dongle) != 0)

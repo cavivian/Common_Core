@@ -6,18 +6,18 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 14:17:36 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/02 17:42:07 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/03 12:17:16 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <codexion.h>
 
-void	compile(t_coders *cod)
+int	compile(t_coders *cod) // finita per ora
 {
 	struct timeval	tv;
 	long			time_save;
 	
-	if (if_dongle_is_available(cod) == 1)
+	if (if_dongle_is_available(cod) == 1) // controlla che la dongle sx e dx siano accessibili in contemporanea
 	{
 		gettimeofday(&tv, NULL);
 		time_save = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
@@ -30,5 +30,7 @@ void	compile(t_coders *cod)
 		cod->dongle_sx->t_available_dongle = time_save + cod->quantum->config.dongle_cooldown;
 		pthread_mutex_unlock(&cod->dongle_dx->m_dongle);
 		pthread_mutex_unlock(&cod->dongle_sx->m_dongle);
+		return (1);
 	}
+	return (0);
 }

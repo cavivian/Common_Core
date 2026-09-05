@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/02 17:49:53 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/03 12:07:30 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void		*monitor(void *arg);
 int			init_check_monitor(t_check *check, t_quantum *q, t_coders *cod);
 void		if_burnout(t_check *check, long save);
 int			if_dongle_is_available(t_coders *coders);
-void	compile(t_coders *cod);
+int			compile(t_coders *cod);
 
 
 
