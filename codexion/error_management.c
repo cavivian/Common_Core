@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_management.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 10:18:46 by camilla           #+#    #+#             */
-/*   Updated: 2026/08/31 11:16:00 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/09 23:14:15 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,31 @@ void	cleanup_coders(t_coders *cod, int size) // gestisce gli errori del mutex de
 		i++;
 	}
 	free(cod);
+}
+
+
+void	cleanup_all(t_coders *cod, int size) // funzione che distrugge i mutex creati se si ha problemi con il join dei thread
+{
+	int i;
+	
+	i = 0;
+	while (i < size)
+	{
+		pthread_mutex_destroy(&cod[i].mutex);
+		i++;
+	}
+	free(cod);
+}
+
+// 
+int	check_simulation(t_coders *coders)
+{
+	pthread_mutex_lock(&coders->quantum->m_simulation_stop);
+	if (coders->quantum->simulation_stop == 1)
+	{
+		pthread_mutex_unlock(&coders->quantum->m_simulation_stop);
+		return (1);
+	}
+	pthread_mutex_unlock(&coders->quantum->m_simulation_stop);
+	return (0);
 }

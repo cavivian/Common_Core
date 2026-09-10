@@ -6,7 +6,7 @@
 #    By: camilla <camilla@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/31 14:52:25 by cavivian          #+#    #+#              #
-#    Updated: 2026/09/02 16:00:52 by camilla          ###   ########.fr        #
+#    Updated: 2026/09/10 11:19:03 by camilla          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,9 @@ SRCS = codexion.c \
 	dongle.c \
 	monitor.c \
 	actions.c \
+	monitor_error_management.c \
+	prints_messages.c \
+	algorithms.c \
 		
 
 all: $(NAME)

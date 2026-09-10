@@ -6,48 +6,45 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/03 12:19:23 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/10 15:42:08 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 // funzione "main" che conterra' tutto il loop delle azioni dei vari coders
-void *coderses(void *arg)
+// qua dentro va creato il ciclo while che diceva ieri Edo
+void *coderses(void *arg) // finita per adesso
 {
 	t_coders *coders = (t_coders *)arg;
-	if (compile(coders) != 1)
-		return (NULL);
+	int	i;
+	
+	i = 0;
+	while(i < coders->quantum->config.number_of_compiles_required)
+	{
+		if (check_simulation(coders) != 0)
+			return (NULL);
+		if (compile(coders) != 0)
+			return (NULL);
+			// da proteggere
+		pthread_mutex_lock(&coders->quantum->m_simulation_stop);
+		coders->n_of_compiles++;
+		pthread_mutex_unlock(&coders->quantum->m_simulation_stop);
+		if (check_simulation(coders) != 0)
+			return (NULL);
+		if (debug(coders) != 0)
+			return (NULL);
+		if (check_simulation(coders) != 0)
+			return (NULL);
+		if (refactor(coders) != 0)
+			return (NULL);
+		i++;
+	}
 	printf("\nthread creato!\n");
 	return (NULL);
 }
+// 	t_coders *codx = malloc(sizeof(t_coders)); // Edo lo aveva scritto con un (coders[1] * sizeof(t_coders))
 
-
-// funzione pressochè inutile, perchè è già stata fatta
-// int creation_thread(t_coders *coders)
-// {
-	// 	t_coders *codx = malloc(sizeof(t_coders)); // Edo lo aveva scritto con un (coders[1] * sizeof(t_coders))
-	// 	int i;
-
-	// 	i = 0;
-	// 	while (i < coders[1].index)
-	// 	{
-// 		if (pthread_create(&coders, NULL, coderses, NULL) != 0)
-// 		{
-// 			printf("uncreated Thread");
-// 			return 1;
-// 		}
-// 		i++;
-// 	}
-// 	while(i < coders[i].index)
-// 	{
-// 		if (pthread_join(codx, NULL) != 0)
-// 			return 2;
-// 		i++;
-// 	}
-// 	free(codx);
-// 	return 0;
-//  }
 
 
 // parte del parse per controllare che i primi 7 arg siano int
@@ -64,17 +61,17 @@ int validation(int argc, char **argv) // finita
 		i = 0;
 		if (argv[args][i] == '\0') // controlla che non venga passata una stringa vuota
 			return (0);
-		while(argv[args][i]) 
+		while(argv[args][i]) // controllo che siano passati solo numeri
 		{
 			if (!(argv[args][i] >= '0' && argv[args][i] <= '9'))
-				return (0);
+				return (1);
 			i++;
 		}
 		args++;
 	}
-	if (strcmp(argv[8], "edf") != 0 && strcmp(argv[8], "fifo") != 0)
+	if (strcmp(argv[8], "edf") != 0 && strcmp(argv[8], "fifo") != 0) // controlla che l'ultimo parametro sia o edf o fifo
 			return (0);
-	return (1);
+	return (0);
 }
 
 // parse che chiama validation
@@ -82,7 +79,7 @@ int validation(int argc, char **argv) // finita
 // e li assegna a ogni variabile della struct quantum 
 int parse(t_quantum *q, int argc, char **argv) // finita
 {
-	if (!validation(argc, argv))
+	if (validation(argc, argv) != 0)
 		return (0);
 	if (!strcmp(argv[8], "fifo"))
 		q->config.algorithm = FIFO;
@@ -95,104 +92,65 @@ int parse(t_quantum *q, int argc, char **argv) // finita
 	q->config.refactor = atoi(argv[5]);
 	q->config.number_of_compiles_required = atoi(argv[6]);
 	q->config.dongle_cooldown = atoi(argv[7]);
-	return (1);	
+	return (0);	
 }
 
-int join_threads(t_coders *cod, int i) // finita
+
+int	central_part(t_quantum *q,  int count, t_coders *coders, t_check *check)
 {
-	int j;
-
-	j = 0;
-	while(j < i)
+	 // in questa funzione quindi vanno creati i thread veri e propri,
+	if (coders == NULL)
+		return (0);
+	if (init_check_monitor(check, q, coders) != 0)
 	{
-		if (pthread_join(cod[j].coder_thread, NULL) != 0)
-			return (-(j + 1));
-		j++;
+		join_threads(coders, count);
+		cleanup_all(coders, q->config.n_of_coders);
+		pthread_mutex_destroy(&q->m_simulation_stop);
+		return (0);
 	}
-	return (1);
+	join_threads(coders, count);
+	if (pthread_join(q->monitor_thread, NULL) != 0)
+		return (1);
+	cleanup_all(coders, q->config.n_of_coders);	
+		return (0);
 }
 
-void	cleanup_all(t_coders *cod, int size, int result) // funzione che distrugge i mutex creati se si ha problemi con il join dei thread
+
+void	get_time(t_quantum *q)
 {
-	int i;
-	
-	i = 0;
-	if (result == 1) // vuoldire che il join è andato bene
-		result = size;
-	while (i < result)
-	{
-		pthread_mutex_destroy(&cod[i].mutex);
-		i++;
-	}
-	free(cod);
+	struct timeval	tv;
+
+	q->simulation_stop = 0; // è 0 perchè non è finita, la simulazione deve ancora iniziare
+	gettimeofday(&tv, NULL); // si ricava l'ora attuale
+	q->simulation_start = (tv.tv_sec * 1000) + (tv.tv_usec / 1000); // si inizia la simulazione dei tempi 
+	pthread_mutex_init(&q->m_simulation_stop, NULL); // si inizializza il mutex della simulation stop
+	pthread_mutex_init(&q->m_print, NULL);
 }
-
-
 //qua dentro ci  stanno le chiamate alle funzioni. prima parse
 // poi creazione thread, e la creazione dell'array preso dal parse
 // se il parse fallisce il programma deve terminare
 int	main(int argc, char *argv[])
 {
-	t_quantum		q;
-	int				result; // risultato del tentativo di tutti i join
-	struct timeval	tv;
-	t_check			check;
+	t_quantum		q; // struct che contiene i riferimenti ai valori dei coders
+	t_check			check; // struct che fa il controllo dei tempi
+	int				count;
+	t_dongle		*dongle;
 	
+	count = 0;
 	if (argc != 9)
 		return 0;
-	if (validation(argc, argv) == 1)
+	if (validation(argc, argv) == 0)
 	{
 		t_coders	*coders; // array di struct che contiene i thread che compongono le struct con i vari  dati dei vari coders
-		if (parse(&q, argc, argv) == 1)
+		if (parse(&q, argc, argv) == 0)
 		{
-			// assegni variabili
-			// argv[1] rappresenta il numero delle struct dentro l'array che devono essere create
-			q.simulation_stop = 0;
-			gettimeofday(&tv, NULL);
-			q.simulation_start = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-			pthread_mutex_init(&q.m_simulation_stop, NULL);
-			coders = init_array_coders(&q); // in questa funzione quindi vanno creati i thread veri e propri,
-			if (coders == NULL)
-				return (0);
-			init_check_monitor(&check, &q, coders);
-			cleanup_all(coders, q.config.n_of_coders, result);
-			return (0);
+			get_time(&q);
+			dongle = init_array_dongle(&q);
+			coders = init_array_coders(&q, &count, dongle);
+			if(central_part(&q, count, coders, &check) != 0)
+				return (1);
 		}
 		return (0);
 	}	// qui va passato il parse, se va a buon fine prosegue, altrimenti si ferma il programma
 	return 0;
 }
-
-// sia per i coders, sia per i vari parametri che devono avere
-				// ! alcuni thread sono di tipo mutex (specificato dal subject)
-				//creation_thread(coders); // questa funzione ormai non serve più perchè l'ho fatto dentro init array
-
-// void	cleanup(t_coders *cod, int i, int status) // funzione che gestisce gli errori di creazione dei mutex
-// {
-// 	// Distrugge i 3 mutex dei coder precedenti, già completamente inizializzati
-// 	int j;
-	
-// 	j = 0;
-// 	while (j < i)
-// 	// I coder con indice < i sono già completamente inizializzati
-// 	{
-// 		pthread_mutex_destroy(cod[j].quantum->config.compile);
-// 		pthread_mutex_destroy(cod[j].quantum->config.refactor);
-// 		pthread_mutex_destroy(cod[j].quantum->config.debug);
-// 		j++;
-// 	}
-// 	if (status == 1)
-// 		pthread_mutex_destroy(cod[i].quantum->config.compile);
-// 	else  if (status == 2)
-// 	{
-// 		pthread_mutex_destroy(cod[i].quantum->config.compile);
-// 		pthread_mutex_destroy(cod[i].quantum->config.refactor);
-// 	}
-// 	else if(status == 3)
-// 	{
-// 		pthread_mutex_destroy(cod[i].quantum->config.compile);
-// 		pthread_mutex_destroy(cod[i].quantum->config.refactor);
-// 		pthread_mutex_destroy(cod[i].quantum->config.debug);
-// 	}
-// 	free(cod);
-// }

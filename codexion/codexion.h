@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/03 12:07:30 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/10 16:17:54 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef enum e_algorithm
 }	t_algorithm;
 
 
-// struct che contine tutte le impostazioni riguardanti i coders e anche l'algoritmo 
+// struct che contiene tutte le impostazioni riguardanti i coders e anche l'algoritmo 
 // che va scelto
 // sono di tipo int e non pthread perchè sono tempi
 typedef struct s_settings
@@ -73,7 +73,8 @@ typedef struct s_quantum
 typedef struct s_dongle
 {
 	pthread_mutex_t m_dongle; // dice se qualcuno in questo momento sta usando la dongle
-	long			t_available_dongle; // dice tra quanto si può riprendere se è stato restituito
+	long			t_available_dongle; // dice da quale momento è possibile prendere la dongle dopo il cooldown
+	int				is_available;
 	// altre info
 }	t_dongle;
 
@@ -110,11 +111,11 @@ typedef struct s_check
 
 
 
-t_coders 	*init_array_coders(t_quantum *q);
+t_coders 	*init_array_coders(t_quantum *q, int *count, t_dongle *dongle);
 int			parse(t_quantum *q, int argc, char **argv);
 void		*coderses(void *arg);
 int			join_threads(t_coders *cod, int i);
-void		cleanup_all(t_coders *cod, int size, int result);
+void		cleanup_all(t_coders *cod, int size);
 void		cleanup(t_dongle *dongle, int i);
 int			validation(int argc, char **argv);
 t_dongle	*init_array_dongle(t_quantum *q);
@@ -124,6 +125,22 @@ int			init_check_monitor(t_check *check, t_quantum *q, t_coders *cod);
 void		if_burnout(t_check *check, long save);
 int			if_dongle_is_available(t_coders *coders);
 int			compile(t_coders *cod);
+int			central_part(t_quantum *q, int count, t_coders *coders, t_check *check);
+int			debug(t_coders *coders);
+int			refactor(t_coders *coders);
+int			check_simulation(t_coders *coders);
+int 		check_n_of_compiles(t_check *check);
+void		simulation_stop_is_1(t_check *check);
+void		compile_message(t_coders *coders);
+void		debug_message(t_coders *coders);
+void		refactor_message(t_coders *coders);
+void		take_dongle_message(t_coders *coders);
+void		burnout_message(t_coders *coders);
+t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size);
+void		get_time(t_quantum *q);
+
+
+
 
 
 
