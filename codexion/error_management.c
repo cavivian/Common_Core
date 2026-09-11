@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 10:18:46 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/09 23:14:15 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/11 17:14:38 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	cleanup(t_dongle *dongle, int i) // funzione che gestisce gli errori di creazione dei mutex della dongle
 {
-	int j;
+	int	j;
 	
 	j = 0;
 	while (j < i)
@@ -26,23 +26,9 @@ void	cleanup(t_dongle *dongle, int i) // funzione che gestisce gli errori di cre
 }
 
 
-void	cleanup_coders(t_coders *cod, int size) // gestisce gli errori del mutex del coder
-{
-	int i;
-
-	i = 0;
-	while (i < size)
-	{
-		pthread_mutex_destroy(&cod[i].mutex);
-		i++;
-	}
-	free(cod);
-}
-
-
 void	cleanup_all(t_coders *cod, int size) // funzione che distrugge i mutex creati se si ha problemi con il join dei thread
 {
-	int i;
+	int	i;
 	
 	i = 0;
 	while (i < size)

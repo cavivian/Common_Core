@@ -6,15 +6,15 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/10 15:53:00 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/11 17:54:21 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-
+// m simulation start eliminalo
 // funzione che controlla se ogni coder è in burnout
-void	if_burnout(t_check *check, long save) // finita
+int	if_burnout(t_check *check, long save) // finita
 {
 	int			i; // indice per visitare un coder alla volta
 	int			burnout;
@@ -25,18 +25,20 @@ void	if_burnout(t_check *check, long save) // finita
 		// "Da quando questo coder ha iniziato il suo ultimo compile, sono passati 
 		// almeno time_to_burnout millisecondi senza che abbia iniziato un altro compile?" - si
 		// da proteggere last compile
-		pthread_mutex_lock(check->m_simulation_stop);
+		pthread_mutex_lock(&check->coders[i].mutex);
 		burnout = save - check->coders[i].last_compile_start;
-		pthread_mutex_unlock(check->m_simulation_stop);
+		pthread_mutex_unlock(&check->coders[i].mutex);
 		if (burnout >= *check->burnout)
 		{
 			pthread_mutex_lock(check->m_simulation_stop);
 			*check->simulation_stop = 1; // stoppa la simulazione
-			burnout_message(&check->coders[i]);
 			pthread_mutex_unlock(check->m_simulation_stop);
+			burnout_message(&check->coders[i]);
+			return(1);
 		}
 		i++;
 	}
+	return (0);
 }
 
 // decide se continuare o fermare la simulazione
@@ -62,7 +64,8 @@ void	*monitor(void *arg)
 			simulation_stop_is_1(check);
 			return (NULL);
 		}
-		if_burnout(check, save);
+		if (if_burnout(check, save) != 0)
+			return (NULL);
 	}
 	return (NULL);
 }
@@ -76,6 +79,7 @@ int	init_check_monitor(t_check *check, t_quantum *q, t_coders *cod) // finita
 	check->coders = cod;
 	check->simulation_stop = &q->simulation_stop;
 	check->m_simulation_stop = &q->m_simulation_stop;
+	check->m_simulation_start = &q->m_simulation_start;
 	if(pthread_create(&q->monitor_thread, NULL, monitor, check) != 0)
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 14:17:36 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/10 15:41:16 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/11 17:44:35 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	compile(t_coders *cod) // finita per ora
 		gettimeofday(&tv, NULL);
 		time_save = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000)); // espressione per ottenere gli ms
 		// deve essere protetta da un mutex
-		pthread_mutex_lock(&cod->quantum->m_simulation_stop);
+		pthread_mutex_lock(&cod->mutex);
 		cod->last_compile_start = time_save; // e si salva quando è iniziata l'ultima compilazione
-		pthread_mutex_unlock(&cod->quantum->m_simulation_stop);
+		pthread_mutex_unlock(&cod->mutex);
 		compile_message(cod);
 		usleep(cod->quantum->config.compile * 1000); // tempo di compilazione
 		gettimeofday(&tv, NULL); // si ricalcola il tempo attuale
@@ -46,6 +46,7 @@ int	debug(t_coders *coders) // finita
 	usleep(coders->quantum->config.debug * 1000);
 	return (0);
 }
+
 
 int	refactor(t_coders *coders) // finita
 {

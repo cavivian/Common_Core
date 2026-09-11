@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/08 14:49:40 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/09 17:08:52 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/11 17:13:05 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 // controlla che tutti i coder abbiano completato i compile richiesti
 int check_n_of_compiles(t_check *check)
 {
-	int i;
+	int	i;
+	int	check_of_compile;
 
 	i = 0;
 	while(i < check->n_of_coders)
 	{
-		if (check->coders[i].n_of_compiles < *check->number_of_compiles_required)
+		pthread_mutex_lock(&check->coders->mutex);
+		check_of_compile = check->coders[i].n_of_compiles;
+		pthread_mutex_unlock(&check->coders->mutex);
+		if (check_of_compile < *check->number_of_compiles_required)
 			return (1);
 		i++;
 	}

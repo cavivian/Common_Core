@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/10 16:17:54 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/11 11:33:25 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_quantum
 	int				simulation_stop;
 	long			simulation_start;
 	pthread_mutex_t m_simulation_stop;
+	pthread_mutex_t m_simulation_start;
 	t_settings		config;
 	pthread_mutex_t	m_print;
 	pthread_t		monitor_thread;
@@ -74,7 +75,6 @@ typedef struct s_dongle
 {
 	pthread_mutex_t m_dongle; // dice se qualcuno in questo momento sta usando la dongle
 	long			t_available_dongle; // dice da quale momento è possibile prendere la dongle dopo il cooldown
-	int				is_available;
 	// altre info
 }	t_dongle;
 
@@ -105,6 +105,7 @@ typedef struct s_check
 	t_coders		*coders;
 	int				n_of_coders;
 	pthread_mutex_t	*m_simulation_stop;
+	pthread_mutex_t	*m_simulation_start;
 	t_dongle		*dongles;
 }	t_check;
 
@@ -119,13 +120,12 @@ void		cleanup_all(t_coders *cod, int size);
 void		cleanup(t_dongle *dongle, int i);
 int			validation(int argc, char **argv);
 t_dongle	*init_array_dongle(t_quantum *q);
-void		cleanup_coders(t_coders *cod, int size);
 void		*monitor(void *arg);
 int			init_check_monitor(t_check *check, t_quantum *q, t_coders *cod);
-void		if_burnout(t_check *check, long save);
+int			if_burnout(t_check *check, long save);
 int			if_dongle_is_available(t_coders *coders);
 int			compile(t_coders *cod);
-int			central_part(t_quantum *q, int count, t_coders *coders, t_check *check);
+int			central_part(t_quantum *q, int count, t_coders *coders, t_check *check, t_dongle *dongle);
 int			debug(t_coders *coders);
 int			refactor(t_coders *coders);
 int			check_simulation(t_coders *coders);
@@ -138,6 +138,7 @@ void		take_dongle_message(t_coders *coders);
 void		burnout_message(t_coders *coders);
 t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size);
 void		get_time(t_quantum *q);
+long		check_available_dongle(t_dongle *dongle);
 
 
 

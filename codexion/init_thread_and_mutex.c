@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/10 16:59:43 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/11 17:14:21 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int	init_threads(t_coders *cod, int size, int *count) // finita
 
 int	init_mutex(t_coders *cod, int size) // finita
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while(i < size)
 	{
 		if (pthread_mutex_init(&cod[i].mutex, NULL) != 0)
 		{
-			cleanup_coders(cod, i);
+			cleanup_all(cod, i);
 			return (0);
 		}
 		i++;
@@ -52,9 +52,9 @@ int	init_mutex(t_coders *cod, int size) // finita
 // funzione che crea gli array per le dongle dei coders
 t_dongle	*init_array_dongle(t_quantum *q) // finita
 {
-	int	number;
-	t_dongle *dongle;
-	int	i;
+	int			number;
+	t_dongle	*dongle;
+	int			i;
 
 	number = q->config.n_of_coders;
 	i = 0;
@@ -62,7 +62,6 @@ t_dongle	*init_array_dongle(t_quantum *q) // finita
 	if (!dongle)
 		return (NULL);
 	memset(dongle, 0, number * sizeof(t_dongle));
-	dongle->is_available = 0;
 	while(i < number)
 	{
 		if (pthread_mutex_init(&dongle[i].m_dongle, NULL) != 0)
@@ -77,7 +76,7 @@ t_dongle	*init_array_dongle(t_quantum *q) // finita
 
 // funzione che crea l'array di coders, e assegna a ogni cella il proprio valore
 // gli errori si gestiscono nel main
-t_coders *init_array_coders(t_quantum *q, int *count, t_dongle *dongle) // finita , va solo spezzata perchè troppo lunga
+t_coders	*init_array_coders(t_quantum *q, int *count, t_dongle *dongle) // finita , va solo spezzata perchè troppo lunga
 {
 	int			i; // indice per scorrere l'array dei threads dei coders
 	t_coders	*coders; 
@@ -91,10 +90,10 @@ t_coders *init_array_coders(t_quantum *q, int *count, t_dongle *dongle) // finit
 	i = 0;
 	while (i < num) // scorre i coder fino all'ultimo, e assegna a ognuno i suoi valori
 	{
-		coders[i].index = i;
 		coders[i].quantum = q;
 		coders[i].last_compile_start = q->simulation_start;
 		coders[i].n_of_compiles = 0;
+		coders[i].index = i + 1;
 		i++;
 	}	
 	if (init_mutex(coders, num) != 1) // si inizializzano i mutex per i vari coder
@@ -104,16 +103,16 @@ t_coders *init_array_coders(t_quantum *q, int *count, t_dongle *dongle) // finit
 	{
 		if (join_threads(coders, *count) != 1) // si joinano i thread
 			return (NULL);
-		cleanup_coders(coders, num);
-			return (NULL);
+		cleanup_all(coders, num);
+		return (NULL);
 	}	
 	return (coders);
 }
 
 
-int join_threads(t_coders *cod, int i) // finita
+int	join_threads(t_coders *cod, int i) // finita
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while(j < i) // i sono i thread effettivamente creati
