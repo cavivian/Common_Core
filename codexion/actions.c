@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 14:17:36 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/11 17:44:35 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/14 15:43:45 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	compile(t_coders *cod) // finita per ora
 	struct timeval	tv;
 	long			time_save;
 	
-	if (if_dongle_is_available(cod) == 0) // controlla che la dongle sx e dx siano accessibili in contemporanea
+	if (if_dongle_is_available(cod) != 1) // controlla che la dongle sx e dx siano accessibili in contemporanea
 	{
 		take_dongle_message(cod);
 		gettimeofday(&tv, NULL);
@@ -34,6 +34,9 @@ int	compile(t_coders *cod) // finita per ora
 		cod->dongle_sx->t_available_dongle = time_save + cod->quantum->config.dongle_cooldown; // calcolo tempo di riposo della dongle
 		pthread_mutex_unlock(&cod->dongle_dx->m_dongle); // si unlockano qui, pk vengono lockate dentro if_dongle_is_available
 		pthread_mutex_unlock(&cod->dongle_sx->m_dongle); // uguale a quella sopra
+		pthread_cond_broadcast(&cod->quantum->service_condition);
+		// la chiamata al broadcast va fatta dopo l'unlock, perchè se lo svegli prima e uno dei due dongle non è disponibile
+		// continua a girare nel while finchè non si sbloccano entrambi.
 		return (0);
 	}
 	return (1);

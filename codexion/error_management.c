@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 10:18:46 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/11 17:14:38 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/14 11:26:56 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	cleanup_all(t_coders *cod, int size) // funzione che distrugge i mutex crea
 	free(cod);
 }
 
-// 
+// controlla se la simulazione è finita o no.
 int	check_simulation(t_coders *coders)
 {
 	pthread_mutex_lock(&coders->quantum->m_simulation_stop);

@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/11 17:14:21 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/14 09:46:18 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	init_mutex(t_coders *cod, int size) // finita
 	i = 0;
 	while(i < size)
 	{
-		if (pthread_mutex_init(&cod[i].mutex, NULL) != 0)
+		if (pthread_mutex_init(&cod[i].mutex, NULL) != 0)  // mutex specifico per la struct t_coders
 		{
 			cleanup_all(cod, i);
 			return (0);
@@ -90,11 +90,11 @@ t_coders	*init_array_coders(t_quantum *q, int *count, t_dongle *dongle) // finit
 	i = 0;
 	while (i < num) // scorre i coder fino all'ultimo, e assegna a ognuno i suoi valori
 	{
-		coders[i].quantum = q;
-		coders[i].last_compile_start = q->simulation_start;
-		coders[i].n_of_compiles = 0;
-		coders[i].index = i + 1;
-		i++;
+		coders[i].quantum = q; // la struct che contiene tutti i valori dei coder
+		coders[i].last_compile_start = q->simulation_start; // ogni volta si riaggiorna, sono gli ms trascorsi dall'ultima compilazione 
+		coders[i].n_of_compiles = 0; // incrementa ogni volta 
+		coders[i].index = i + 1; // indice di ciascun coder, devono partire da 1
+		i++; // indice della struct dei coders, ogni i rappresenta un coder
 	}	
 	if (init_mutex(coders, num) != 1) // si inizializzano i mutex per i vari coder
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/11 17:54:21 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/14 17:50:48 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,39 @@ int	if_burnout(t_check *check, long save) // finita
 	return (0);
 }
 
+
+void	monitor_centre(t_check *check, struct timeval tv, int check_simulation)
+{
+	long	save;
+	pthread_mutex_lock(check->m_simulation_stop);
+	check_simulation = *check->simulation_stop;
+	pthread_mutex_unlock(check->m_simulation_stop);
+	if (check_simulation != 0)
+		return ;
+	gettimeofday(&tv, NULL);
+	save = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	if (check_n_of_compiles(check) == 0)
+	{
+		simulation_stop_is_1(check);
+		check_simulation = 1;
+	}
+	if (if_burnout(check, save) != 0)
+		check_simulation = 1;
+}
+
 // decide se continuare o fermare la simulazione
 void	*monitor(void *arg)
 {
 	t_check			*check = (t_check*)arg;
 	struct timeval	tv;
-	long			save;
 	int				check_simulation;
 
 	check_simulation = 0;
 	while(check_simulation == 0)
-	{
-		pthread_mutex_lock(check->m_simulation_stop);
-		check_simulation = *check->simulation_stop;
-		pthread_mutex_unlock(check->m_simulation_stop);
-		if (check_simulation != 0)
-			return (NULL);
-		gettimeofday(&tv, NULL);
-		save = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-		if (check_n_of_compiles(check) == 0)
-		{
-			simulation_stop_is_1(check);
-			return (NULL);
-		}
-		if (if_burnout(check, save) != 0)
-			return (NULL);
-	}
+		monitor_centre(check, tv, check_simulation);
+	pthread_mutex_lock(check->service_mutex);
+	pthread_cond_broadcast(check->service_condition);
+	pthread_mutex_unlock(check->service_mutex);
 	return (NULL);
 }
 
@@ -79,7 +86,8 @@ int	init_check_monitor(t_check *check, t_quantum *q, t_coders *cod) // finita
 	check->coders = cod;
 	check->simulation_stop = &q->simulation_stop;
 	check->m_simulation_stop = &q->m_simulation_stop;
-	check->m_simulation_start = &q->m_simulation_start;
+	check->service_condition = &q->service_condition;
+	check->service_mutex = &q->service_mutex;
 	if(pthread_create(&q->monitor_thread, NULL, monitor, check) != 0)
 		return (1);
 	return (0);

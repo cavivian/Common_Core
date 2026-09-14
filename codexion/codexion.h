@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/11 11:33:25 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/14 16:46:14 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,11 @@ typedef struct s_quantum
 	int				simulation_stop;
 	long			simulation_start;
 	pthread_mutex_t m_simulation_stop;
-	pthread_mutex_t m_simulation_start;
 	t_settings		config;
 	pthread_mutex_t	m_print;
 	pthread_t		monitor_thread;
+	pthread_cond_t	service_condition;
+	pthread_mutex_t	service_mutex;
 }	t_quantum;
 
 
@@ -105,8 +106,9 @@ typedef struct s_check
 	t_coders		*coders;
 	int				n_of_coders;
 	pthread_mutex_t	*m_simulation_stop;
-	pthread_mutex_t	*m_simulation_start;
 	t_dongle		*dongles;
+	pthread_mutex_t	*service_mutex;
+	pthread_cond_t	*service_condition;
 }	t_check;
 
 
@@ -139,6 +141,7 @@ void		burnout_message(t_coders *coders);
 t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size);
 void		get_time(t_quantum *q);
 long		check_available_dongle(t_dongle *dongle);
+int			check_less_zero(char **argv);
 
 
 
