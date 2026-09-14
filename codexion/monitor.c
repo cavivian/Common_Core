@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/14 17:50:48 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/14 22:48:51 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,23 @@ int	if_burnout(t_check *check, long save) // finita
 }
 
 
-void	monitor_centre(t_check *check, struct timeval tv, int check_simulation)
+void	monitor_centre(t_check *check, struct timeval tv, int *check_simulation)
 {
 	long	save;
 	pthread_mutex_lock(check->m_simulation_stop);
-	check_simulation = *check->simulation_stop;
+	*check_simulation = *check->simulation_stop;
 	pthread_mutex_unlock(check->m_simulation_stop);
-	if (check_simulation != 0)
+	if (*check_simulation != 0)
 		return ;
 	gettimeofday(&tv, NULL);
 	save = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	if (check_n_of_compiles(check) == 0)
 	{
 		simulation_stop_is_1(check);
-		check_simulation = 1;
+		*check_simulation = 1;
 	}
 	if (if_burnout(check, save) != 0)
-		check_simulation = 1;
+		*check_simulation = 1;
 }
 
 // decide se continuare o fermare la simulazione
@@ -70,7 +70,7 @@ void	*monitor(void *arg)
 
 	check_simulation = 0;
 	while(check_simulation == 0)
-		monitor_centre(check, tv, check_simulation);
+		monitor_centre(check, tv, &check_simulation);
 	pthread_mutex_lock(check->service_mutex);
 	pthread_cond_broadcast(check->service_condition);
 	pthread_mutex_unlock(check->service_mutex);
