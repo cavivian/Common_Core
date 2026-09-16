@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/14 15:43:23 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/16 08:33:34 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,6 @@ int	main(int argc, char *argv[])
 				return (1);
 		}
 		return (0);
-	}	// qui va passato il parse, se va a buon fine prosegue, altrimenti si ferma il programma
+	}
 	return (1);
 }

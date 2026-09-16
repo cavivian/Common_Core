@@ -6,13 +6,12 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/14 22:48:51 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/16 11:13:15 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// m simulation start eliminalo
 // funzione che controlla se ogni coder è in burnout
 int	if_burnout(t_check *check, long save) // finita
 {

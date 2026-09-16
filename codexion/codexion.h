@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/14 16:46:14 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/16 14:08:24 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ typedef enum e_algorithm
 	FIFO,
 	EDF
 }	t_algorithm;
+
+
+typedef struct s_wait_node
+{
+	t_coders	*coder; // puntatore al coder che sta aspettando
+	long		request_time; // quando ha fatto la richiesta
+}	t_wait_node;
 
 
 // struct che contiene tutte le impostazioni riguardanti i coders e anche l'algoritmo 
@@ -142,6 +149,7 @@ t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size);
 void		get_time(t_quantum *q);
 long		check_available_dongle(t_dongle *dongle);
 int			check_less_zero(char **argv);
+int			has_priority(t_wait_node *a, t_wait_node *b);
 
 
 

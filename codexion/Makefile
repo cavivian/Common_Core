@@ -6,7 +6,7 @@
 #    By: camilla <camilla@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/31 14:52:25 by cavivian          #+#    #+#              #
-#    Updated: 2026/09/10 11:19:03 by camilla          ###   ########.fr        #
+#    Updated: 2026/09/15 12:01:42 by camilla          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ $(NAME): $(SRCS)
 clean:
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) 
 
 re: fclean all
 

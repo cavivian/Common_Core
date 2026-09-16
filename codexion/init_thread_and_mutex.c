@@ -6,7 +6,7 @@
 /*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/14 09:46:18 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/15 22:58:41 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_coders	*init_array_coders(t_quantum *q, int *count, t_dongle *dongle) // finit
 	give_dongle(coders, dongle, num);
 	if (init_threads(coders, num, count) != 1) // si inizializzano i thread
 	{
-		if (join_threads(coders, *count) != 1) // si joinano i thread
+		if (join_threads(coders, *count) != 1) // si joinano i thread 
 			return (NULL);
 		cleanup_all(coders, num);
 		return (NULL);
