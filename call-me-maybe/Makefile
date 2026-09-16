@@ -1,5 +1,5 @@
-PYTHON = python3
-MAIN = call-me-maybe.py
+PYTHON = python3 -m
+MAIN = call_me_maybe.py
 CONFIG = config.txt
 
 install:
