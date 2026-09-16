@@ -1,12 +1,16 @@
 PYTHON = python3 -m
 MAIN = call_me_maybe.py
 CONFIG = config.txt
+export HF_HOME=/home/cavivian/sgoinfre/.hf_cache
+export UV_CACHE_DIR=/home/cavivian/sgoinfre
+export  export UV_PROJECT_ENVIRONMENT=/home/cavivian/sgoinfre/.venv
 
 install:
-	pip install -e .
+	uv sync
 
 run:
-	$(PYTHON) $(MAIN) $(CONFIG)
+	uv run python3 -m src
+#	$(PYTHON) $(MAIN) $(CONFIG)
 
 debug:
 	$(PYTHON) -m pdb $(MAIN) $(CONFIG)

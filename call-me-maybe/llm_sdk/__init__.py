@@ -2,7 +2,7 @@
 # ABOUTME: Provides Small_LLM_Model class for loading and running causal language models.
 
 import time
-from typing import Tuple
+from typing import Tuple, cast
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer, PreTrainedTokenizer, PreTrainedModel, logging
@@ -56,6 +56,7 @@ class Small_LLM_Model:
         self._tokenizer: PreTrainedTokenizer = AutoTokenizer.from_pretrained(
             model_name, trust_remote_code=trust_remote_code
         )
+        self._tokenizer = cast(PreTrainedTokenizer, self._tokenizer)
         if self._tokenizer.pad_token_id is None:
             # ensure we have a pad token to keep batch helpers happy
             self._tokenizer.pad_token_id = self._tokenizer.eos_token_id
@@ -73,6 +74,9 @@ class Small_LLM_Model:
         for p in self._model.parameters():
             p.requires_grad = False
 
+
+    def format(self, conversation: list[dict[str, str]]) -> str:
+        return self._tokenizer.apply_chat_template(conversation, tokenize=False, add_generation_prompt=True, enable_thinking=False)
 
     def encode(self, text: str) -> torch.Tensor:
         """Tokenise *text* and return a 2-D ``input_ids`` tensor on the target device."""
