@@ -7,6 +7,8 @@ import numpy as np
 # ricreare format (e' vietato dal subject)
 # ricreare get_logits_from_input_ids
 # ricreare tokenizer
+# ricreare eos_token_id
+# e le altre cose che chiederò a Claude
 
 
 def main() -> None:
