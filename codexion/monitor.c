@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/16 11:13:15 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/17 17:22:22 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ int	if_burnout(t_check *check, long save) // finita
 }
 
 
-void	monitor_centre(t_check *check, struct timeval tv, int *check_simulation)
+void	monitor_centre(t_check *check, int *check_simulation)
 {
+	struct timeval	tv;
 	long	save;
+
 	pthread_mutex_lock(check->m_simulation_stop);
 	*check_simulation = *check->simulation_stop;
 	pthread_mutex_unlock(check->m_simulation_stop);
@@ -64,12 +66,11 @@ void	monitor_centre(t_check *check, struct timeval tv, int *check_simulation)
 void	*monitor(void *arg)
 {
 	t_check			*check = (t_check*)arg;
-	struct timeval	tv;
 	int				check_simulation;
 
 	check_simulation = 0;
 	while(check_simulation == 0)
-		monitor_centre(check, tv, &check_simulation);
+		monitor_centre(check, &check_simulation);
 	pthread_mutex_lock(check->service_mutex);
 	pthread_cond_broadcast(check->service_condition);
 	pthread_mutex_unlock(check->service_mutex);

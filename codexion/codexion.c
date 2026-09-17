@@ -3,34 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/16 08:33:34 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/17 17:05:19 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// funzione "main" che conterra' tutto il loop delle azioni dei vari coders
-// qua dentro va creato il ciclo while che diceva ieri Edo
 void	*coderses(void *arg) // finita per adesso
 {
-	t_coders *coders = (t_coders *)arg;
-	int	i;
-	
+	t_coders	*coders;
+	int			i;
+
 	i = 0;
-	while(i < coders->quantum->config.number_of_compiles_required)
+	coders = (t_coders *)arg;
+	while (i < coders->quantum->config.number_of_compiles_required)
 	{
 		if (check_simulation(coders) != 0)
 			return (NULL);
 		if (compile(coders) != 0)
 		{
-			usleep(10000);
-			continue;
+			usleep (10000);
+			continue ;
 		}
 		pthread_mutex_lock(&coders->mutex);
-		coders->n_of_compiles++; // deve essere protetto, perchè ci sta che due thread lo vedano nello stesso momento
+		coders->n_of_compiles++; 
 		pthread_mutex_unlock(&coders->mutex);
 		if (check_simulation(coders) != 0)
 			return (NULL);
@@ -42,13 +41,9 @@ void	*coderses(void *arg) // finita per adesso
 			return (NULL);
 		i++;
 	}
-	printf("\nthread creato!\n");
 	return (NULL);
 }
 // 	t_coders *codx = malloc(sizeof(t_coders)); // Edo lo aveva scritto con un (coders[1] * sizeof(t_coders))
-
-
-
 // parte del parse per controllare che i primi 7 arg siano int
 // e che l'ultimo sia una stringa, controllo con strcmp
 // questa funzione accetta che i primi 7 argomenti possano essere 0, sbagliato!
@@ -59,12 +54,12 @@ int	validation(int argc, char **argv) // finita
 
 	args = 1;
 	i = 0;
-	while(args < argc - 1) // si scorre args finchè è minore di argc
+	while (args < argc - 1)
 	{
 		i = 0;
-		if (argv[args][i] == '\0') // controlla che non venga passata una stringa vuota
+		if (argv[args][i] == '\0')
 			return (1);
-		while(argv[args][i]) // controllo che siano passati solo numeri
+		while (argv[args][i]) 
 		{
 			if (!(argv[args][i] >= '0' && argv[args][i] <= '9'))
 				return (1);
@@ -72,7 +67,7 @@ int	validation(int argc, char **argv) // finita
 		}
 		args++;
 	}
-	if (strcmp(argv[8], "edf") != 0 && strcmp(argv[8], "fifo") != 0) // controlla che l'ultimo parametro sia o edf o fifo
+	if (strcmp(argv[8], "edf") != 0 && strcmp(argv[8], "fifo") != 0)
 			return (1);
 	return (0);
 }
@@ -173,7 +168,7 @@ int	main(int argc, char *argv[])
 	memset(&check, 0, sizeof(t_check));
 	if (validation(argc, argv) == 0)
 	{
-		t_coders	*coders; // array di struct che contiene i thread che compongono le struct con i vari  dati dei vari coders
+		t_coders	*coders;
 		if (parse(&q, argc, argv) == 0)
 		{
 			get_time(&q);
@@ -181,7 +176,6 @@ int	main(int argc, char *argv[])
 			if (!dongle)
 				return (1);
 			coders = init_array_coders(&q, &count, dongle);
-			// qui dentro ci sta la creazione del monitor, i vari join e i destroy
 			if(central_part(&q, count, coders, &check, dongle) != 0)
 				return (1);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dongle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/14 15:44:42 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/17 17:23:03 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,10 @@ long	check_available_dongle(t_dongle *dongle)
 	return (available);
 }
 
-
-// controlla se è possibile prendere due dongle in contemporanea
-// qui manca la chiamata a FIFO e EDF
-// manca caso un solo coder
-int	if_dongle_is_available(t_coders *coders) 
+void	centre(t_coders *coders, int actually_time, struct timespec *ts)
 {
-	struct timespec	ts;
 	struct timeval	tv;
-	long			save;
-	long			actually_time;
-	
-	// mi dice per quanto tempo posso stare nel ciclo prima di raggiungere il burnout
-	save = (coders->last_compile_start + coders->quantum->config.burnout); //  calcolo della propria deadline personale di burnout
-	ts.tv_sec = save / 1000;
-	ts.tv_nsec = (save % 1000) * 1000000; // parametri che vanno passati al timedwait
-	pthread_mutex_lock(&coders->quantum->service_mutex); // mutex che serve per proteggere la presa delle dongle, assicura che
-	// un coder alla volta possa verificare lo stato di disponibilità delle dongle
-	gettimeofday(&tv, NULL); // calcolo del momento attuale per sapere se al momento le dongle sono disponibili
-	actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000)); // conversione in millisecondi
-	// t_available_dongle in check_available_dongle è un punto preciso, non è una durata
+
 	while(check_available_dongle(coders->dongle_sx) > actually_time // risponde alla domanda "in questo istante, il dongle è disponibile, o è in cooldown?"
 	|| check_available_dongle(coders->dongle_dx) > actually_time) // controllo dal momento in cui le dongle tornano libere, fino al tempo attuale
 	{
@@ -71,21 +55,53 @@ int	if_dongle_is_available(t_coders *coders)
 		if(check_simulation(coders) != 0) // se la simulazione è finita(burnout o tutti i coder hanno finito) rilascia la dongle
 		{
 			pthread_mutex_unlock(&coders->quantum->service_mutex);
-			return (1);
+			return ;
 		}
 		else if (pthread_cond_timedwait(&coders->quantum->service_condition,
-		&coders->quantum->service_mutex, &ts) != 0) // rilascia il mutex che fermava il controllo 
+		&coders->quantum->service_mutex, ts) != 0) // rilascia il mutex che fermava il controllo 
 		// della disponibilità, per permettere agli altri coder di andare avanti.
 		// stoppa il thread finchè qualcuno non chiama cond_broadcast/signal oppure va in burnout
 		{
 			pthread_mutex_unlock(&coders->quantum->service_mutex);
-			return (1);
+			return ;
 		}
 		// se ha successo controlla di nuovo che le dongle rilasciate siano compatibili con il coder svegliato
 	}
+}
+
+void	lock_unlock_of_mutex(t_coders *coders)
+{
 	pthread_mutex_lock(&coders->dongle_sx->m_dongle);
 	pthread_mutex_lock(&coders->dongle_dx->m_dongle);
 	pthread_mutex_unlock(&coders->quantum->service_mutex);
+}
+// controlla se è possibile prendere due dongle in contemporanea
+// qui manca la chiamata a FIFO e EDF
+// manca caso un solo coder
+// t_available_dongle in check_available_dongle è un punto preciso, non è una durata
+// save mi dice per quanto tempo posso stare nel ciclo prima di raggiungere il burnout
+int	if_dongle_is_available(t_coders *coders) 
+{
+	struct timespec	ts;
+	struct timeval	tv;
+	long			save;
+	long			actually_time;
+	t_wait_node		*node;
+	
+	node = NULL;
+	save = (coders->last_compile_start + coders->quantum->config.burnout); //  calcolo della propria deadline personale di burnout
+	ts.tv_sec = save / 1000;
+	ts.tv_nsec = (save % 1000) * 1000000; // parametri che vanno passati al timedwait
+	gettimeofday(&tv, NULL);
+	actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000)); // conversione in millisecondi
+	node->coder = coders; // creazione di un nodo che contiene il coder che sta aspettando e il momento in cui ha fatto la richiesta
+	node->request_time = actually_time;
+	pthread_mutex_lock(&coders->quantum->service_mutex);
+	gettimeofday(&tv, NULL); // calcolo del momento attuale per sapere se al momento le dongle sono disponibili
+	actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000)); // conversione in millisecondi
+	create_heap(coders->quantum->config.n_of_coders); // creazione dell'heap che contiene i coder in attesa
+	centre(coders, actually_time, &ts); // controllo se le dongle sono disponibili, e se non lo sono, addormento il thread finchè non lo diventano
+	lock_unlock_of_mutex(coders); // se le dongle sono disponibili, le blocco e rilascia il mutex del service
 	return(0);
 }
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: camilla <camilla@student.42.fr>            +#+  +:+       +#+         #
+#    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/31 14:52:25 by cavivian          #+#    #+#              #
-#    Updated: 2026/09/15 12:01:42 by camilla          ###   ########.fr        #
+#    Updated: 2026/09/17 17:26:00 by cavivian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS = codexion.c \
 	monitor_error_management.c \
 	prints_messages.c \
 	algorithms.c \
+	heap.c \
 		
 
 all: $(NAME)
