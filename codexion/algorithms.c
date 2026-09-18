@@ -6,32 +6,33 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 11:18:30 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/17 17:39:24 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/18 16:53:56 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	has_fifo_priority(t_wait_node *a, t_wait_node *b)
+t_wait_node	create_wait_node(t_heap *heap, t_coders *coder, t_algorithm algo)
 {
-	return (a->request_time < b->request_time);
+	t_wait_node node;
+
+	node.coder = coder;
+	if (algo == FIFO)
+		node.value = heap->current_size;
+	else if (algo == EDF)
+		node.value = coder->last_compile_start;
+	return (node);
 }
 
-int	has_edf_priority(t_wait_node *a, t_wait_node *b)
+int heap_father(int i)
 {
-	long			save_a;
-	long			save_b;
-
-	save_a = a->coder->last_compile_start + a->coder->quantum->config.burnout;
-	save_b = b->coder->last_compile_start + b->coder->quantum->config.burnout; // calcoli per la deadline di burnout
-	return (save_a < save_b);
+    return (i - 1) / 2;
 }
-
-
-int	has_priority(t_wait_node *a, t_wait_node *b)
+int heap_left_son(int i)
 {
-	if (a->coder->quantum->config.algorithm == FIFO)
-		return (has_fifo_priority(a, b));
-	else
-		return (has_edf_priority(a, b));
+    return (2 * i + 1);
+}
+int heap_right_son(int i)
+{
+    return (2 * i + 2);
 }

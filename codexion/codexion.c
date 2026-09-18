@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/17 17:05:19 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/18 14:40:55 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int	parse(t_quantum *q, int argc, char **argv) // finita
 
 int	central_part(t_quantum *q,  int count, t_coders *coders, t_check *check, t_dongle *dongle)
 {
-	 // in questa funzione quindi vanno creati i thread veri e propri,
 	if (coders == NULL)
 		return (1);
 	if (init_check_monitor(check, q, coders) != 0)
@@ -138,7 +137,6 @@ int	central_part(t_quantum *q,  int count, t_coders *coders, t_check *check, t_d
 	return (0);
 }
 
-
 void	get_time(t_quantum *q)
 {
 	struct timeval	tv;
@@ -152,6 +150,22 @@ void	get_time(t_quantum *q)
 	pthread_cond_init(&q->service_condition, NULL);
 }
 
+int	creation_arrays(t_coders **coders, t_quantum *q, t_dongle **dongle, int *count)
+{
+	*dongle = init_array_dongle(q);
+	if (!*dongle)
+		return (1);
+	*coders = init_array_coders(q, count, *dongle);
+	if (!*coders)
+		return (1);
+	q->wait_heap = init_array_heap(q->config.n_of_coders);
+	if (!q->wait_heap)
+	{
+		free_heap(q->wait_heap);
+		return (1);
+	}
+	return (0);
+}
 //qua dentro ci  stanno le chiamate alle funzioni. prima parse
 // poi creazione thread, e la creazione dell'array preso dal parse
 // se il parse fallisce il programma deve terminare
@@ -172,10 +186,8 @@ int	main(int argc, char *argv[])
 		if (parse(&q, argc, argv) == 0)
 		{
 			get_time(&q);
-			dongle = init_array_dongle(&q);
-			if (!dongle)
+			if (creation_arrays(&coders, &q, &dongle, &count) != 0)
 				return (1);
-			coders = init_array_coders(&q, &count, dongle);
 			if(central_part(&q, count, coders, &check, dongle) != 0)
 				return (1);
 		}

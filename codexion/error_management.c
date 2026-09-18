@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_management.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 10:18:46 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/14 11:26:56 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/18 13:21:26 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,10 @@ int	check_simulation(t_coders *coders)
 	}
 	pthread_mutex_unlock(&coders->quantum->m_simulation_stop);
 	return (0);
+}
+
+void	free_heap(t_heap *heap)
+{
+	free(heap->array);
+	free(heap);
 }

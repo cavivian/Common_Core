@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/17 17:23:03 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/18 17:08:56 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size)
 		// assegnazione delle dongle
 		cod[i].dongle_sx = &dongle[i];
 		cod[i].dongle_dx = &dongle[(i + 1) % cod->quantum->config.n_of_coders];
+		if (i == 0)
+		{
+			cod[i].dongle_sx = cod[i].dongle_dx;
+			cod[i].dongle_dx = &dongle[i];
+		}
 		//pthread_mutex_unlock(&dongle->m_dongle);
 		i++;
 	}
@@ -86,20 +91,19 @@ int	if_dongle_is_available(t_coders *coders)
 	struct timeval	tv;
 	long			save;
 	long			actually_time;
-	t_wait_node		*node;
+	t_wait_node		node;
 	
-	node = NULL;
 	save = (coders->last_compile_start + coders->quantum->config.burnout); //  calcolo della propria deadline personale di burnout
 	ts.tv_sec = save / 1000;
 	ts.tv_nsec = (save % 1000) * 1000000; // parametri che vanno passati al timedwait
 	gettimeofday(&tv, NULL);
 	actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000)); // conversione in millisecondi
-	node->coder = coders; // creazione di un nodo che contiene il coder che sta aspettando e il momento in cui ha fatto la richiesta
-	node->request_time = actually_time;
+	node.coder = coders; // creazione di un nodo che contiene il coder che sta aspettando e il momento in cui ha fatto la richiesta
+	node.value = actually_time;
 	pthread_mutex_lock(&coders->quantum->service_mutex);
 	gettimeofday(&tv, NULL); // calcolo del momento attuale per sapere se al momento le dongle sono disponibili
 	actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000)); // conversione in millisecondi
-	create_heap(coders->quantum->config.n_of_coders); // creazione dell'heap che contiene i coder in attesa
+	push_into_the_heap(coders->quantum->wait_heap, &node);
 	centre(coders, actually_time, &ts); // controllo se le dongle sono disponibili, e se non lo sono, addormento il thread finchè non lo diventano
 	lock_unlock_of_mutex(coders); // se le dongle sono disponibili, le blocco e rilascia il mutex del service
 	return(0);

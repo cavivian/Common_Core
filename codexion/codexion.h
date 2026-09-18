@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/17 17:23:26 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/18 16:26:54 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_dongle
 // che i coders devono rispettare per eseguire le azioni 
 typedef struct s_coders
 {
-	int				index;
+	int				current_size;
 	pthread_t		coder_thread;
 	pthread_mutex_t	mutex; // mutex per ogni coder che si crea
 	
@@ -100,7 +100,7 @@ typedef struct s_coders
 typedef struct s_wait_node
 {
 	t_coders	*coder; // puntatore al coder che sta aspettando
-	long		request_time; // quando ha fatto la richiesta
+	long		value; // quando ha fatto la richiesta
 }	t_wait_node;
 
 // struct che contiene l'heap, si occupa di gestire la priorità dei coder che stanno aspettando le dongle
@@ -108,7 +108,7 @@ typedef struct s_heap
 {
 	t_wait_node	*array;
 	int			size;
-	int 		index;
+	int 		current_size;
 }	t_heap;
 
 
@@ -154,7 +154,6 @@ void		lock_unlock_of_mutex(t_coders *coders);
 void		cleanup(t_dongle *dongle, int i);
 void		cleanup_all(t_coders *cod, int size);
 int			check_simulation(t_coders *coders);
-t_heap		*create_heap(int size);
 int			init_threads(t_coders *cod, int size, int *count);
 int			init_mutex(t_coders *cod, int size);
 int			join_threads(t_coders *cod, int i);
@@ -169,6 +168,14 @@ void		debug_message(t_coders *coders);
 void		refactor_message(t_coders *coders);
 void		take_dongle_message(t_coders *coders);
 void		burnout_message(t_coders *coders);
+void		ft_swap(t_wait_node *a, t_wait_node *b);
+t_heap		*init_array_heap(int size);
+t_heap		*push_into_the_heap(t_heap *heap, t_wait_node *node);
+void		free_heap(t_heap *heap);
+void		creation_arrays(t_coders *coders, t_quantum *q, t_dongle *dongle, int *count);
+int			heap_father(int i);
+int			heap_left_son(int i);
+int			heap_right_son(int i);
 
 
 
