@@ -2,7 +2,7 @@ from llm_sdk import Small_LLM_Model as SLM
 import numpy as np
 import agparse
 from pydantic import BaseModel, ValidationError, TypeAdapter
-from typing import Literal
+from typing import Literal, Union
 import json
 
 # quello che devo fare io e':
@@ -19,7 +19,7 @@ import json
 # agparse per --functions_definition, --input e --output con path di default
 # 
 
-typeofparameter = Literal["string", "number", "boolean", "array", "object"]
+typeofparameter = Union[str, float, bool, dict, list]
 
 
 class ParameterDefinition(BaseModel):
@@ -68,11 +68,15 @@ def main() -> None:
         print(e)
         raise SystemExit("Exiting due to input file error.")
     modello = SLM()
-    richiesta = [
-        {"role": "system", "content": "rispondi brevemente solo con il"
-         " risultato."},
-        {"role": "user", "content": loaded_data}
+    # Fuori dal ciclo: serializzo le funzioni una volta sola
+    functions_text = json.dumps([f.model_dump() for f in loaded_data])
+    for test in tests:
+        richiesta = [
+            {"role": "system", "content": functions_text},
+            {"role": "user", "content": test.prompt}
         ]
+    # qui dentro: genera la function call per QUESTO prompt
+    # e accumula il risultato da qualche parte (es. una lista `results`)
     print("end_of_sentence:", modello._tokenizer.eos_token_id)
     formatted = modello.format(richiesta)
     encoding = modello.encode(formatted)[0].tolist()

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:01:38 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/18 17:04:21 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/20 15:45:44 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ t_heap	*init_array_heap(int size)
 		return (NULL);
 	heap->array = malloc(size * sizeof(t_wait_node));
 	if (!heap->array)
+	{
+		free_heap(heap);
 		return (NULL);
+	}
 	memset(heap->array, 0, size * sizeof(t_wait_node));
 	heap->size = size;
 	heap->current_size = 0;
@@ -37,7 +40,7 @@ void	ft_swap(t_wait_node *a, t_wait_node *b)
 	*b = tmp;
 }
 
-t_heap	*push_into_the_heap(t_heap *heap, t_wait_node node)
+t_heap	*push_into_the_heap(t_heap *heap, t_wait_node *node)
 {
 	int	i;
 
@@ -45,7 +48,7 @@ t_heap	*push_into_the_heap(t_heap *heap, t_wait_node node)
 		return (NULL);
 	heap->current_size++;
 	i = heap->current_size -1;
-	heap->array[i] = node;
+	heap->array[i] = *node;
 	while (i != 0 && heap->array[heap_father(i)].value > heap->array[i].value)
 	{
 		ft_swap(&heap->array[heap_father(i)], &heap->array[i]);
@@ -54,39 +57,68 @@ t_heap	*push_into_the_heap(t_heap *heap, t_wait_node node)
 	return (heap);
 }
 
-void decreaseKey(struct MinHeap *h, int i, int new_val)
+void decreaseKey(t_heap *heap, int i, t_wait_node new_val)
 {
-    h->harr[i] = new_val;
-    while (i != 0 && h->array[parent(i)] > h->array[i])
+    heap->array[i] = new_val;
+    while (i != 0 && &heap->array[heap_father
+		(i)] > &heap->array[i])
     {
-        swap(&h->array[i], &h->array[parent(i)]);
-        i = parent(i);
+        ft_swap(&heap->array[i], &heap->array[heap_father(i)]);
+        i = heap_father(i);
     }
 }
 
-// Method to remove minimum element (or root) from min heap
-int extractMin(t_heap *h)
+int delete_max_priority_node(t_heap *heap, t_wait_node *extract_node)
 {
-    if (h->size <= 0)
-        return INT_MAX;
-    if (h->size == 1)
+	if (heap == NULL || heap->current_size <= 0)
+		return (1);
+    if (heap->current_size == 1)
     {
-        h->size--;
-        return h->array[0];
+        heap->current_size--;
+        *extract_node = heap->array[0];
+        return (0);
     }
 
-    // Store the minimum value, and remove it from heap
-    int root = h->array[0];
-    h->array[0] = h->array[h->size - 1];
-    h->size--;
-    MinHeapify(h, 0);
+    // Store the value with max priority, and remove it from heap
+    *extract_node = heap->array[0];
+    heap->array[0] = heap->array[heap->current_size - 1];
+    heap->current_size--;
+    Minheapify(heap, 0);
 
-    return root;
+    return 0;
+}
+
+void	check_priority_queue(t_heap *heap, int index)
+{
+	int	left_son;
+	int	right_son;
+	int	best;
+
+	while (index < heap->current_size)
+	{
+		left_son = heap_left_son(index);
+		right_son = heap_right_son(index);
+		best = index;
+		if (left_son < heap->current_size &&
+			heap->array[left_son].value > heap->array[best].value)
+			best = left_son;
+		if (right_son < heap->current_size &&
+			heap->array[right_son].value > heap->array[best].value)
+			best = right_son;
+		if (best == index)
+			return ;
+		else
+		{
+			ft_swap(&heap->array[index], &heap->array[best]);
+			index  = best;
+		}
+	}
+	//push_into_the_heap(heap, node);
 }
 
 // This function deletes key at index i.
-void deleteKey(struct MinHeap *h, int i)
+void deleteKey(t_heap *heap, int i)
 {
-    decreaseKey(h, i, INT_MIN);
-    extractMin(h);
+    decreaseKey(heap, i, INT_MIN);
+    extractMin(heap);
 }

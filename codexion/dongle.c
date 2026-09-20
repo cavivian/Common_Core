@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dongle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/18 17:08:56 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/19 10:28:26 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ int	if_dongle_is_available(t_coders *coders)
 	ts.tv_nsec = (save % 1000) * 1000000; // parametri che vanno passati al timedwait
 	gettimeofday(&tv, NULL);
 	actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000)); // conversione in millisecondi
-	node.coder = coders; // creazione di un nodo che contiene il coder che sta aspettando e il momento in cui ha fatto la richiesta
-	node.value = actually_time;
+	node = create_wait_node(coders->quantum->wait_heap, coders,
+			coders->quantum->config.algorithm);
 	pthread_mutex_lock(&coders->quantum->service_mutex);
 	gettimeofday(&tv, NULL); // calcolo del momento attuale per sapere se al momento le dongle sono disponibili
 	actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000)); // conversione in millisecondi

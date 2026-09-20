@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/18 14:40:55 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/19 10:31:58 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,7 @@ int	creation_arrays(t_coders **coders, t_quantum *q, t_dongle **dongle, int *cou
 		return (1);
 	q->wait_heap = init_array_heap(q->config.n_of_coders);
 	if (!q->wait_heap)
-	{
-		free_heap(q->wait_heap);
 		return (1);
-	}
 	return (0);
 }
 //qua dentro ci  stanno le chiamate alle funzioni. prima parse

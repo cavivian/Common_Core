@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/18 16:26:54 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/19 23:22:58 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODEXION_H
 # define CODEXION_H
 
+#define INT_MAX
 #include <pthread.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -83,7 +84,7 @@ typedef struct s_dongle
 // che i coders devono rispettare per eseguire le azioni 
 typedef struct s_coders
 {
-	int				current_size;
+	int				index;
 	pthread_t		coder_thread;
 	pthread_mutex_t	mutex; // mutex per ogni coder che si crea
 	
@@ -172,10 +173,12 @@ void		ft_swap(t_wait_node *a, t_wait_node *b);
 t_heap		*init_array_heap(int size);
 t_heap		*push_into_the_heap(t_heap *heap, t_wait_node *node);
 void		free_heap(t_heap *heap);
-void		creation_arrays(t_coders *coders, t_quantum *q, t_dongle *dongle, int *count);
+int			creation_arrays(t_coders **coders, t_quantum *q, t_dongle **dongle, int *count);
 int			heap_father(int i);
 int			heap_left_son(int i);
 int			heap_right_son(int i);
+t_wait_node	create_wait_node(t_heap *heap, t_coders *coder, t_algorithm algo);
+int 		delete_max_priority_node(t_heap *heap, t_wait_node *extract_node);
 
 
 
