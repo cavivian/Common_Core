@@ -6,12 +6,13 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 11:18:30 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/18 16:53:56 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/21 11:30:34 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
+// corrisponde a pick_metric
 t_wait_node	create_wait_node(t_heap *heap, t_coders *coder, t_algorithm algo)
 {
 	t_wait_node node;

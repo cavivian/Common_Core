@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/19 23:22:58 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/21 17:45:03 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CODEXION_H
 # define CODEXION_H
 
-#define INT_MAX
 #include <pthread.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -142,9 +141,6 @@ int			init_check_monitor(t_check *check, t_quantum *q, t_coders *cod);
 int			compile(t_coders *cod);
 int			debug(t_coders *coders);
 int			refactor(t_coders *coders);
-int			has_fifo_priority(t_wait_node *a, t_wait_node *b);
-int			has_edf_priority(t_wait_node *a, t_wait_node *b);
-int			has_priority(t_wait_node *a, t_wait_node *b);
 int			check_less_zero(char **argv);
 void		*coderses(void *arg);
 t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size);
@@ -171,16 +167,15 @@ void		take_dongle_message(t_coders *coders);
 void		burnout_message(t_coders *coders);
 void		ft_swap(t_wait_node *a, t_wait_node *b);
 t_heap		*init_array_heap(int size);
-t_heap		*push_into_the_heap(t_heap *heap, t_wait_node *node);
+t_wait_node create_wait_node(t_heap *heap, t_coders *coder, t_algorithm algo);
 void		free_heap(t_heap *heap);
 int			creation_arrays(t_coders **coders, t_quantum *q, t_dongle **dongle, int *count);
 int			heap_father(int i);
 int			heap_left_son(int i);
 int			heap_right_son(int i);
-t_wait_node	create_wait_node(t_heap *heap, t_coders *coder, t_algorithm algo);
 int 		delete_max_priority_node(t_heap *heap, t_wait_node *extract_node);
-
-
+t_heap		*push_into_the_heap(t_heap *heap, t_wait_node *node);
+void		check_priority_queue(t_heap *heap, int index);
 
 
 

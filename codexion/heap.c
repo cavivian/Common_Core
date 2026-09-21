@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:01:38 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/20 15:45:44 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/21 13:32:41 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_swap(t_wait_node *a, t_wait_node *b)
 	*b = tmp;
 }
 
+// confronto il nodo passato per parametro con il padre, dopo averlo inserito nell'heap 
 t_heap	*push_into_the_heap(t_heap *heap, t_wait_node *node)
 {
 	int	i;
@@ -47,7 +48,7 @@ t_heap	*push_into_the_heap(t_heap *heap, t_wait_node *node)
 	if (heap->size <= heap->current_size)
 		return (NULL);
 	heap->current_size++;
-	i = heap->current_size -1;
+	i = heap->current_size - 1;
 	heap->array[i] = *node;
 	while (i != 0 && heap->array[heap_father(i)].value > heap->array[i].value)
 	{
@@ -57,37 +58,9 @@ t_heap	*push_into_the_heap(t_heap *heap, t_wait_node *node)
 	return (heap);
 }
 
-void decreaseKey(t_heap *heap, int i, t_wait_node new_val)
-{
-    heap->array[i] = new_val;
-    while (i != 0 && &heap->array[heap_father
-		(i)] > &heap->array[i])
-    {
-        ft_swap(&heap->array[i], &heap->array[heap_father(i)]);
-        i = heap_father(i);
-    }
-}
 
-int delete_max_priority_node(t_heap *heap, t_wait_node *extract_node)
-{
-	if (heap == NULL || heap->current_size <= 0)
-		return (1);
-    if (heap->current_size == 1)
-    {
-        heap->current_size--;
-        *extract_node = heap->array[0];
-        return (0);
-    }
 
-    // Store the value with max priority, and remove it from heap
-    *extract_node = heap->array[0];
-    heap->array[0] = heap->array[heap->current_size - 1];
-    heap->current_size--;
-    Minheapify(heap, 0);
-
-    return 0;
-}
-
+// controllo di chi ha la priorita'
 void	check_priority_queue(t_heap *heap, int index)
 {
 	int	left_son;
@@ -106,19 +79,27 @@ void	check_priority_queue(t_heap *heap, int index)
 			heap->array[right_son].value > heap->array[best].value)
 			best = right_son;
 		if (best == index)
-			return ;
+			break;
 		else
-		{
-			ft_swap(&heap->array[index], &heap->array[best]);
-			index  = best;
-		}
+		ft_swap(&heap->array[index], &heap->array[best]);
+		index  = best;
 	}
-	//push_into_the_heap(heap, node);
 }
 
-// This function deletes key at index i.
-void deleteKey(t_heap *heap, int i)
+// quando trova il nodo maggiore lo toglie dalla coda
+int delete_max_priority_node(t_heap *heap, t_wait_node *extract_node)
 {
-    decreaseKey(heap, i, INT_MIN);
-    extractMin(heap);
+	if (heap == NULL || heap->current_size <= 0)
+		return (1);
+    if (heap->current_size == 1)
+    {
+        heap->current_size--;
+        *extract_node = heap->array[0];
+        return (0);
+    }
+    *extract_node = heap->array[0];
+    heap->array[0] = heap->array[heap->current_size - 1];
+    heap->current_size--;
+    check_priority_queue(heap, 0);
+    return 0;
 }
