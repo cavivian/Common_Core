@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/19 10:31:58 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/22 12:07:48 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,96 +28,24 @@ void	*coderses(void *arg) // finita per adesso
 			usleep (10000);
 			continue ;
 		}
-		pthread_mutex_lock(&coders->mutex);
-		coders->n_of_compiles++; 
-		pthread_mutex_unlock(&coders->mutex);
-		if (check_simulation(coders) != 0)
-			return (NULL);
-		if (debug(coders) != 0)
-			return (NULL);
-		if (check_simulation(coders) != 0)
-			return (NULL);
-		if (refactor(coders) != 0)
-			return (NULL);
+		actions(coders);
 		i++;
 	}
 	return (NULL);
 }
-// 	t_coders *codx = malloc(sizeof(t_coders)); // Edo lo aveva scritto con un (coders[1] * sizeof(t_coders))
+
+// 	t_coders *codx = malloc(sizeof(t_coders));
+// Edo lo aveva scritto con un (coders[1] * sizeof(t_coders))
 // parte del parse per controllare che i primi 7 arg siano int
 // e che l'ultimo sia una stringa, controllo con strcmp
 // questa funzione accetta che i primi 7 argomenti possano essere 0, sbagliato!
-int	validation(int argc, char **argv) // finita
+int	central_part(t_quantum *q, int count,
+	t_check *check, t_dongle *dongle)
 {
-	int	args;
-	int	i;
-
-	args = 1;
-	i = 0;
-	while (args < argc - 1)
+	if (init_check_monitor(check, q, q->coders) != 0)
 	{
-		i = 0;
-		if (argv[args][i] == '\0')
-			return (1);
-		while (argv[args][i]) 
-		{
-			if (!(argv[args][i] >= '0' && argv[args][i] <= '9'))
-				return (1);
-			i++;
-		}
-		args++;
-	}
-	if (strcmp(argv[8], "edf") != 0 && strcmp(argv[8], "fifo") != 0)
-			return (1);
-	return (0);
-}
-
-
-int	check_less_zero(char **argv)
-{
-	int	check_coders;
-	int	check_burnout;
-	int	check_compile_required;
-
-	check_coders = atoi(argv[1]);
-	check_burnout = atoi(argv[2]);
-	check_compile_required = atoi(argv[6]);
-	if (check_coders <= 0 || check_burnout <= 0 || check_compile_required <= 0)
-		return (1);
-	return (0);
-}
-// parse che chiama validation
-// controlla che tutti i parametri passati siano int
-// e li assegna a ogni variabile della struct quantum 
-int	parse(t_quantum *q, int argc, char **argv) // finita
-{
-	if (validation(argc, argv) != 0)
-		return (1);
-	if (check_less_zero(argv) != 0)
-		return (1);
-	if (!strcmp(argv[8], "fifo"))
-		q->config.algorithm = FIFO;
-	else if (!strcmp(argv[8], "edf"))
-		q->config.algorithm = EDF;
-	q->config.n_of_coders = atoi(argv[1]);
-	q->config.burnout = atoi(argv[2]);
-	q->config.compile = atoi(argv[3]);
-	q->config.debug = atoi(argv[4]);
-	q->config.refactor = atoi(argv[5]);
-	q->config.number_of_compiles_required = atoi(argv[6]);
-	q->config.dongle_cooldown = atoi(argv[7]);
-	return (0);	
-}
-
-
-int	central_part(t_quantum *q,  int count, t_coders *coders, t_check *check, t_dongle *dongle)
-{
-	if (coders == NULL)
-		return (1);
-	if (init_check_monitor(check, q, coders) != 0)
-	{
-		join_threads(coders, count);
-		cleanup_all(coders, q->config.n_of_coders);
+		join_threads(q->coders, count);
+		cleanup_all(q->coders, q->config.n_of_coders);
 		pthread_mutex_destroy(&q->m_simulation_stop);
 		pthread_mutex_destroy(&q->m_print);
 		pthread_mutex_destroy(&q->service_mutex);
@@ -125,10 +53,10 @@ int	central_part(t_quantum *q,  int count, t_coders *coders, t_check *check, t_d
 		cleanup(dongle, count);
 		return (1);
 	}
-	join_threads(coders, count);
+	join_threads(q->coders, count);
 	if (pthread_join(q->monitor_thread, NULL) != 0)
 		return (1);
-	cleanup_all(coders, q->config.n_of_coders);
+	cleanup_all(q->coders, q->config.n_of_coders);
 	cleanup(dongle, count);
 	pthread_mutex_destroy(&q->m_simulation_stop);
 	pthread_mutex_destroy(&q->m_print);
@@ -141,16 +69,17 @@ void	get_time(t_quantum *q)
 {
 	struct timeval	tv;
 
-	q->simulation_stop = 0; // è 0 perchè non è finita, la simulazione deve ancora iniziare
-	gettimeofday(&tv, NULL); // si ricava l'ora attuale
-	q->simulation_start = (tv.tv_sec * 1000) + (tv.tv_usec / 1000); // si inizia la simulazione dei tempi 
-	pthread_mutex_init(&q->m_simulation_stop, NULL); // si inizializza il mutex della simulation stop
+	q->simulation_stop = 0;
+	gettimeofday(&tv, NULL);
+	q->simulation_start = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	pthread_mutex_init(&q->m_simulation_stop, NULL);
 	pthread_mutex_init(&q->m_print, NULL);
 	pthread_mutex_init(&q->service_mutex, NULL);
 	pthread_cond_init(&q->service_condition, NULL);
 }
 
-int	creation_arrays(t_coders **coders, t_quantum *q, t_dongle **dongle, int *count)
+int	creation_arrays(t_coders **coders, t_quantum *q,
+	t_dongle **dongle, int *count)
 {
 	*dongle = init_array_dongle(q);
 	if (!*dongle)
@@ -158,34 +87,36 @@ int	creation_arrays(t_coders **coders, t_quantum *q, t_dongle **dongle, int *cou
 	*coders = init_array_coders(q, count, *dongle);
 	if (!*coders)
 		return (1);
+	q->coders = *coders;
 	q->wait_heap = init_array_heap(q->config.n_of_coders);
 	if (!q->wait_heap)
 		return (1);
 	return (0);
 }
+
 //qua dentro ci  stanno le chiamate alle funzioni. prima parse
 // poi creazione thread, e la creazione dell'array preso dal parse
 // se il parse fallisce il programma deve terminare
 int	main(int argc, char *argv[])
 {
-	t_quantum		q; // struct che contiene i riferimenti ai valori dei coders
-	t_check			check; // struct che fa il controllo dei tempi
+	t_quantum		q;
+	t_check			check;
 	int				count;
 	t_dongle		*dongle;
-	
+	t_coders		*coders;
+
 	count = 0;
 	if (argc != 9)
-		return 0;
+		return (0);
 	memset(&check, 0, sizeof(t_check));
 	if (validation(argc, argv) == 0)
 	{
-		t_coders	*coders;
 		if (parse(&q, argc, argv) == 0)
 		{
 			get_time(&q);
 			if (creation_arrays(&coders, &q, &dongle, &count) != 0)
 				return (1);
-			if(central_part(&q, count, coders, &check, dongle) != 0)
+			if (central_part(&q, count, &check, dongle) != 0)
 				return (1);
 		}
 		return (0);

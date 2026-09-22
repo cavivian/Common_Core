@@ -6,11 +6,26 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 14:17:36 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/17 12:03:09 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/22 11:59:38 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
+
+void	actions(t_coders *coders)
+{
+	pthread_mutex_lock(&coders->mutex);
+	coders->n_of_compiles++;
+	pthread_mutex_unlock(&coders->mutex);
+	if (check_simulation(coders) != 0)
+		return ;
+	if (debug(coders) != 0)
+		return ;
+	if (check_simulation(coders) != 0)
+		return ;
+	if (refactor(coders) != 0)
+		return ;
+}
 
 //  controlla che la dongle sx e dx siano accessibili in contemporanea
 // t_available_dongle = tempo in millisecondi in cui la dongle sarà disponibile
@@ -37,9 +52,7 @@ int	compile(t_coders *cod) // finita per ora
 				+ cod->quantum->config.dongle_cooldown);
 		cod->dongle_sx->t_available_dongle = (time_save
 				+ cod->quantum->config.dongle_cooldown);
-		pthread_mutex_unlock(&cod->dongle_dx->m_dongle);
-		pthread_mutex_unlock(&cod->dongle_sx->m_dongle);
-		pthread_cond_broadcast(&cod->quantum->service_condition);
+		mutex_unlock(cod);
 		return (0);
 	}
 	return (1);

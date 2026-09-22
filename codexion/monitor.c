@@ -6,45 +6,45 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/17 17:22:22 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/22 10:34:21 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 // funzione che controlla se ogni coder è in burnout
+// "Da quando questo coder ha iniziato il suo ultimo compile, sono passati 
+// almeno time_to_burnout millisecondi senza
+// che abbia iniziato un altro compile?" - si
+// da proteggere last compile
 int	if_burnout(t_check *check, long save) // finita
 {
-	int			i; // indice per visitare un coder alla volta
+	int			i;
 	int			burnout;
 
 	i = 0;
-	while(i < check->n_of_coders)
+	while (i < check->n_of_coders)
 	{
-		// "Da quando questo coder ha iniziato il suo ultimo compile, sono passati 
-		// almeno time_to_burnout millisecondi senza che abbia iniziato un altro compile?" - si
-		// da proteggere last compile
 		pthread_mutex_lock(&check->coders[i].mutex);
 		burnout = save - check->coders[i].last_compile_start;
 		pthread_mutex_unlock(&check->coders[i].mutex);
 		if (burnout >= *check->burnout)
 		{
 			pthread_mutex_lock(check->m_simulation_stop);
-			*check->simulation_stop = 1; // stoppa la simulazione
+			*check->simulation_stop = 1;
 			pthread_mutex_unlock(check->m_simulation_stop);
 			burnout_message(&check->coders[i]);
-			return(1);
+			return (1);
 		}
 		i++;
 	}
 	return (0);
 }
 
-
 void	monitor_centre(t_check *check, int *check_simulation)
 {
 	struct timeval	tv;
-	long	save;
+	long			save;
 
 	pthread_mutex_lock(check->m_simulation_stop);
 	*check_simulation = *check->simulation_stop;
@@ -65,11 +65,12 @@ void	monitor_centre(t_check *check, int *check_simulation)
 // decide se continuare o fermare la simulazione
 void	*monitor(void *arg)
 {
-	t_check			*check = (t_check*)arg;
+	t_check			*check;
 	int				check_simulation;
 
+	check = (t_check *)arg;
 	check_simulation = 0;
-	while(check_simulation == 0)
+	while (check_simulation == 0)
 		monitor_centre(check, &check_simulation);
 	pthread_mutex_lock(check->service_mutex);
 	pthread_cond_broadcast(check->service_condition);
@@ -77,7 +78,7 @@ void	*monitor(void *arg)
 	return (NULL);
 }
 
-int	init_check_monitor(t_check *check, t_quantum *q, t_coders *cod) // finita
+int	init_check_monitor(t_check *check, t_quantum *q, t_coders *cod)
 {
 	check->number_of_compiles_required = &q->config.number_of_compiles_required;
 	check->burnout = &q->config.burnout;
@@ -88,7 +89,7 @@ int	init_check_monitor(t_check *check, t_quantum *q, t_coders *cod) // finita
 	check->m_simulation_stop = &q->m_simulation_stop;
 	check->service_condition = &q->service_condition;
 	check->service_mutex = &q->service_mutex;
-	if(pthread_create(&q->monitor_thread, NULL, monitor, check) != 0)
+	if (pthread_create(&q->monitor_thread, NULL, monitor, check) != 0)
 		return (1);
 	return (0);
 }

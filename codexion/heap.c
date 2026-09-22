@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:01:38 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/21 13:32:41 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/22 16:24:43 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	ft_swap(t_wait_node *a, t_wait_node *b)
 	*b = tmp;
 }
 
-// confronto il nodo passato per parametro con il padre, dopo averlo inserito nell'heap 
+// confronto il nodo passato per parametro
+// con il padre e lo faccio salire, dopo averlo inserito nell'heap 
 t_heap	*push_into_the_heap(t_heap *heap, t_wait_node *node)
 {
 	int	i;
@@ -58,8 +59,6 @@ t_heap	*push_into_the_heap(t_heap *heap, t_wait_node *node)
 	return (heap);
 }
 
-
-
 // controllo di chi ha la priorita'
 void	check_priority_queue(t_heap *heap, int index)
 {
@@ -72,34 +71,34 @@ void	check_priority_queue(t_heap *heap, int index)
 		left_son = heap_left_son(index);
 		right_son = heap_right_son(index);
 		best = index;
-		if (left_son < heap->current_size &&
-			heap->array[left_son].value > heap->array[best].value)
+		if (left_son < heap->current_size
+			&& heap->array[left_son].value > heap->array[best].value)
 			best = left_son;
-		if (right_son < heap->current_size &&
-			heap->array[right_son].value > heap->array[best].value)
+		if (right_son < heap->current_size
+			&& heap->array[right_son].value > heap->array[best].value)
 			best = right_son;
 		if (best == index)
-			break;
+			break ;
 		else
-		ft_swap(&heap->array[index], &heap->array[best]);
-		index  = best;
+			ft_swap(&heap->array[index], &heap->array[best]);
+		index = best;
 	}
 }
 
 // quando trova il nodo maggiore lo toglie dalla coda
-int delete_max_priority_node(t_heap *heap, t_wait_node *extract_node)
+int	delete_max_priority_node(t_heap *heap, t_wait_node *extract_node)
 {
 	if (heap == NULL || heap->current_size <= 0)
 		return (1);
-    if (heap->current_size == 1)
-    {
-        heap->current_size--;
-        *extract_node = heap->array[0];
-        return (0);
-    }
-    *extract_node = heap->array[0];
-    heap->array[0] = heap->array[heap->current_size - 1];
-    heap->current_size--;
-    check_priority_queue(heap, 0);
-    return 0;
+	if (heap->current_size == 1)
+	{
+		heap->current_size--;
+		*extract_node = heap->array[0];
+		return (0);
+	}
+	*extract_node = heap->array[0];
+	heap->array[0] = heap->array[heap->current_size - 1];
+	heap->current_size--;
+	check_priority_queue(heap, 0);
+	return (0);
 }

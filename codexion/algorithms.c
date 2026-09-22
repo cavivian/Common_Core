@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 11:18:30 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/21 11:30:34 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/22 10:31:23 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // corrisponde a pick_metric
 t_wait_node	create_wait_node(t_heap *heap, t_coders *coder, t_algorithm algo)
 {
-	t_wait_node node;
+	t_wait_node	node;
 
 	node.coder = coder;
 	if (algo == FIFO)
@@ -25,15 +25,17 @@ t_wait_node	create_wait_node(t_heap *heap, t_coders *coder, t_algorithm algo)
 	return (node);
 }
 
-int heap_father(int i)
+int	heap_father(int i)
 {
-    return (i - 1) / 2;
+	return ((i - 1) / 2);
 }
-int heap_left_son(int i)
+
+int	heap_left_son(int i)
 {
-    return (2 * i + 1);
+	return (2 * i + 1);
 }
-int heap_right_son(int i)
+
+int	heap_right_son(int i)
 {
-    return (2 * i + 2);
+	return (2 * i + 2);
 }

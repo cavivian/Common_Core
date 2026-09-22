@@ -6,16 +6,16 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 10:18:46 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/18 13:21:26 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/22 10:17:53 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	cleanup(t_dongle *dongle, int i) // funzione che gestisce gli errori di creazione dei mutex della dongle
+void	cleanup(t_dongle *dongle, int i)
 {
 	int	j;
-	
+
 	j = 0;
 	while (j < i)
 	{
@@ -25,11 +25,10 @@ void	cleanup(t_dongle *dongle, int i) // funzione che gestisce gli errori di cre
 	free(dongle);
 }
 
-
-void	cleanup_all(t_coders *cod, int size) // funzione che distrugge i mutex creati se si ha problemi con il join dei thread
+void	cleanup_all(t_coders *cod, int size)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < size)
 	{
@@ -56,4 +55,11 @@ void	free_heap(t_heap *heap)
 {
 	free(heap->array);
 	free(heap);
+}
+
+void	mutex_unlock(t_coders *cod)
+{
+	pthread_mutex_unlock(&cod->dongle_dx->m_dongle);
+	pthread_mutex_unlock(&cod->dongle_sx->m_dongle);
+	pthread_cond_broadcast(&cod->quantum->service_condition);
 }

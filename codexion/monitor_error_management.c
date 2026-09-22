@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   monitor_error_management.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/08 14:49:40 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/12 14:17:07 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/22 10:08:56 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 // controlla che tutti i coder abbiano completato i compile richiesti
-int check_n_of_compiles(t_check *check)
+int	check_n_of_compiles(t_check *check)
 {
 	int	i;
 	int	check_of_compile;
 
 	i = 0;
-	while(i < check->n_of_coders)
+	while (i < check->n_of_coders)
 	{
 		pthread_mutex_lock(&check->coders[i].mutex);
 		check_of_compile = check->coders[i].n_of_compiles;
