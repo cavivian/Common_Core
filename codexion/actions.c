@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 14:17:36 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/22 11:59:38 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/23 15:30:14 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	actions(t_coders *coders)
 {
+	printf("\n%d sono entrato in actions\n", coders->index);
 	pthread_mutex_lock(&coders->mutex);
 	coders->n_of_compiles++;
 	pthread_mutex_unlock(&coders->mutex);
@@ -31,18 +32,20 @@ void	actions(t_coders *coders)
 // t_available_dongle = tempo in millisecondi in cui la dongle sarà disponibile
 // m_dongle = mutex che dice se la dongle è in uso o meno
 // chiamata a boadcast per svegliare i thread in attesa di una dongle
-int	compile(t_coders *cod) // finita per ora
+int	compile(t_coders *cod)
 {
 	struct timeval	tv;
 	long			time_save;
-
+	printf("\n---- COMPILE ----\n");
 	if (if_dongle_is_available(cod) != 1)
 	{
+		printf("\n%d entrato in compile\n", cod->index);
 		take_dongle_message(cod);
 		gettimeofday(&tv, NULL);
 		time_save = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 		pthread_mutex_lock(&cod->mutex);
 		cod->last_compile_start = time_save;
+		printf("sono arrivato qua %d", cod->index);
 		pthread_mutex_unlock(&cod->mutex);
 		compile_message(cod);
 		usleep(cod->quantum->config.compile * 1000);

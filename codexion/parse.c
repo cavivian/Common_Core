@@ -6,13 +6,13 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:36:25 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/22 10:04:45 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/23 10:57:32 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-int	validation(int argc, char **argv) // finita
+int	validation(int argc, char **argv)
 {
 	int	args;
 	int	i;

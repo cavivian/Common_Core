@@ -6,27 +6,30 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/22 12:07:48 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/23 15:20:16 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	*coderses(void *arg) // finita per adesso
+void	*coderses(void *arg)
 {
 	t_coders	*coders;
 	int			i;
 
 	i = 0;
 	coders = (t_coders *)arg;
+	printf("\n---- CODERSES ----\n");
 	while (i < coders->quantum->config.number_of_compiles_required)
 	{
+		printf("\n %d entrato in coderses\n", coders->index);
 		if (check_simulation(coders) != 0)
 			return (NULL);
 		if (compile(coders) != 0)
 		{
 			usleep (10000);
 			continue ;
+			printf("\n %d entrato in compile se fallisce\n", coders->index);
 		}
 		actions(coders);
 		i++;

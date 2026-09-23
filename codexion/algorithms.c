@@ -6,20 +6,21 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 11:18:30 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/22 10:31:23 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/23 15:31:19 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 // corrisponde a pick_metric
-t_wait_node	create_wait_node(t_heap *heap, t_coders *coder, t_algorithm algo)
+t_wait_node	create_wait_node(t_coders *coder, t_algorithm algo, long actually_time)
 {
 	t_wait_node	node;
 
+	printf("%d entrato dentro create_wait_node", coder->index);
 	node.coder = coder;
 	if (algo == FIFO)
-		node.value = heap->current_size;
+		node.value = actually_time;
 	else if (algo == EDF)
 		node.value = coder->last_compile_start;
 	return (node);

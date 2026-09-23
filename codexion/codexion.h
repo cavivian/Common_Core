@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/22 16:55:05 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/23 11:06:35 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void		take_dongle_message(t_coders *coders);
 void		burnout_message(t_coders *coders);
 void		ft_swap(t_wait_node *a, t_wait_node *b);
 t_heap		*init_array_heap(int size);
-t_wait_node	create_wait_node(t_heap *heap, t_coders *coder, t_algorithm algo);
+t_wait_node	create_wait_node(t_coders *coder, t_algorithm algo, long actually_time);
 void		free_heap(t_heap *heap);
 int			creation_arrays(t_coders **coders, t_quantum *q,
 				t_dongle **dongle, int *count);

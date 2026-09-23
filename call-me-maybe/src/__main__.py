@@ -11,13 +11,14 @@ import json
 # ricreare le funzioni che hanno _ davanti al nome
 # ricreare la mappa token_id -> stringa del token dal vocab file
 # lettura dei due json e gestione degli errori
-# logica di validazione incrementale del json (sono dentro {}? sto scrivendo un chiave? un valore stringa, un numero?)
+# logica di validazione incrementale del json (sono dentro {}? sto scrivendo
+# un chiave? un valore stringa, un numero?)
 # vincolo che il valore "name" sia uno dei nomi di funzione noti
 # vincolo sui tipi di parametri
 # sostituzione di np.argmax(logits) con "argmax solo tra i token ammessi"
 # criterio di stop basato sulla struttura completa, non su eos_token_id
 # agparse per --functions_definition, --input e --output con path di default
-# 
+
 
 typeofparameter = Union[str, float, bool, dict, list]
 
