@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/22 10:34:21 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/23 16:57:43 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	monitor_centre(t_check *check, int *check_simulation)
 	struct timeval	tv;
 	long			save;
 
+	printf("\nsono dentro monitor_centre\n");
 	pthread_mutex_lock(check->m_simulation_stop);
 	*check_simulation = *check->simulation_stop;
 	pthread_mutex_unlock(check->m_simulation_stop);
@@ -55,11 +56,15 @@ void	monitor_centre(t_check *check, int *check_simulation)
 	save = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	if (check_n_of_compiles(check) == 0)
 	{
+		printf("\nsono dentro il controllo se check_n_of_compiles(check) == 0");
 		simulation_stop_is_1(check);
 		*check_simulation = 1;
 	}
 	if (if_burnout(check, save) != 0)
+	{
+		printf("\nsono dentro il controllo del if_burnout quando fallisce");
 		*check_simulation = 1;
+	}
 }
 
 // decide se continuare o fermare la simulazione
@@ -70,6 +75,7 @@ void	*monitor(void *arg)
 
 	check = (t_check *)arg;
 	check_simulation = 0;
+	printf("\nsono dentro monitor");
 	while (check_simulation == 0)
 		monitor_centre(check, &check_simulation);
 	pthread_mutex_lock(check->service_mutex);
