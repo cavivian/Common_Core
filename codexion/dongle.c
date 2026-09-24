@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/23 15:48:54 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/24 17:42:52 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size)
 	int	i;
 
 	i = 0;
+//	printf("\nsto assegnando le dongle\n");
 	while (i < size)
 	{
 		cod[i].dongle_sx = &dongle[i];
@@ -43,25 +44,27 @@ long	check_available_dongle(t_dongle *dongle)
 	return (available);
 }
 
-int	centre(t_coders *coders, int actually_time, struct timespec *ts)
+int	centre(t_coders *coders, long actually_time, struct timespec *ts)
 {
 	struct timeval	tv;
-	printf("\n%d sono dentro centre\n", coders->index);
-	while (check_available_dongle(coders->dongle_sx) > actually_time
-		|| (check_available_dongle(coders->dongle_dx) > actually_time)
-		|| coders->quantum->wait_heap->array[0].coder != coders)
+	//printf("\n%d sono dentro centre\n", coders->index);
+	printf("\nstatus di simulation stop: %d\n", coders->quantum->simulation_stop);
+	while (check_available_dongle(coders->dongle_sx) >= actually_time
+		|| (check_available_dongle(coders->dongle_dx) >= actually_time)
+		|| coders->quantum->wait_heap.array[0].coder != coders)
 	{
-		printf("%d ", actually_time);
+	//	printf("%d ", actually_time);
 		gettimeofday(&tv, NULL);
 		actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 		if (check_simulation(coders) != 0 || pthread_cond_timedwait(&coders->quantum->service_condition,
 			&coders->quantum->service_mutex, ts) != 0)
 		{
-			printf("\n%d sono entrato dentro il timedwait\n", coders->index);
+		//	printf("\n%d sono entrato dentro il timedwait\n", coders->index);
+			printf("\nstatus di simulation stop: %d\n", coders->quantum->simulation_stop);
 			pthread_mutex_unlock(&coders->quantum->service_mutex);
 			return (1);
 		}
-		printf("\n%d sono fuori dal timedwait\n", coders->index);
+		//printf("\n%d sono fuori dal timedwait\n", coders->index);
 	}
 	return (0);
 }
@@ -98,11 +101,11 @@ int	if_dongle_is_available(t_coders *coders)
 	actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 	node = create_wait_node(coders, coders->quantum->config.algorithm,
 		timestamp_for_value);
-	push_into_the_heap(coders->quantum->wait_heap, &node);
+	push_into_the_heap(&coders->quantum->wait_heap, &node);
 	if (centre(coders, actually_time, &ts) != 0)
 		return (1);
-	printf("\n%d sono fuori da centre", coders->index);
-	delete_max_priority_node(coders->quantum->wait_heap, &node);
+	//printf("\n%d sono fuori da centre", coders->index);
+	delete_max_priority_node(&coders->quantum->wait_heap, &node);
 	lock_unlock_of_mutex(coders);
 	return (0);
 }

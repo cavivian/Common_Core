@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/23 15:20:16 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/24 18:45:50 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ void	*coderses(void *arg)
 
 	i = 0;
 	coders = (t_coders *)arg;
-	printf("\n---- CODERSES ----\n");
+	//printf("\n---- CODERSES ----\n");
 	while (i < coders->quantum->config.number_of_compiles_required)
 	{
-		printf("\n %d entrato in coderses\n", coders->index);
+	//	printf("\n %d entrato in coderses\n", coders->index);
 		if (check_simulation(coders) != 0)
 			return (NULL);
 		if (compile(coders) != 0)
 		{
 			usleep (10000);
 			continue ;
-			printf("\n %d entrato in compile se fallisce\n", coders->index);
+		//	printf("\n %d entrato in compile se fallisce\n", coders->index);
 		}
 		actions(coders);
 		i++;
@@ -42,10 +42,9 @@ void	*coderses(void *arg)
 // parte del parse per controllare che i primi 7 arg siano int
 // e che l'ultimo sia una stringa, controllo con strcmp
 // questa funzione accetta che i primi 7 argomenti possano essere 0, sbagliato!
-int	central_part(t_quantum *q, int count,
-	t_check *check, t_dongle *dongle)
+int	central_part(t_quantum *q, int count, t_dongle *dongle)
 {
-	if (init_check_monitor(check, q, q->coders) != 0)
+	if (init_check_monitor(q, q->coders) != 0)
 	{
 		join_threads(q->coders, count);
 		cleanup_all(q->coders, q->config.n_of_coders);
@@ -82,20 +81,31 @@ void	get_time(t_quantum *q)
 }
 
 int	creation_arrays(t_coders **coders, t_quantum *q,
-	t_dongle **dongle, int *count)
+	t_dongle **dongle)
 {
 	*dongle = init_array_dongle(q);
 	if (!*dongle)
 		return (1);
-	*coders = init_array_coders(q, count, *dongle);
-	if (!*coders)
-		return (1);
-	q->coders = *coders;
 	q->wait_heap = init_array_heap(q->config.n_of_coders);
-	if (!q->wait_heap)
+	if (!q->wait_heap.array)
 		return (1);
+	q->coders = init_array_coders(q, *dongle);
+	if (!q->coders)
+		return (1);
+	(void)coders;
 	return (0);
 }
+
+/**
+ * VALIDATION
+ * PARSING > valorizza quantum.config
+ * INIT DEI DATI[QUANTUM(MUTEX, START DATE), CODERS, DONGLES] con protezione di failure
+ * CREAZIONE THREAD[CODERS, MONITOR]
+ *  ... vita coder
+ * JOIN MONITOR
+ * JOIN CODER
+ * EXIT
+ */
 
 //qua dentro ci  stanno le chiamate alle funzioni. prima parse
 // poi creazione thread, e la creazione dell'array preso dal parse
@@ -103,26 +113,23 @@ int	creation_arrays(t_coders **coders, t_quantum *q,
 int	main(int argc, char *argv[])
 {
 	t_quantum		q;
-	t_check			check;
 	int				count;
 	t_dongle		*dongle;
-	t_coders		*coders;
 
 	count = 0;
 	if (argc != 9)
-		return (0);
-	memset(&check, 0, sizeof(t_check));
-	if (validation(argc, argv) == 0)
-	{
-		if (parse(&q, argc, argv) == 0)
-		{
-			get_time(&q);
-			if (creation_arrays(&coders, &q, &dongle, &count) != 0)
-				return (1);
-			if (central_part(&q, count, &check, dongle) != 0)
-				return (1);
-		}
-		return (0);
-	}
+		return (1);
+	memset(&q, 0, sizeof(t_quantum));
+	if (validation(argc, argv) != 0)
+		return (1);
+	if (parse(&q, argc, argv) != 0)
+		return (1);
+	get_time(&q);
+	if (creation_arrays(&q.coders, &q, &dongle) != 0)
+		return (1);
+	if (handle_coders_thread(q.coders, q.config.n_of_coders, dongle, &count) != 0)
+		return (1);
+	if (central_part(&q, count, dongle) != 0)
+		return (1);
 	return (1);
 }

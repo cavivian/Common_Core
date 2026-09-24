@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:43:51 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/22 17:47:51 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/24 18:11:19 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_coders_values(int i, t_coders *coders, t_quantum *q)
 	coders[i].last_compile_start = q->simulation_start;
 	coders[i].n_of_compiles = 0;
 	coders[i].index = i + 1;
+	//printf("\nho inizializzato i valori dei coders\n");
 }
 
 int	handle_coders_thread(t_coders *coders, int num,
@@ -36,7 +37,7 @@ int	handle_coders_thread(t_coders *coders, int num,
 	return (0);
 }
 
-t_coders	*init_array_coders(t_quantum *q, int *count, t_dongle *dongle)
+t_coders	*init_array_coders(t_quantum *q, t_dongle *dongle)
 {
 	int			i;
 	t_coders	*coders;
@@ -53,8 +54,7 @@ t_coders	*init_array_coders(t_quantum *q, int *count, t_dongle *dongle)
 		init_coders_values(i, coders, q);
 		i++;
 	}
-	if (handle_coders_thread(coders, num, dongle, count) != 0)
-		return (NULL);
+	(void)dongle;
 	return (coders);
 }
 

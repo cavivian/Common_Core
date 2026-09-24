@@ -6,28 +6,25 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:01:38 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/23 15:39:00 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/24 17:42:42 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-t_heap	*init_array_heap(int size)
+t_heap	init_array_heap(int size)
 {
-	t_heap	*heap;
+	t_heap	heap;
 
-	heap = malloc(sizeof(t_heap));
-	if (!heap)
-		return (NULL);
-	heap->array = malloc(size * sizeof(t_wait_node));
-	if (!heap->array)
+	heap.array = malloc(size * sizeof(t_wait_node));
+	if (!heap.array)
 	{
-		free_heap(heap);
-		return (NULL);
+		free_heap(&heap);
+		return heap;
 	}
-	memset(heap->array, 0, size * sizeof(t_wait_node));
-	heap->size = size;
-	heap->current_size = 0;
+	memset(heap.array, 0, size * sizeof(t_wait_node));
+	heap.size = size;
+	heap.current_size = 0;
 	return (heap);
 }
 
@@ -56,7 +53,7 @@ t_heap	*push_into_the_heap(t_heap *heap, t_wait_node *node)
 		ft_swap(&heap->array[heap_father(i)], &heap->array[i]);
 		i = heap_father(i);
 	}
-	printf("\n entrato in push_into_the_heap\n");
+	//printf("\n%d entrato in push_into_the_heap\n", heap->array->coder->index);
 	return (heap);
 }
 

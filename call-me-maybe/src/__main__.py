@@ -76,6 +76,9 @@ def main() -> None:
             {"role": "system", "content": functions_text},
             {"role": "user", "content": test.prompt}
         ]
+    result = CheckFunctionsDefinition(prompt=test.prompt, name=test.name,
+                                      parameters=test.params)
+    results = list[result]
     # qui dentro: genera la function call per QUESTO prompt
     # e accumula il risultato da qualche parte (es. una lista `results`)
     print("end_of_sentence:", modello._tokenizer.eos_token_id)

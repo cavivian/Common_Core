@@ -6,7 +6,7 @@
 #    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/31 14:52:25 by cavivian          #+#    #+#              #
-#    Updated: 2026/09/22 09:44:18 by cavivian         ###   ########.fr        #
+#    Updated: 2026/09/24 17:32:58 by cavivian         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = codexion
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread -g
 
 SRCS = codexion.c \
 	init_thread_and_mutex.c \
