@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/24 18:42:11 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 13:27:58 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ void	*monitor(void *arg)
 	q = (t_quantum *)arg;
 	//printf("\nsono dentro monitor");
 	while (check_simulation(q->coders) == 0)
+	{
 		monitor_centre(q);
+		usleep(1);
+	}
 	pthread_mutex_lock(&q->service_mutex);
 	pthread_cond_broadcast(&q->service_condition);
 	//printf("\n%d sto chiamando il broadcast\n", q->coders->index);

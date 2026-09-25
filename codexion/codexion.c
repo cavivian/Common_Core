@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/24 18:45:50 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 13:42:58 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*coderses(void *arg)
 			return (NULL);
 		if (compile(coders) != 0)
 		{
-			usleep (10000);
+			usleep (1);
 			continue ;
 		//	printf("\n %d entrato in compile se fallisce\n", coders->index);
 		}
@@ -44,20 +44,9 @@ void	*coderses(void *arg)
 // questa funzione accetta che i primi 7 argomenti possano essere 0, sbagliato!
 int	central_part(t_quantum *q, int count, t_dongle *dongle)
 {
-	if (init_check_monitor(q, q->coders) != 0)
-	{
-		join_threads(q->coders, count);
-		cleanup_all(q->coders, q->config.n_of_coders);
-		pthread_mutex_destroy(&q->m_simulation_stop);
-		pthread_mutex_destroy(&q->m_print);
-		pthread_mutex_destroy(&q->service_mutex);
-		pthread_cond_destroy(&q->service_condition);
-		cleanup(dongle, count);
-		return (1);
-	}
+	//if (pthread_join(q->monitor_thread, NULL) != 0)
+		//return (1);
 	join_threads(q->coders, count);
-	if (pthread_join(q->monitor_thread, NULL) != 0)
-		return (1);
 	cleanup_all(q->coders, q->config.n_of_coders);
 	cleanup(dongle, count);
 	pthread_mutex_destroy(&q->m_simulation_stop);
@@ -66,6 +55,17 @@ int	central_part(t_quantum *q, int count, t_dongle *dongle)
 	pthread_cond_destroy(&q->service_condition);
 	return (0);
 }
+
+int	monitor_errors(t_quantum *q)
+{
+	cleanup_all(q->coders, q->config.n_of_coders);
+	pthread_mutex_destroy(&q->m_simulation_stop);
+	pthread_mutex_destroy(&q->m_print);
+	pthread_mutex_destroy(&q->service_mutex);
+	pthread_cond_destroy(&q->service_condition);
+	return (1);
+}
+
 
 void	get_time(t_quantum *q)
 {
@@ -86,9 +86,9 @@ int	creation_arrays(t_coders **coders, t_quantum *q,
 	*dongle = init_array_dongle(q);
 	if (!*dongle)
 		return (1);
-	q->wait_heap = init_array_heap(q->config.n_of_coders);
-	if (!q->wait_heap.array)
-		return (1);
+	// q->wait_heap = init_array_heap(q->config.n_of_coders);
+	// if (!q->wait_heap.array)
+	// 	return (1);
 	q->coders = init_array_coders(q, *dongle);
 	if (!q->coders)
 		return (1);
@@ -129,6 +129,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (handle_coders_thread(q.coders, q.config.n_of_coders, dongle, &count) != 0)
 		return (1);
+	init_monitor_threads(&q);
 	if (central_part(&q, count, dongle) != 0)
 		return (1);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/24 18:45:59 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 13:22:23 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 typedef struct s_coders		t_coders;
 typedef struct s_quantum	t_quantum;
 typedef struct s_dongle		t_dongle;
-typedef struct s_wait_node	t_wait_node;
 
 // enum per semplificare il parse dello scheduler 
 typedef enum e_algorithm
@@ -48,10 +47,16 @@ typedef struct s_settings
 	t_algorithm	algorithm;
 }	t_settings;
 
+typedef struct s_wait_node
+{
+	t_coders	*coder; // puntatore al coder che sta aspettando
+	long		value; // quando ha fatto la richiesta
+}	t_wait_node;
+
 // struct che contiene l'heap, si occupa di gestire la priorità dei coder che stanno aspettando le dongle
 typedef struct s_heap
 {
-	t_wait_node	*array;
+	t_wait_node	array[2];
 	int			size;
 	int			current_size;
 }	t_heap;
@@ -77,6 +82,8 @@ typedef struct s_dongle
 {
 	pthread_mutex_t	m_dongle; // dice se qualcuno in questo momento sta usando la dongle
 	long			t_available_dongle; // dice da quale momento è possibile prendere la dongle dopo il cooldown
+	int				is_not_available;
+	t_heap			heap;
 }	t_dongle;
 
 // struct dei coders, che ripesca dentro quantum i parametri
@@ -95,11 +102,7 @@ typedef struct s_coders
 
 // struct che contiene il coder e il momento in cui ha fatto la richiesta (per FIFO)
 // o il momento in cui ha fatto l'ultima compilazione (per EDF)
-typedef struct s_wait_node
-{
-	t_coders	*coder; // puntatore al coder che sta aspettando
-	long		value; // quando ha fatto la richiesta
-}	t_wait_node;
+
 
 
 // struct che contiene tutte le info che servono al monitor per controllare lo stato della simulazione
@@ -118,14 +121,14 @@ int			refactor(t_coders *coders);
 int			check_less_zero(char **argv);
 void		*coderses(void *arg);
 t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size);
-long		check_available_dongle(t_dongle *dongle);
-int			if_dongle_is_available(t_coders *coders);
+long		get_eta_cooldown_time(t_dongle *dongle);
+int			if_dongle_is_available(t_coders *coder);
 int			centre(t_coders *coders, long actually_time, struct timespec *ts);
 void		lock_unlock_of_mutex(t_coders *coders);
 void		cleanup(t_dongle *dongle, int i);
 void		cleanup_all(t_coders *cod, int size);
 int			check_simulation(t_coders *coders);
-int			init_threads(t_coders *cod, int size, int *count);
+int			init_coders_threads(t_coders *cod, int size, int *count);
 int			init_mutex(t_coders *cod, int size);
 int			join_threads(t_coders *cod, int i);
 int			check_n_of_compiles(t_quantum *q);
@@ -140,8 +143,8 @@ void		refactor_message(t_coders *coders);
 void		take_dongle_message(t_coders *coders);
 void		burnout_message(t_coders *coders);
 void		ft_swap(t_wait_node *a, t_wait_node *b);
-t_heap		init_array_heap(int size);
-t_wait_node	create_wait_node(t_coders *coder, t_algorithm algo, long actually_time);
+//t_heap		init_array_heap(int size);
+t_wait_node	create_wait_node(t_coders *coder, t_algorithm algo);
 void		free_heap(t_heap *heap);
 int			creation_arrays(t_coders **coders, t_quantum *q,
 				t_dongle **dongle);
@@ -149,12 +152,18 @@ int			heap_father(int i);
 int			heap_left_son(int i);
 int			heap_right_son(int i);
 int			delete_max_priority_node(t_heap *heap, t_wait_node *extract_node);
-t_heap		*push_into_the_heap(t_heap *heap, t_wait_node *node);
+t_heap		*push_into_the_heap(t_heap *heap, t_wait_node node);
 void		check_priority_queue(t_heap *heap, int index);
 void		actions(t_coders *coders);
 void		init_coders_values(int i, t_coders *coders, t_quantum *q);
 int			handle_coders_thread(t_coders *coders, int num,
 				t_dongle *dongle, int *count);
 void		mutex_unlock(t_coders *cod);
+void		init_monitor_threads(t_quantum *q);
+int			monitor_errors(t_quantum *q);
+void		register_heap(t_coders *coder);
+void		apply_cooldown(t_coders *coder);
+
+
 
 #endif

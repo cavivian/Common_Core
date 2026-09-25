@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/22 10:11:28 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 13:31:04 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // crea già tutti i thread dell'array.
 //(*count)++ -> variabile condivisa con join_threads,
 // serve per salvare quanti thread sono stati creati
-int	init_threads(t_coders *cod, int size, int *count)
+int	init_coders_threads(t_coders *cod, int size, int *count)
 {
 	int	i;
 
@@ -33,6 +33,12 @@ int	init_threads(t_coders *cod, int size, int *count)
 	}
 	return (0);
 }
+void	init_monitor_threads(t_quantum *q)
+{
+	if (init_check_monitor(q, q->coders) != 0)
+		monitor_errors(q);
+}
+
 
 int	init_mutex(t_coders *cod, int size)
 {
@@ -41,6 +47,7 @@ int	init_mutex(t_coders *cod, int size)
 	i = 0;
 	while (i < size)
 	{
+		printf("CODER[%d]: %p\n", i, &cod[i]);
 		if (pthread_mutex_init(&cod[i].mutex, NULL) != 0)
 		{
 			cleanup_all(cod, i);

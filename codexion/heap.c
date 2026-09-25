@@ -6,27 +6,27 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:01:38 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/24 17:42:42 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 13:34:49 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-t_heap	init_array_heap(int size)
-{
-	t_heap	heap;
+// t_heap	init_array_heap(int size)
+// {
+// 	t_heap	heap;
 
-	heap.array = malloc(size * sizeof(t_wait_node));
-	if (!heap.array)
-	{
-		free_heap(&heap);
-		return heap;
-	}
-	memset(heap.array, 0, size * sizeof(t_wait_node));
-	heap.size = size;
-	heap.current_size = 0;
-	return (heap);
-}
+// 	heap.array = malloc(size * sizeof(t_wait_node));
+// 	if (!heap.array)
+// 	{
+// 		free_heap(&heap);
+// 		return heap;
+// 	}
+// 	memset(heap.array, 0, size * sizeof(t_wait_node));
+// 	heap.size = size;
+// 	heap.current_size = 0;
+// 	return (heap);
+// }
 
 void	ft_swap(t_wait_node *a, t_wait_node *b)
 {
@@ -39,7 +39,7 @@ void	ft_swap(t_wait_node *a, t_wait_node *b)
 
 // confronto il nodo passato per parametro
 // con il padre e lo faccio salire, dopo averlo inserito nell'heap 
-t_heap	*push_into_the_heap(t_heap *heap, t_wait_node *node)
+t_heap	*push_into_the_heap(t_heap *heap, t_wait_node node)
 {
 	int	i;
 
@@ -47,13 +47,13 @@ t_heap	*push_into_the_heap(t_heap *heap, t_wait_node *node)
 		return (NULL);
 	heap->current_size++;
 	i = heap->current_size - 1;
-	heap->array[i] = *node;
+	heap->array[i] = node;
 	while (i != 0 && heap->array[heap_father(i)].value > heap->array[i].value)
 	{
 		ft_swap(&heap->array[heap_father(i)], &heap->array[i]);
 		i = heap_father(i);
 	}
-	//printf("\n%d entrato in push_into_the_heap\n", heap->array->coder->index);
+	
 	return (heap);
 }
 

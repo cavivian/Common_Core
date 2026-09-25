@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:43:51 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/24 18:11:19 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 12:40:39 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	handle_coders_thread(t_coders *coders, int num,
 	if (init_mutex(coders, num) != 0)
 		return (1);
 	give_dongle(coders, dongle, num);
-	if (init_threads(coders, num, count) != 0)
+	if (init_coders_threads(coders, num, count) != 0)
 	{
 		if (join_threads(coders, *count) != 0)
 			return (1);
@@ -72,6 +72,7 @@ t_dongle	*init_array_dongle(t_quantum *q)
 	memset(dongle, 0, number * sizeof(t_dongle));
 	while (i < number)
 	{
+		dongle[i].heap.size = 2;
 		if (pthread_mutex_init(&dongle[i].m_dongle, NULL) != 0)
 		{
 			cleanup(dongle, number);
