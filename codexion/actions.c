@@ -6,15 +6,15 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 14:17:36 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 13:45:04 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 17:49:51 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
+// ultima parte di coderses
 void	actions(t_coders *coders)
 {
-//	printf("\n%d sono entrato in actions\n", coders->index);
 	pthread_mutex_lock(&coders->mutex);
 	coders->n_of_compiles++;
 	pthread_mutex_unlock(&coders->mutex);
@@ -28,6 +28,7 @@ void	actions(t_coders *coders)
 		return ;
 }
 
+// funzione che crea il nodo e lo passa a heap
 void	register_heap(t_coders *coder)
 {
 	t_wait_node	node;
@@ -39,7 +40,6 @@ void	register_heap(t_coders *coder)
 	push_into_the_heap(&coder->dongle_dx->heap, node);
 	printf("\n%d [lct: %ld] entrato in push_into_the_heap. current nodes: (DONGLE_DX) [0]: %p (value: %ld), [1]: %p (value: %ld)\n", coder->index, coder->last_compile_start,
 		coder->dongle_dx->heap.array[0].coder, coder->dongle_dx->heap.array[0].value, coder->dongle_dx->heap.array[1].coder, coder->dongle_dx->heap.array[1].value);
-
 }
 
 //  controlla che la dongle sx e dx siano accessibili in contemporanea
@@ -48,7 +48,6 @@ void	register_heap(t_coders *coder)
 // chiamata a boadcast per svegliare i thread in attesa di una dongle
 int	compile(t_coders *cod)
 {
-	struct timeval	tv;
 	long			time_save;
 
 	register_heap(cod);
@@ -56,15 +55,13 @@ int	compile(t_coders *cod)
 		if (if_dongle_is_available(cod) != 1)
 			break ;
 	take_dongle_message(cod);
-	gettimeofday(&tv, NULL);
-	time_save = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	time_save = get_time();
 	pthread_mutex_lock(&cod->mutex);
 	cod->last_compile_start = time_save;
 	pthread_mutex_unlock(&cod->mutex);
 	compile_message(cod);
 	usleep(cod->quantum->config.compile * 1000);
-	gettimeofday(&tv, NULL);
-	time_save = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	time_save = get_time();
 	pthread_mutex_lock(&cod->dongle_dx->m_dongle);
 	cod->dongle_dx->t_available_dongle = (time_save
 		+ cod->quantum->config.dongle_cooldown);

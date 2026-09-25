@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/25 13:22:23 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 17:46:13 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct s_coders
 
 int			validation(int argc, char **argv);
 int			parse(t_quantum *q, int argc, char **argv);
-void		get_time(t_quantum *q);
+void		init_simulation_and_mutex(t_quantum *q);
 t_dongle	*init_array_dongle(t_quantum *q);
 t_coders	*init_array_coders(t_quantum *q, t_dongle *dongle);
 int			central_part(t_quantum *q, int count, t_dongle *dongle);
@@ -158,11 +158,12 @@ void		actions(t_coders *coders);
 void		init_coders_values(int i, t_coders *coders, t_quantum *q);
 int			handle_coders_thread(t_coders *coders, int num,
 				t_dongle *dongle, int *count);
-void		mutex_unlock(t_coders *cod);
+//void		mutex_unlock_and_broadcast(t_coders *cod);
 void		init_monitor_threads(t_quantum *q);
 int			monitor_errors(t_quantum *q);
 void		register_heap(t_coders *coder);
 void		apply_cooldown(t_coders *coder);
+long		get_time();
 
 
 

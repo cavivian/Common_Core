@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 10:18:46 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/24 18:46:58 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 17:42:45 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	free_heap(t_heap *heap)
 	free(heap);
 }
 
-void	mutex_unlock(t_coders *cod)
-{
-	pthread_mutex_unlock(&cod->dongle_dx->m_dongle);
-	pthread_mutex_unlock(&cod->dongle_sx->m_dongle);
-	pthread_cond_broadcast(&cod->quantum->service_condition);
-}
+// void	mutex_unlock_and_broadcast(t_coders *cod)
+// {
+// 	pthread_mutex_unlock(&cod->dongle_dx->m_dongle);
+// 	pthread_mutex_unlock(&cod->dongle_sx->m_dongle);
+// 	pthread_cond_broadcast(&cod->quantum->service_condition);
+// }

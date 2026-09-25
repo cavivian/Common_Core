@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 13:31:04 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 17:47:58 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_monitor_threads(t_quantum *q)
 		monitor_errors(q);
 }
 
-
+// inizializza i mutex per ciascun coder
 int	init_mutex(t_coders *cod, int size)
 {
 	int	i;

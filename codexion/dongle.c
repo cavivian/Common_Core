@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 13:22:55 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 17:36:43 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ long	get_eta_cooldown_time(t_dongle *dongle)
 
 int	centre(t_coders *coders, long actually_time, struct timespec *ts)
 {
-	struct timeval	tv;
 	(void)ts;
 	//printf("\n%d sono dentro centre\n", coders->index);
 	printf("\nstatus di simulation stop: %d\n", coders->quantum->simulation_stop);
@@ -55,8 +54,7 @@ int	centre(t_coders *coders, long actually_time, struct timespec *ts)
 		|| coders->quantum->wait_heap.array[0].coder != coders)
 	{
 	//	printf("%d ", actually_time);
-		gettimeofday(&tv, NULL);
-		actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+		actually_time = get_time();
 		if (check_simulation(coders) != 0)
 		{
 		//	printf("\n%d sono entrato dentro il timedwait\n", coders->index);
@@ -78,13 +76,11 @@ void	lock_unlock_of_mutex(t_coders *coders)
 
 void	apply_cooldown(t_coders *coder)
 {
-	struct timeval tv;
 	long time_dx;
 	long time_sx;
 	long actual_time;
 
-	gettimeofday(&tv, NULL);
-	actual_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	actual_time = get_time();
 	time_dx = get_eta_cooldown_time(coder->dongle_dx) - actual_time;
 	time_sx = get_eta_cooldown_time(coder->dongle_sx) - actual_time;
 	actual_time = time_dx;

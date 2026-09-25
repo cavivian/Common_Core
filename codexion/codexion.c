@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/25 13:42:58 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 17:46:21 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,14 @@ void	*coderses(void *arg)
 
 	i = 0;
 	coders = (t_coders *)arg;
-	//printf("\n---- CODERSES ----\n");
 	while (i < coders->quantum->config.number_of_compiles_required)
 	{
-	//	printf("\n %d entrato in coderses\n", coders->index);
 		if (check_simulation(coders) != 0)
 			return (NULL);
 		if (compile(coders) != 0)
 		{
 			usleep (1);
 			continue ;
-		//	printf("\n %d entrato in compile se fallisce\n", coders->index);
 		}
 		actions(coders);
 		i++;
@@ -44,8 +41,6 @@ void	*coderses(void *arg)
 // questa funzione accetta che i primi 7 argomenti possano essere 0, sbagliato!
 int	central_part(t_quantum *q, int count, t_dongle *dongle)
 {
-	//if (pthread_join(q->monitor_thread, NULL) != 0)
-		//return (1);
 	join_threads(q->coders, count);
 	cleanup_all(q->coders, q->config.n_of_coders);
 	cleanup(dongle, count);
@@ -56,24 +51,10 @@ int	central_part(t_quantum *q, int count, t_dongle *dongle)
 	return (0);
 }
 
-int	monitor_errors(t_quantum *q)
+void	init_simulation_and_mutex(t_quantum *q)
 {
-	cleanup_all(q->coders, q->config.n_of_coders);
-	pthread_mutex_destroy(&q->m_simulation_stop);
-	pthread_mutex_destroy(&q->m_print);
-	pthread_mutex_destroy(&q->service_mutex);
-	pthread_cond_destroy(&q->service_condition);
-	return (1);
-}
-
-
-void	get_time(t_quantum *q)
-{
-	struct timeval	tv;
-
 	q->simulation_stop = 0;
-	gettimeofday(&tv, NULL);
-	q->simulation_start = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	q->simulation_start = get_time();
 	pthread_mutex_init(&q->m_simulation_stop, NULL);
 	pthread_mutex_init(&q->m_print, NULL);
 	pthread_mutex_init(&q->service_mutex, NULL);
@@ -107,9 +88,6 @@ int	creation_arrays(t_coders **coders, t_quantum *q,
  * EXIT
  */
 
-//qua dentro ci  stanno le chiamate alle funzioni. prima parse
-// poi creazione thread, e la creazione dell'array preso dal parse
-// se il parse fallisce il programma deve terminare
 int	main(int argc, char *argv[])
 {
 	t_quantum		q;
@@ -124,7 +102,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (parse(&q, argc, argv) != 0)
 		return (1);
-	get_time(&q);
+	init_simulation_and_mutex(&q);
 	if (creation_arrays(&q.coders, &q, &dongle) != 0)
 		return (1);
 	if (handle_coders_thread(q.coders, q.config.n_of_coders, dongle, &count) != 0)

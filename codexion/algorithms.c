@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 11:18:30 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 13:40:09 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 17:36:06 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,9 @@
 t_wait_node	create_wait_node(t_coders *coder, t_algorithm algo)
 {
 	t_wait_node	node;
-	struct timeval	tv;
 	long	actually_time;
 
-	gettimeofday(&tv, NULL);
-	actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-//	printf("%d entrato dentro create_wait_node", coder->index);
+	actually_time = get_time();
 	node.coder = coder;
 	if (algo == FIFO)
 		node.value = actually_time;

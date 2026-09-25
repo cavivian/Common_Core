@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:36:25 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/23 10:57:32 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 17:49:13 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ int	check_less_zero(char **argv)
 // parse che chiama validation
 // controlla che tutti i parametri passati siano int
 // e li assegna a ogni variabile della struct quantum
-
-int	parse(t_quantum *q, int argc, char **argv) // finita
+int	parse(t_quantum *q, int argc, char **argv)
 {
 	if (validation(argc, argv) != 0)
 		return (1);
@@ -72,4 +71,14 @@ int	parse(t_quantum *q, int argc, char **argv) // finita
 	q->config.number_of_compiles_required = atoi(argv[6]);
 	q->config.dongle_cooldown = atoi(argv[7]);
 	return (0);
+}
+
+long	get_time()
+{
+	struct timeval	tv;
+	long			time;
+
+	gettimeofday(&tv, NULL);
+	time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	return (time);
 }
