@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 17:49:00 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/27 22:15:48 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	if_burnout(t_quantum *q, long save)
 	return (0);
 }
 
+// si occupa di controllare il numero di compilazioni e se il programma è andato in burnout
 void	monitor_centre(t_quantum *q)
 {
 	long			save;
@@ -69,6 +70,7 @@ void	*monitor(void *arg)
 	return (NULL);
 }
 
+// inizializzazione del thread del monitor
 int	init_check_monitor(t_quantum *q, t_coders *cod)
 {
 	if (pthread_create(&q->monitor_thread, NULL, monitor, q) != 0)

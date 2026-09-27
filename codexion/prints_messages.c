@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prints_messages.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 12:04:03 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 17:37:56 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/27 22:31:14 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	take_dongle_message(t_coders *coders)
 	pthread_mutex_unlock(&coders->quantum->m_print);
 }
 
+// qui forse potrei aggiungere quella condizione che il messaggio va stampato entro 10 ms dal burnout
 void	burnout_message(t_coders *coders)
 {
 	long			save;

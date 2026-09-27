@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_array.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:43:51 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/25 17:40:58 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/27 22:29:13 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_coders_values(int i, t_coders *coders, t_quantum *q)
 	coders[i].index = i + 1;
 }
 
+// chiamata nel main
 int	handle_coders_thread(t_coders *coders, int num,
 	t_dongle *dongle, int *count)
 {
@@ -80,4 +81,17 @@ t_dongle	*init_array_dongle(t_quantum *q)
 		i++;
 	}
 	return (dongle);
+}
+
+int	creation_arrays(t_coders **coders, t_quantum *q,
+	t_dongle **dongle)
+{
+	*dongle = init_array_dongle(q);
+	if (!*dongle)
+		return (1);
+	q->coders = init_array_coders(q, *dongle);
+	if (!q->coders)
+		return (1);
+	(void)coders;
+	return (0);
 }

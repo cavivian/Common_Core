@@ -3,31 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:01:38 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/25 13:34:49 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/27 22:28:20 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// t_heap	init_array_heap(int size)
-// {
-// 	t_heap	heap;
-
-// 	heap.array = malloc(size * sizeof(t_wait_node));
-// 	if (!heap.array)
-// 	{
-// 		free_heap(&heap);
-// 		return heap;
-// 	}
-// 	memset(heap.array, 0, size * sizeof(t_wait_node));
-// 	heap.size = size;
-// 	heap.current_size = 0;
-// 	return (heap);
-// }
-
+// serve per swappare gli elementi della queue
 void	ft_swap(t_wait_node *a, t_wait_node *b)
 {
 	t_wait_node	tmp;
@@ -99,4 +84,18 @@ int	delete_max_priority_node(t_heap *heap, t_wait_node *extract_node)
 	heap->current_size--;
 	check_priority_queue(heap, 0);
 	return (0);
+}
+
+// funzione che crea il nodo e lo passa a heap
+void	register_heap(t_coders *coder)
+{
+	t_wait_node	node;
+
+	node = create_wait_node(coder, coder->quantum->config.algorithm);
+	push_into_the_heap(&coder->dongle_sx->heap, node);
+	printf("\n%d [lct: %ld] entrato in push_into_the_heap. current nodes: (DONGLE_SX) [0]: %p (value: %ld), [1]: %p (value: %ld)\n", coder->index, coder->last_compile_start,
+		coder->dongle_sx->heap.array[0].coder, coder->dongle_sx->heap.array[0].value, coder->dongle_sx->heap.array[1].coder, coder->dongle_sx->heap.array[1].value);
+	push_into_the_heap(&coder->dongle_dx->heap, node);
+	printf("\n%d [lct: %ld] entrato in push_into_the_heap. current nodes: (DONGLE_DX) [0]: %p (value: %ld), [1]: %p (value: %ld)\n", coder->index, coder->last_compile_start,
+		coder->dongle_dx->heap.array[0].coder, coder->dongle_dx->heap.array[0].value, coder->dongle_dx->heap.array[1].coder, coder->dongle_dx->heap.array[1].value);
 }

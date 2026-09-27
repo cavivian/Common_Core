@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 14:17:36 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 17:49:51 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/27 22:16:06 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,7 @@ void	actions(t_coders *coders)
 		return ;
 }
 
-// funzione che crea il nodo e lo passa a heap
-void	register_heap(t_coders *coder)
-{
-	t_wait_node	node;
-
-	node = create_wait_node(coder, coder->quantum->config.algorithm);
-	push_into_the_heap(&coder->dongle_sx->heap, node);
-	printf("\n%d [lct: %ld] entrato in push_into_the_heap. current nodes: (DONGLE_SX) [0]: %p (value: %ld), [1]: %p (value: %ld)\n", coder->index, coder->last_compile_start,
-		coder->dongle_sx->heap.array[0].coder, coder->dongle_sx->heap.array[0].value, coder->dongle_sx->heap.array[1].coder, coder->dongle_sx->heap.array[1].value);
-	push_into_the_heap(&coder->dongle_dx->heap, node);
-	printf("\n%d [lct: %ld] entrato in push_into_the_heap. current nodes: (DONGLE_DX) [0]: %p (value: %ld), [1]: %p (value: %ld)\n", coder->index, coder->last_compile_start,
-		coder->dongle_dx->heap.array[0].coder, coder->dongle_dx->heap.array[0].value, coder->dongle_dx->heap.array[1].coder, coder->dongle_dx->heap.array[1].value);
-}
-
-//  controlla che la dongle sx e dx siano accessibili in contemporanea
+// controlla che la dongle sx e dx siano accessibili in contemporanea
 // t_available_dongle = tempo in millisecondi in cui la dongle sarà disponibile
 // m_dongle = mutex che dice se la dongle è in uso o meno
 // chiamata a boadcast per svegliare i thread in attesa di una dongle

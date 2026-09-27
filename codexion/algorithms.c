@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   algorithms.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 11:18:30 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 17:36:06 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/27 22:17:56 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// corrisponde a pick_metric
+// crea il nodo con il valore da passare all'heap per formare la queue
 t_wait_node	create_wait_node(t_coders *coder, t_algorithm algo)
 {
 	t_wait_node	node;
@@ -31,16 +31,19 @@ t_wait_node	create_wait_node(t_coders *coder, t_algorithm algo)
 	return (node);
 }
 
+// espressione per sapere in quale posizione si trova il padre nell'heap
 int	heap_father(int i)
 {
 	return ((i - 1) / 2);
 }
 
+// funzione per sapere dove si trova il figlio sinisto dentro heap
 int	heap_left_son(int i)
 {
 	return (2 * i + 1);
 }
 
+// espressione per sapere dove si trova il figlio destro
 int	heap_right_son(int i)
 {
 	return (2 * i + 2);

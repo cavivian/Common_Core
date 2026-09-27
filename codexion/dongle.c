@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dongle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 17:36:43 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/27 22:26:25 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size)
 	int	i;
 
 	i = 0;
-//	printf("\nsto assegnando le dongle\n");
 	while (i < size)
 	{
 		cod[i].dongle_sx = &dongle[i];
@@ -33,6 +32,7 @@ t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size)
 	return (cod);
 }
 
+// calcola il tempo del cooldown
 long	get_eta_cooldown_time(t_dongle *dongle)
 {
 	long	available;
@@ -44,36 +44,27 @@ long	get_eta_cooldown_time(t_dongle *dongle)
 	return (available);
 }
 
+// non credo sia finita
 int	centre(t_coders *coders, long actually_time, struct timespec *ts)
 {
 	(void)ts;
-	//printf("\n%d sono dentro centre\n", coders->index);
 	printf("\nstatus di simulation stop: %d\n", coders->quantum->simulation_stop);
 	while (get_eta_cooldown_time(coders->dongle_sx) >= actually_time
 		|| (get_eta_cooldown_time(coders->dongle_dx) >= actually_time)
 		|| coders->quantum->wait_heap.array[0].coder != coders)
 	{
-	//	printf("%d ", actually_time);
 		actually_time = get_time();
 		if (check_simulation(coders) != 0)
 		{
-		//	printf("\n%d sono entrato dentro il timedwait\n", coders->index);
 			printf("\nstatus di simulation stop: %d\n", coders->quantum->simulation_stop);
 			pthread_mutex_unlock(&coders->quantum->service_mutex);
 			return (1);
 		}
-		//printf("\n%d sono fuori dal timedwait\n", coders->index);
 	}
 	return (0);
 }
 
-void	lock_unlock_of_mutex(t_coders *coders)
-{
-	pthread_mutex_lock(&coders->dongle_sx->m_dongle);
-	pthread_mutex_lock(&coders->dongle_dx->m_dongle);
-	pthread_mutex_unlock(&coders->quantum->service_mutex);
-}
-
+// funzione che mi controlla il cooldown e me lo imposta in base  a chi lo ha più alto
 void	apply_cooldown(t_coders *coder)
 {
 	long time_dx;

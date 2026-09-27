@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/25 17:46:21 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/27 22:19:24 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	*coderses(void *arg)
+// funzione che da il via alle azioni
+void	*routine(void *arg)
 {
 	t_coders	*coders;
 	int			i;
@@ -36,9 +37,7 @@ void	*coderses(void *arg)
 
 // 	t_coders *codx = malloc(sizeof(t_coders));
 // Edo lo aveva scritto con un (coders[1] * sizeof(t_coders))
-// parte del parse per controllare che i primi 7 arg siano int
-// e che l'ultimo sia una stringa, controllo con strcmp
-// questa funzione accetta che i primi 7 argomenti possano essere 0, sbagliato!
+// joina i thread dei coders, e distrugge i mutex e i cond
 int	central_part(t_quantum *q, int count, t_dongle *dongle)
 {
 	join_threads(q->coders, count);
@@ -48,32 +47,6 @@ int	central_part(t_quantum *q, int count, t_dongle *dongle)
 	pthread_mutex_destroy(&q->m_print);
 	pthread_mutex_destroy(&q->service_mutex);
 	pthread_cond_destroy(&q->service_condition);
-	return (0);
-}
-
-void	init_simulation_and_mutex(t_quantum *q)
-{
-	q->simulation_stop = 0;
-	q->simulation_start = get_time();
-	pthread_mutex_init(&q->m_simulation_stop, NULL);
-	pthread_mutex_init(&q->m_print, NULL);
-	pthread_mutex_init(&q->service_mutex, NULL);
-	pthread_cond_init(&q->service_condition, NULL);
-}
-
-int	creation_arrays(t_coders **coders, t_quantum *q,
-	t_dongle **dongle)
-{
-	*dongle = init_array_dongle(q);
-	if (!*dongle)
-		return (1);
-	// q->wait_heap = init_array_heap(q->config.n_of_coders);
-	// if (!q->wait_heap.array)
-	// 	return (1);
-	q->coders = init_array_coders(q, *dongle);
-	if (!q->coders)
-		return (1);
-	(void)coders;
 	return (0);
 }
 

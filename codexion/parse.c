@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:36:25 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/25 17:49:13 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/27 22:30:34 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	validation(int argc, char **argv)
 	return (0);
 }
 
+// controlla che alcuni parametri di argv non siano minori o uguali a 0
 int	check_less_zero(char **argv)
 {
 	int	check_coders;
@@ -73,6 +74,7 @@ int	parse(t_quantum *q, int argc, char **argv)
 	return (0);
 }
 
+// funzione che calcola il momento attuale
 long	get_time()
 {
 	struct timeval	tv;

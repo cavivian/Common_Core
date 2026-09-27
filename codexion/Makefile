@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+         #
+#    By: camilla <camilla@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/31 14:52:25 by cavivian          #+#    #+#              #
-#    Updated: 2026/09/24 17:32:58 by cavivian         ###   ########.fr        #
+#    Updated: 2026/09/25 21:56:13 by camilla          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS = codexion.c \
 	heap.c \
 	parse.c \
 	init_array.c \
+	simulation_mutex.c \
 	
 		
 

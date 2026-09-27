@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/25 17:46:13 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 21:49:29 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int			compile(t_coders *cod);
 int			debug(t_coders *coders);
 int			refactor(t_coders *coders);
 int			check_less_zero(char **argv);
-void		*coderses(void *arg);
+void		*routine(void *arg);
 t_coders	*give_dongle(t_coders *cod, t_dongle *dongle, int size);
 long		get_eta_cooldown_time(t_dongle *dongle);
 int			if_dongle_is_available(t_coders *coder);

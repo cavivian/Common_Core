@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor_error_management.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/08 14:49:40 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 17:48:28 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/27 19:18:29 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,7 @@ int	check_n_of_compiles(t_quantum *q)
 	return (0);
 }
 
-// imposta il simulation stop a 1
-void	simulation_stop_is_1(t_quantum *q)
-{
-	pthread_mutex_lock(&q->m_simulation_stop);
-	q->simulation_stop = 1;
-	pthread_mutex_unlock(&q->m_simulation_stop);
-}
-
+// gestisce la distruzione dei mutex e il free in caso di errore di creazione del thread del monitor
 int	monitor_errors(t_quantum *q)
 {
 	cleanup_all(q->coders, q->config.n_of_coders);

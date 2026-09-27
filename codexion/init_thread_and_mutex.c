@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_thread_and_mutex.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 17:47:58 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/25 21:49:41 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	init_coders_threads(t_coders *cod, int size, int *count)
 	i = 0;
 	while (i < size)
 	{
-		if (pthread_create(&cod[i].coder_thread, NULL, coderses, &cod[i]) != 0)
+		if (pthread_create(&cod[i].coder_thread, NULL, routine, &cod[i]) != 0)
 		{
 			return (1);
 		}
