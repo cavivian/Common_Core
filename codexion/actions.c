@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 14:17:36 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/28 15:28:41 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/28 18:47:06 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	compile(t_coder *cod)
 	return (0);
 }
 
+// funzione che si occupa di stampare il messaggio di debug
 int	debug(t_coder *coder)
 {
 	debug_message(coder);
@@ -72,6 +73,7 @@ int	debug(t_coder *coder)
 	return (0);
 }
 
+// funzione che si occupa di stampare il messaggio di refactor
 int	refactor(t_coder *coder)
 {
 	refactor_message(coder);

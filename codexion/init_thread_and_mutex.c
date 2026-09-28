@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/28 14:21:21 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/28 17:08:29 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,3 @@ int	join_threads(t_coder *cod, int i)
 	}
 	return (0);
 }
-
-// int	monitor_threads(t_quantum *q)
-// {
-	
-// }

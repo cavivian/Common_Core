@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/28 14:30:22 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/28 18:46:56 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	*routine(void *arg)
 	{
 		if (check_simulation(coder) != 0)
 			return (NULL);
+		if (coder->quantum->config.n_of_coders == 1)
+			only_one_coder(coder);
 		if (compile(coder) != 0)
 		{
 			usleep (1);
@@ -38,7 +40,7 @@ void	*routine(void *arg)
 // 	t_coders *codx = malloc(sizeof(t_coders));
 // Edo lo aveva scritto con un (coders[1] * sizeof(t_coders))
 // joina i thread dei coders, e distrugge i mutex e i cond
-int	central_part(t_quantum *q, int count, t_dongle *dongle)
+int	join_and_clean(t_quantum *q, int count, t_dongle *dongle)
 {
 	join_threads(q->coder, count);
 	if (pthread_join(q->monitor_thread, NULL) != 0)
@@ -52,6 +54,19 @@ int	central_part(t_quantum *q, int count, t_dongle *dongle)
 	return (0);
 }
 
+int only_one_coder(t_coder *coder)
+{
+	if (coder->quantum->simulation_stop == 0)
+	{
+		pthread_mutex_lock(&coder->mutex);
+		usleep(coder->quantum->config.burnout * 1000);
+		printf("%d %d burned out\n", coder->quantum->config.burnout, coder->index);
+		coder->quantum->simulation_stop = 1;
+		pthread_mutex_unlock(&coder->mutex);
+		return (1);
+	}
+	return (0);
+}
 /**
  * VALIDATION
  * PARSING > valorizza quantum.config
@@ -79,11 +94,13 @@ int	main(int argc, char *argv[])
 		return (1);
 	init_simulation_and_mutex(&q);
 	if (creation_arrays(&q.coder, &q, &dongle) != 0)
-		return (1);
-	if (handle_coders_thread(q.coder, q.config.n_of_coders, dongle, &count) != 0)
-		return (1);
-	init_monitor_threads(&q);
-	if (central_part(&q, count, dongle) != 0)
-		return (1);
 	return (1);
+	if (handle_coders_thread(q.coder, q.config.n_of_coders, dongle, &count) != 0)
+	return (1);
+	init_monitor_threads(&q);
+	// if (only_one_coder(q.coder) != 0)
+	// 	return (1);
+	if (join_and_clean(&q, count, dongle) != 0)
+		return (1);
+	return (0);
 }

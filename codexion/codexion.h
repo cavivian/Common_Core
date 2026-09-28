@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/28 15:26:20 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/28 17:54:10 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int			parse(t_quantum *q, int argc, char **argv);
 void		init_simulation_and_mutex(t_quantum *q);
 t_dongle	*init_array_dongle(t_quantum *q);
 t_coder		*init_array_coders(t_quantum *q, t_dongle *dongle);
-int			central_part(t_quantum *q, int count, t_dongle *dongle);
+int			join_and_clean(t_quantum *q, int count, t_dongle *dongle);
 int			init_check_monitor(t_quantum *q, t_coder *cod);
 int			compile(t_coder *cod);
 int			debug(t_coder *coder);
@@ -165,6 +165,7 @@ void		register_heap(t_coder *coder);
 void		apply_cooldown(t_coder *coder);
 long		get_time();
 void		freedom_dongle(t_dongle *dongle, pthread_mutex_t m_dongle, long time_save);
+int 		only_one_coder(t_coder *coder);
 
 
 
