@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:01:38 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/27 22:28:20 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/28 11:08:05 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,15 @@ void	check_priority_queue(t_heap *heap, int index)
 }
 
 // quando trova il nodo maggiore lo toglie dalla coda
-int	delete_max_priority_node(t_heap *heap, t_wait_node *extract_node)
+int	delete_max_priority_node(t_heap *heap)
 {
 	if (heap == NULL || heap->current_size <= 0)
 		return (1);
 	if (heap->current_size == 1)
 	{
 		heap->current_size--;
-		*extract_node = heap->array[0];
 		return (0);
 	}
-	*extract_node = heap->array[0];
 	heap->array[0] = heap->array[heap->current_size - 1];
 	heap->current_size--;
 	check_priority_queue(heap, 0);
@@ -92,10 +90,14 @@ void	register_heap(t_coders *coder)
 	t_wait_node	node;
 
 	node = create_wait_node(coder, coder->quantum->config.algorithm);
+	pthread_mutex_lock(&coder->dongle_sx->m_dongle);
 	push_into_the_heap(&coder->dongle_sx->heap, node);
-	printf("\n%d [lct: %ld] entrato in push_into_the_heap. current nodes: (DONGLE_SX) [0]: %p (value: %ld), [1]: %p (value: %ld)\n", coder->index, coder->last_compile_start,
-		coder->dongle_sx->heap.array[0].coder, coder->dongle_sx->heap.array[0].value, coder->dongle_sx->heap.array[1].coder, coder->dongle_sx->heap.array[1].value);
+	pthread_mutex_unlock(&coder->dongle_sx->m_dongle);
+	//printf("\n%d [lct: %ld] entrato in push_into_the_heap. current nodes: (DONGLE_SX) [0]: %p (value: %ld), [1]: %p (value: %ld)\n", coder->index, coder->last_compile_start,
+		//coder->dongle_sx->heap.array[0].coder, coder->dongle_sx->heap.array[0].value, coder->dongle_sx->heap.array[1].coder, coder->dongle_sx->heap.array[1].value);
+	pthread_mutex_lock(&coder->dongle_dx->m_dongle);
 	push_into_the_heap(&coder->dongle_dx->heap, node);
-	printf("\n%d [lct: %ld] entrato in push_into_the_heap. current nodes: (DONGLE_DX) [0]: %p (value: %ld), [1]: %p (value: %ld)\n", coder->index, coder->last_compile_start,
-		coder->dongle_dx->heap.array[0].coder, coder->dongle_dx->heap.array[0].value, coder->dongle_dx->heap.array[1].coder, coder->dongle_dx->heap.array[1].value);
+	pthread_mutex_unlock(&coder->dongle_dx->m_dongle);
+	//printf("\n%d [lct: %ld] entrato in push_into_the_heap. current nodes: (DONGLE_DX) [0]: %p (value: %ld), [1]: %p (value: %ld)\n", coder->index, coder->last_compile_start,
+		//coder->dongle_dx->heap.array[0].coder, coder->dongle_dx->heap.array[0].value, coder->dongle_dx->heap.array[1].coder, coder->dongle_dx->heap.array[1].value);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dongle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/27 22:26:25 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/28 11:09:30 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ long	get_eta_cooldown_time(t_dongle *dongle)
 int	centre(t_coders *coders, long actually_time, struct timespec *ts)
 {
 	(void)ts;
-	printf("\nstatus di simulation stop: %d\n", coders->quantum->simulation_stop);
+	//printf("\nstatus di simulation stop: %d\n", coders->quantum->simulation_stop);
 	while (get_eta_cooldown_time(coders->dongle_sx) >= actually_time
 		|| (get_eta_cooldown_time(coders->dongle_dx) >= actually_time)
 		|| coders->quantum->wait_heap.array[0].coder != coders)
@@ -56,7 +56,7 @@ int	centre(t_coders *coders, long actually_time, struct timespec *ts)
 		actually_time = get_time();
 		if (check_simulation(coders) != 0)
 		{
-			printf("\nstatus di simulation stop: %d\n", coders->quantum->simulation_stop);
+		//	printf("\nstatus di simulation stop: %d\n", coders->quantum->simulation_stop);
 			pthread_mutex_unlock(&coders->quantum->service_mutex);
 			return (1);
 		}
@@ -104,7 +104,8 @@ int	if_dongle_is_available(t_coders *coder)
 	{
 		coder->dongle_dx->is_not_available = 1;
 		coder->dongle_sx->is_not_available = 1;
-		
+		delete_max_priority_node(&coder->dongle_dx->heap);
+		delete_max_priority_node(&coder->dongle_sx->heap);
 		pthread_mutex_unlock(&coder->dongle_sx->m_dongle);
 		pthread_mutex_unlock(&coder->dongle_dx->m_dongle);
 		return (0);

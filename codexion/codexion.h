@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/25 21:49:29 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/28 11:08:19 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int			creation_arrays(t_coders **coders, t_quantum *q,
 int			heap_father(int i);
 int			heap_left_son(int i);
 int			heap_right_son(int i);
-int			delete_max_priority_node(t_heap *heap, t_wait_node *extract_node);
+int			delete_max_priority_node(t_heap *heap);
 t_heap		*push_into_the_heap(t_heap *heap, t_wait_node node);
 void		check_priority_queue(t_heap *heap, int index);
 void		actions(t_coders *coders);
