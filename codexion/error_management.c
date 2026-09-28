@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error_management.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/28 10:18:46 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 21:56:53 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/28 14:36:13 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	cleanup(t_dongle *dongle, int i)
+void	cleanup_dongle(t_dongle *dongle, int i)
 {
 	int	j;
 
@@ -25,7 +25,7 @@ void	cleanup(t_dongle *dongle, int i)
 	free(dongle);
 }
 
-void	cleanup_all(t_coders *cod, int size)
+void	cleanup_all(t_coder *cod, int size)
 {
 	int	i;
 

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   simulation_mutex.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 21:54:29 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 21:58:07 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/28 14:22:15 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
+// inizio della simulazione e identificazione del momento attuale
 void	init_simulation_and_mutex(t_quantum *q)
 {
 	q->simulation_stop = 0;
@@ -22,27 +23,24 @@ void	init_simulation_and_mutex(t_quantum *q)
 	pthread_cond_init(&q->service_condition, NULL);
 }
 
-void	lock_unlock_of_mutex(t_coders *coders)
+// 
+void	lock_unlock_of_mutex(t_coder *coder)
 {
-	pthread_mutex_lock(&coders->dongle_sx->m_dongle);
-	pthread_mutex_lock(&coders->dongle_dx->m_dongle);
-	pthread_mutex_unlock(&coders->quantum->service_mutex);
+	pthread_mutex_lock(&coder->dongle_sx->m_dongle);
+	pthread_mutex_lock(&coder->dongle_dx->m_dongle);
+	pthread_mutex_unlock(&coder->quantum->service_mutex);
 }
 
 // controlla se la simulazione è finita o no.
-int	check_simulation(t_coders *coders)
+int	check_simulation(t_coder *coder)
 {
-	pthread_mutex_lock(&coders->quantum->m_simulation_stop);
-	//printf("\nstatus di simulation stop dentro check_simulation: %d", coders->quantum->simulation_stop);
-	if (coders->quantum->simulation_stop == 1)
+	pthread_mutex_lock(&coder->quantum->m_simulation_stop);
+	if (coder->quantum->simulation_stop == 1)
 	{
-	//	printf("\nsono dentro\n");
-		
-		//printf("\nsono dentro check_simulation");
-		pthread_mutex_unlock(&coders->quantum->m_simulation_stop);
+		pthread_mutex_unlock(&coder->quantum->m_simulation_stop);
 		return (1);
 	}
-	pthread_mutex_unlock(&coders->quantum->m_simulation_stop);
+	pthread_mutex_unlock(&coder->quantum->m_simulation_stop);
 	return (0);
 }
 

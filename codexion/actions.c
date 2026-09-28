@@ -3,43 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 14:17:36 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/27 22:16:06 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/28 15:28:41 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 // ultima parte di coderses
-void	actions(t_coders *coders)
+void	actions(t_coder *coder)
 {
-	pthread_mutex_lock(&coders->mutex);
-	coders->n_of_compiles++;
-	pthread_mutex_unlock(&coders->mutex);
-	if (check_simulation(coders) != 0)
+	pthread_mutex_lock(&coder->mutex);
+	coder->n_of_compiles++;
+	pthread_mutex_unlock(&coder->mutex);
+	if (check_simulation(coder) != 0)
 		return ;
-	if (debug(coders) != 0)
+	if (debug(coder) != 0)
 		return ;
-	if (check_simulation(coders) != 0)
+	if (check_simulation(coder) != 0)
 		return ;
-	if (refactor(coders) != 0)
+	if (refactor(coder) != 0)
 		return ;
 }
 
+void	freedom_dongle(t_dongle *dongle, pthread_mutex_t m_dongle, long time_save)
+{
+	pthread_mutex_lock(&m_dongle);
+	dongle->t_available_dongle = time_save;
+	dongle->is_not_available = 0;
+	pthread_mutex_unlock(&m_dongle);
+}
 // controlla che la dongle sx e dx siano accessibili in contemporanea
 // t_available_dongle = tempo in millisecondi in cui la dongle sarà disponibile
 // m_dongle = mutex che dice se la dongle è in uso o meno
 // chiamata a boadcast per svegliare i thread in attesa di una dongle
-int	compile(t_coders *cod)
+int	compile(t_coder *cod)
 {
 	long			time_save;
 
 	register_heap(cod);
-	while (check_simulation(cod) != 1)
+	while (check_simulation(cod) == 0)
+	{
 		if (if_dongle_is_available(cod) != 1)
 			break ;
+		usleep(1);
+	}
 	take_dongle_message(cod);
 	time_save = get_time();
 	pthread_mutex_lock(&cod->mutex);
@@ -48,28 +58,23 @@ int	compile(t_coders *cod)
 	compile_message(cod);
 	usleep(cod->quantum->config.compile * 1000);
 	time_save = get_time();
-	pthread_mutex_lock(&cod->dongle_dx->m_dongle);
-	cod->dongle_dx->t_available_dongle = (time_save
+	freedom_dongle(cod->dongle_dx, cod->dongle_dx->m_dongle, time_save
 		+ cod->quantum->config.dongle_cooldown);
-	cod->dongle_dx->is_not_available = 0;
-	pthread_mutex_unlock(&cod->dongle_dx->m_dongle);
-	pthread_mutex_lock(&cod->dongle_sx->m_dongle);
-	cod->dongle_sx->t_available_dongle = (time_save
+	freedom_dongle(cod->dongle_sx, cod->dongle_sx->m_dongle, time_save
 		+ cod->quantum->config.dongle_cooldown);
-	cod->dongle_sx->is_not_available = 0;
-	return (pthread_mutex_unlock(&cod->dongle_sx->m_dongle), 0);
-}
-
-int	debug(t_coders *coders)
-{
-	debug_message(coders);
-	usleep(coders->quantum->config.debug * 1000);
 	return (0);
 }
 
-int	refactor(t_coders *coders)
+int	debug(t_coder *coder)
 {
-	refactor_message(coders);
-	usleep(coders->quantum->config.refactor * 1000);
+	debug_message(coder);
+	usleep(coder->quantum->config.debug * 1000);
+	return (0);
+}
+
+int	refactor(t_coder *coder)
+{
+	refactor_message(coder);
+	usleep(coder->quantum->config.refactor * 1000);
 	return (0);
 }

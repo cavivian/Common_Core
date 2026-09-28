@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/27 22:15:48 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/28 14:20:57 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int	if_burnout(t_quantum *q, long save)
 	i = 0;
 	while (i < q->config.n_of_coders)
 	{
-		pthread_mutex_lock(&q->coders[i].mutex);
-		burnout = save - q->coders[i].last_compile_start;
-		pthread_mutex_unlock(&q->coders[i].mutex);
+		pthread_mutex_lock(&q->coder[i].mutex);
+		burnout = save - q->coder[i].last_compile_start;
+		pthread_mutex_unlock(&q->coder[i].mutex);
 		if (burnout >= q->config.burnout)
 		{
 			pthread_mutex_lock(&q->m_simulation_stop);
 			q->simulation_stop = 1;
 			pthread_mutex_unlock(&q->m_simulation_stop);
-			burnout_message(&q->coders[i]);
+			burnout_message(&q->coder[i]);
 			return (1);
 		}
 		i++;
@@ -59,7 +59,7 @@ void	*monitor(void *arg)
 	t_quantum			*q;
 
 	q = (t_quantum *)arg;
-	while (check_simulation(q->coders) == 0)
+	while (check_simulation(q->coder) == 0)
 	{
 		monitor_centre(q);
 		usleep(1);
@@ -71,7 +71,7 @@ void	*monitor(void *arg)
 }
 
 // inizializzazione del thread del monitor
-int	init_check_monitor(t_quantum *q, t_coders *cod)
+int	init_check_monitor(t_quantum *q, t_coder *cod)
 {
 	if (pthread_create(&q->monitor_thread, NULL, monitor, q) != 0)
 		return (1);

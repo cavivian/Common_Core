@@ -3,59 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   init_array.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:43:51 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/27 22:29:13 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/28 14:30:29 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-void	init_coders_values(int i, t_coders *coders, t_quantum *q)
+void	init_coders_values(int i, t_coder *coder, t_quantum *q)
 {
-	coders[i].quantum = q;
-	coders[i].last_compile_start = q->simulation_start;
-	coders[i].n_of_compiles = 0;
-	coders[i].index = i + 1;
+	coder[i].quantum = q;
+	coder[i].last_compile_start = q->simulation_start;
+	coder[i].n_of_compiles = 0;
+	coder[i].index = i + 1;
 }
 
 // chiamata nel main
-int	handle_coders_thread(t_coders *coders, int num,
+int	handle_coders_thread(t_coder *coder, int num,
 	t_dongle *dongle, int *count)
 {
-	if (init_mutex(coders, num) != 0)
+	if (init_mutex(coder, num) != 0)
 		return (1);
-	give_dongle(coders, dongle, num);
-	if (init_coders_threads(coders, num, count) != 0)
+	give_dongle(coder, dongle, num);
+	if (init_coders_threads(coder, num, count) != 0)
 	{
-		if (join_threads(coders, *count) != 0)
+		if (join_threads(coder, *count) != 0)
 			return (1);
-		cleanup_all(coders, num);
+		cleanup_all(coder, num);
 		return (1);
 	}
 	return (0);
 }
 
-t_coders	*init_array_coders(t_quantum *q, t_dongle *dongle)
+t_coder	*init_array_coders(t_quantum *q, t_dongle *dongle)
 {
 	int			i;
-	t_coders	*coders;
+	t_coder	*coder;
 	int			num;
 
 	num = q->config.n_of_coders;
-	coders = malloc(sizeof(t_coders) * num);
-	if (!coders)
+	coder = malloc(sizeof(t_coder) * num);
+	if (!coder)
 		return (NULL);
-	memset(coders, 0, num * sizeof(t_coders));
+	memset(coder, 0, num * sizeof(t_coder));
 	i = 0;
 	while (i < num)
 	{
-		init_coders_values(i, coders, q);
+		init_coders_values(i, coder, q);
 		i++;
 	}
 	(void)dongle;
-	return (coders);
+	return (coder);
 }
 
 t_dongle	*init_array_dongle(t_quantum *q)
@@ -75,7 +75,7 @@ t_dongle	*init_array_dongle(t_quantum *q)
 		dongle[i].heap.size = 2;
 		if (pthread_mutex_init(&dongle[i].m_dongle, NULL) != 0)
 		{
-			cleanup(dongle, number);
+			cleanup_dongle(dongle, number);
 			return (NULL);
 		}
 		i++;
@@ -83,15 +83,15 @@ t_dongle	*init_array_dongle(t_quantum *q)
 	return (dongle);
 }
 
-int	creation_arrays(t_coders **coders, t_quantum *q,
+int	creation_arrays(t_coder **coder, t_quantum *q,
 	t_dongle **dongle)
 {
 	*dongle = init_array_dongle(q);
 	if (!*dongle)
 		return (1);
-	q->coders = init_array_coders(q, *dongle);
-	if (!q->coders)
+	q->coder = init_array_coders(q, *dongle);
+	if (!q->coder)
 		return (1);
-	(void)coders;
+	(void)coder;
 	return (0);
 }

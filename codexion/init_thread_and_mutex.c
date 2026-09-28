@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_thread_and_mutex.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/25 21:49:41 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/28 14:21:21 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // crea già tutti i thread dell'array.
 //(*count)++ -> variabile condivisa con join_threads,
 // serve per salvare quanti thread sono stati creati
-int	init_coders_threads(t_coders *cod, int size, int *count)
+int	init_coders_threads(t_coder *cod, int size, int *count)
 {
 	int	i;
 
@@ -35,12 +35,12 @@ int	init_coders_threads(t_coders *cod, int size, int *count)
 }
 void	init_monitor_threads(t_quantum *q)
 {
-	if (init_check_monitor(q, q->coders) != 0)
+	if (init_check_monitor(q, q->coder) != 0)
 		monitor_errors(q);
 }
 
 // inizializza i mutex per ciascun coder
-int	init_mutex(t_coders *cod, int size)
+int	init_mutex(t_coder *cod, int size)
 {
 	int	i;
 
@@ -58,7 +58,7 @@ int	init_mutex(t_coders *cod, int size)
 	return (0);
 }
 
-int	join_threads(t_coders *cod, int i)
+int	join_threads(t_coder *cod, int i)
 {
 	int	j;
 
@@ -71,3 +71,8 @@ int	join_threads(t_coders *cod, int i)
 	}
 	return (0);
 }
+
+// int	monitor_threads(t_quantum *q)
+// {
+	
+// }

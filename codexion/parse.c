@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:36:25 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/27 22:30:34 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/28 14:10:52 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ int	check_less_zero(char **argv)
 		return (1);
 	return (0);
 }
-// parse che chiama validation
-// controlla che tutti i parametri passati siano int
-// e li assegna a ogni variabile della struct quantum
+// assegnazione e cast a int dei parametri
 int	parse(t_quantum *q, int argc, char **argv)
 {
 	if (validation(argc, argv) != 0)

@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:01:38 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/28 11:08:05 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/28 14:17:43 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	delete_max_priority_node(t_heap *heap)
 }
 
 // funzione che crea il nodo e lo passa a heap
-void	register_heap(t_coders *coder)
+void	register_heap(t_coder *coder)
 {
 	t_wait_node	node;
 
