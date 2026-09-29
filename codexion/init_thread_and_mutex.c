@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/28 17:08:29 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/29 13:49:11 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	init_coders_threads(t_coder *cod, int size, int *count)
 	}
 	return (0);
 }
+
 void	init_monitor_threads(t_quantum *q)
 {
 	if (init_check_monitor(q, q->coder) != 0)

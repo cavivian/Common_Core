@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:01:38 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/28 14:17:43 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/29 13:48:13 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_heap	*push_into_the_heap(t_heap *heap, t_wait_node node)
 		ft_swap(&heap->array[heap_father(i)], &heap->array[i]);
 		i = heap_father(i);
 	}
-	
 	return (heap);
 }
 
@@ -93,11 +92,7 @@ void	register_heap(t_coder *coder)
 	pthread_mutex_lock(&coder->dongle_sx->m_dongle);
 	push_into_the_heap(&coder->dongle_sx->heap, node);
 	pthread_mutex_unlock(&coder->dongle_sx->m_dongle);
-	//printf("\n%d [lct: %ld] entrato in push_into_the_heap. current nodes: (DONGLE_SX) [0]: %p (value: %ld), [1]: %p (value: %ld)\n", coder->index, coder->last_compile_start,
-		//coder->dongle_sx->heap.array[0].coder, coder->dongle_sx->heap.array[0].value, coder->dongle_sx->heap.array[1].coder, coder->dongle_sx->heap.array[1].value);
 	pthread_mutex_lock(&coder->dongle_dx->m_dongle);
 	push_into_the_heap(&coder->dongle_dx->heap, node);
 	pthread_mutex_unlock(&coder->dongle_dx->m_dongle);
-	//printf("\n%d [lct: %ld] entrato in push_into_the_heap. current nodes: (DONGLE_DX) [0]: %p (value: %ld), [1]: %p (value: %ld)\n", coder->index, coder->last_compile_start,
-		//coder->dongle_dx->heap.array[0].coder, coder->dongle_dx->heap.array[0].value, coder->dongle_dx->heap.array[1].coder, coder->dongle_dx->heap.array[1].value);
 }

@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/28 14:17:28 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/29 13:46:36 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,8 @@ long	get_eta_cooldown_time(t_dongle *dongle)
 	return (available);
 }
 
-// non credo sia finita
-int	centre(t_coder *coder, long actually_time, struct timespec *ts)
+int	centre(t_coder *coder, long actually_time)
 {
-	(void)ts;
-	//printf("\nstatus di simulation stop: %d\n", coders->quantum->simulation_stop);
 	while (get_eta_cooldown_time(coder->dongle_sx) >= actually_time
 		|| (get_eta_cooldown_time(coder->dongle_dx) >= actually_time)
 		|| coder->quantum->wait_heap.array[0].coder != coder)
@@ -56,7 +53,6 @@ int	centre(t_coder *coder, long actually_time, struct timespec *ts)
 		actually_time = get_time();
 		if (check_simulation(coder) != 0)
 		{
-		//	printf("\nstatus di simulation stop: %d\n", coders->quantum->simulation_stop);
 			pthread_mutex_unlock(&coder->quantum->service_mutex);
 			return (1);
 		}
@@ -64,12 +60,13 @@ int	centre(t_coder *coder, long actually_time, struct timespec *ts)
 	return (0);
 }
 
-// funzione che mi controlla il cooldown e me lo imposta in base  a chi lo ha più alto
+// funzione che mi controlla il cooldown e me lo imposta in base 
+// a chi lo ha più alto
 void	apply_cooldown(t_coder *coder)
 {
-	long time_dx;
-	long time_sx;
-	long actual_time;
+	long	time_dx;
+	long	time_sx;
+	long	actual_time;
 
 	actual_time = get_time();
 	time_dx = get_eta_cooldown_time(coder->dongle_dx) - actual_time;
@@ -83,12 +80,6 @@ void	apply_cooldown(t_coder *coder)
 }
 
 // controlla se è possibile prendere due dongle in contemporanea
-// manca caso un solo coder
-// t_available_dongle in get_eta_cooldown_time
-// è un punto preciso, non è una durata
-// save mi dice per quanto tempo posso stare
-// nel ciclo prima di raggiungere il burnout
-
 int	if_dongle_is_available(t_coder *coder)
 {
 	int	dongle_dx;
@@ -114,53 +105,3 @@ int	if_dongle_is_available(t_coder *coder)
 	pthread_mutex_unlock(&coder->dongle_dx->m_dongle);
 	return (1);
 }
-
-
-
-
-
-
-
-
-// int	if_dongle_is_available(t_coders *coders)
-// {
-// 	struct timespec	ts;
-// 	struct timeval	tv;
-// 	long			save;
-// 	long			actually_time;
-// 	long			timestamp_for_value;
-// 	t_wait_node		node;
-
-// 	save = (coders->last_compile_start + coders->quantum->config.burnout);
-// 	ts.tv_sec = save / 1000;
-// 	ts.tv_nsec = (save % 1000) * 1000000;
-// 	gettimeofday(&tv, NULL);
-// 	timestamp_for_value = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-// 	pthread_mutex_lock(&coders->quantum->service_mutex);
-// 	gettimeofday(&tv, NULL);
-// 	actually_time = ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-// 	node = create_wait_node(coders, coders->quantum->config.algorithm,
-// 		timestamp_for_value);
-// 	push_into_the_heap(&coders->quantum->wait_heap, &node);
-// 	if (centre(coders, actually_time, &ts) != 0)
-// 		return (1);
-// 	//printf("\n%d sono fuori da centre", coders->index);
-// 	delete_max_priority_node(&coders->quantum->wait_heap, &node);
-// 	lock_unlock_of_mutex(coders);
-// 	return (0);
-// }
-
-// utilizzo di pthread_cond_timedwait()e pthread_cond_wait():
-// permettono di addormentare un thread finchè una 
-// certa condizione non si verifica senza consumare CPU
-// e di essere risvegliato dall'OS quando quel qualcosa accade
-// (grazie a broadcast/signal, fatti da un'altro thread)
-// cond_wait fa il rilascio del mutex e l'addormentamento del thread
-// in un unico passaggio, perchè potrebbe succedere che tra un 
-// passaggio e l'altro un altro thread faccia il suo broadcast,
-// e quello addormentato rimanga così per sempre. è per maggiore sicurezza
-// ma la differenza con timedwait sta nel fatto che quest'ultimo
-// lo fa con un'uscita di sicurezza: ovvero se arriva all'istante
-// assoluto della deadline, fa risvegliare il thread,
-// e la funzione ritorna un messaggio di default di errore.
-// pthread_cond_wait invece aspetterebbe per sempre

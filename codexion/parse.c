@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:36:25 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/28 14:10:52 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/29 13:51:19 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	check_less_zero(char **argv)
 		return (1);
 	return (0);
 }
+
 // assegnazione e cast a int dei parametri
 int	parse(t_quantum *q, int argc, char **argv)
 {
@@ -73,7 +74,7 @@ int	parse(t_quantum *q, int argc, char **argv)
 }
 
 // funzione che calcola il momento attuale
-long	get_time()
+long	get_time(void)
 {
 	struct timeval	tv;
 	long			time;

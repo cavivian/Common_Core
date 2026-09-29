@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/28 14:20:57 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/29 13:50:19 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	if_burnout(t_quantum *q, long save)
 	return (0);
 }
 
-// si occupa di controllare il numero di compilazioni e se il programma è andato in burnout
+// si occupa di controllare il numero di compilazioni e
+// se il programma è andato in burnout
 void	monitor_centre(t_quantum *q)
 {
 	long			save;

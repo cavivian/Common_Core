@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:43:51 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/28 14:30:29 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/29 13:48:51 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int	handle_coders_thread(t_coder *coder, int num,
 	return (0);
 }
 
-t_coder	*init_array_coders(t_quantum *q, t_dongle *dongle)
+t_coder	*init_array_coders(t_quantum *q)
 {
 	int			i;
-	t_coder	*coder;
+	t_coder		*coder;
 	int			num;
 
 	num = q->config.n_of_coders;
@@ -54,7 +54,6 @@ t_coder	*init_array_coders(t_quantum *q, t_dongle *dongle)
 		init_coders_values(i, coder, q);
 		i++;
 	}
-	(void)dongle;
 	return (coder);
 }
 
@@ -83,15 +82,14 @@ t_dongle	*init_array_dongle(t_quantum *q)
 	return (dongle);
 }
 
-int	creation_arrays(t_coder **coder, t_quantum *q,
+int	creation_arrays(t_quantum *q,
 	t_dongle **dongle)
 {
 	*dongle = init_array_dongle(q);
 	if (!*dongle)
 		return (1);
-	q->coder = init_array_coders(q, *dongle);
+	q->coder = init_array_coders(q);
 	if (!q->coder)
 		return (1);
-	(void)coder;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/28 18:46:56 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/29 13:43:09 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 void	*routine(void *arg)
 {
 	t_coder	*coder;
-	int			i;
+	int		i;
 
 	i = 0;
 	coder = (t_coder *)arg;
+	if (coder->quantum->config.n_of_coders == 1)
+		return (only_one_coder(coder), NULL);
 	while (i < coder->quantum->config.number_of_compiles_required)
 	{
 		if (check_simulation(coder) != 0)
 			return (NULL);
-		if (coder->quantum->config.n_of_coders == 1)
-			only_one_coder(coder);
 		if (compile(coder) != 0)
 		{
 			usleep (1);
@@ -44,7 +44,7 @@ int	join_and_clean(t_quantum *q, int count, t_dongle *dongle)
 {
 	join_threads(q->coder, count);
 	if (pthread_join(q->monitor_thread, NULL) != 0)
-		return 1;
+		return (1);
 	cleanup_all(q->coder, q->config.n_of_coders);
 	cleanup_dongle(dongle, count);
 	pthread_mutex_destroy(&q->m_simulation_stop);
@@ -54,15 +54,13 @@ int	join_and_clean(t_quantum *q, int count, t_dongle *dongle)
 	return (0);
 }
 
-int only_one_coder(t_coder *coder)
+int	only_one_coder(t_coder *coder)
 {
-	if (coder->quantum->simulation_stop == 0)
+	if (check_simulation(coder) == 0)
 	{
-		pthread_mutex_lock(&coder->mutex);
+		pthread_mutex_lock(&coder->quantum->m_simulation_stop);
 		usleep(coder->quantum->config.burnout * 1000);
-		printf("%d %d burned out\n", coder->quantum->config.burnout, coder->index);
-		coder->quantum->simulation_stop = 1;
-		pthread_mutex_unlock(&coder->mutex);
+		pthread_mutex_unlock(&coder->quantum->m_simulation_stop);
 		return (1);
 	}
 	return (0);
@@ -70,7 +68,8 @@ int only_one_coder(t_coder *coder)
 /**
  * VALIDATION
  * PARSING > valorizza quantum.config
- * INIT DEI DATI[QUANTUM(MUTEX, START DATE), CODERS, DONGLES] con protezione di failure
+ * INIT DEI DATI[QUANTUM(MUTEX, START DATE), CODERS, DONGLES]
+ * con protezione di failure
  * CREAZIONE THREAD[CODERS, MONITOR]
  *  ... vita coder
  * JOIN MONITOR
@@ -93,13 +92,12 @@ int	main(int argc, char *argv[])
 	if (parse(&q, argc, argv) != 0)
 		return (1);
 	init_simulation_and_mutex(&q);
-	if (creation_arrays(&q.coder, &q, &dongle) != 0)
-	return (1);
-	if (handle_coders_thread(q.coder, q.config.n_of_coders, dongle, &count) != 0)
-	return (1);
+	if (creation_arrays(&q, &dongle) != 0)
+		return (1);
+	if (handle_coders_thread(q.coder, q.config.n_of_coders,
+			dongle, &count) != 0)
+		return (1);
 	init_monitor_threads(&q);
-	// if (only_one_coder(q.coder) != 0)
-	// 	return (1);
 	if (join_and_clean(&q, count, dongle) != 0)
 		return (1);
 	return (0);

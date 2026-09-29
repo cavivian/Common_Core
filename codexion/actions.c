@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 14:17:36 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/28 18:47:06 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/29 13:41:33 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,16 @@ void	actions(t_coder *coder)
 		return ;
 }
 
-void	freedom_dongle(t_dongle *dongle, pthread_mutex_t m_dongle, long time_save)
+void	freedom_dongle(t_dongle *dongle, pthread_mutex_t *m_dongle,
+	long time_save)
 {
-	pthread_mutex_lock(&m_dongle);
+	pthread_mutex_lock(m_dongle);
 	dongle->t_available_dongle = time_save;
 	dongle->is_not_available = 0;
-	pthread_mutex_unlock(&m_dongle);
+	pthread_mutex_unlock(m_dongle);
 }
+
 // controlla che la dongle sx e dx siano accessibili in contemporanea
-// t_available_dongle = tempo in millisecondi in cui la dongle sarà disponibile
-// m_dongle = mutex che dice se la dongle è in uso o meno
-// chiamata a boadcast per svegliare i thread in attesa di una dongle
 int	compile(t_coder *cod)
 {
 	long			time_save;
@@ -56,11 +55,13 @@ int	compile(t_coder *cod)
 	cod->last_compile_start = time_save;
 	pthread_mutex_unlock(&cod->mutex);
 	compile_message(cod);
+	pthread_mutex_lock(&cod->mutex);
 	usleep(cod->quantum->config.compile * 1000);
+	pthread_mutex_unlock(&cod->mutex);
 	time_save = get_time();
-	freedom_dongle(cod->dongle_dx, cod->dongle_dx->m_dongle, time_save
+	freedom_dongle(cod->dongle_dx, &cod->dongle_dx->m_dongle, time_save
 		+ cod->quantum->config.dongle_cooldown);
-	freedom_dongle(cod->dongle_sx, cod->dongle_sx->m_dongle, time_save
+	freedom_dongle(cod->dongle_sx, &cod->dongle_sx->m_dongle, time_save
 		+ cod->quantum->config.dongle_cooldown);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/10 11:18:30 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/28 17:21:40 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/29 13:42:07 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 t_wait_node	create_wait_node(t_coder *coder, t_algorithm algo)
 {
 	t_wait_node	node;
-	long	actually_time;
+	long		actually_time;
 
 	actually_time = get_time();
 	node.coder = coder;
