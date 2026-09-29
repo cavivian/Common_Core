@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:36:25 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/29 13:51:19 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/29 22:19:57 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_less_zero(char **argv)
 	return (0);
 }
 
-// assegnazione e cast a int dei parametri
+// assegnazione e cast a int dei parametri, durante il live coding va aggiunto lo strcmp per LIFO
 int	parse(t_quantum *q, int argc, char **argv)
 {
 	if (validation(argc, argv) != 0)

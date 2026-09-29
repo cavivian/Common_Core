@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/29 13:43:09 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/29 22:14:06 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-// 	t_coders *codx = malloc(sizeof(t_coders));
-// Edo lo aveva scritto con un (coders[1] * sizeof(t_coders))
-// joina i thread dei coders, e distrugge i mutex e i cond
+// join di tutti i thread creati
 int	join_and_clean(t_quantum *q, int count, t_dongle *dongle)
 {
 	join_threads(q->coder, count);
@@ -54,6 +52,7 @@ int	join_and_clean(t_quantum *q, int count, t_dongle *dongle)
 	return (0);
 }
 
+// comportamento per un solo coder
 int	only_one_coder(t_coder *coder)
 {
 	if (check_simulation(coder) == 0)
@@ -65,17 +64,6 @@ int	only_one_coder(t_coder *coder)
 	}
 	return (0);
 }
-/**
- * VALIDATION
- * PARSING > valorizza quantum.config
- * INIT DEI DATI[QUANTUM(MUTEX, START DATE), CODERS, DONGLES]
- * con protezione di failure
- * CREAZIONE THREAD[CODERS, MONITOR]
- *  ... vita coder
- * JOIN MONITOR
- * JOIN CODER
- * EXIT
- */
 
 int	main(int argc, char *argv[])
 {
