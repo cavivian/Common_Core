@@ -6,17 +6,12 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/26 15:03:00 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/29 13:49:11 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:06:37 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// funzione che mi crea i thread per ogni coder,
-// che poi vanno assegnati, ogni coder ha il suo thread
-// crea già tutti i thread dell'array.
-//(*count)++ -> variabile condivisa con join_threads,
-// serve per salvare quanti thread sono stati creati
 int	init_coders_threads(t_coder *cod, int size, int *count)
 {
 	int	i;
@@ -36,11 +31,10 @@ int	init_coders_threads(t_coder *cod, int size, int *count)
 
 void	init_monitor_threads(t_quantum *q)
 {
-	if (init_check_monitor(q, q->coder) != 0)
+	if (init_check_monitor(q) != 0)
 		monitor_errors(q);
 }
 
-// inizializza i mutex per ciascun coder
 int	init_mutex(t_coder *cod, int size)
 {
 	int	i;
@@ -48,7 +42,6 @@ int	init_mutex(t_coder *cod, int size)
 	i = 0;
 	while (i < size)
 	{
-		printf("CODER[%d]: %p\n", i, &cod[i]);
 		if (pthread_mutex_init(&cod[i].mutex, NULL) != 0)
 		{
 			cleanup_all(cod, i);

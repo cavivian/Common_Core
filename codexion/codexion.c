@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/29 22:14:06 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/30 09:46:01 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// funzione che da il via alle azioni
 void	*routine(void *arg)
 {
 	t_coder	*coder;
@@ -37,7 +36,6 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-// join di tutti i thread creati
 int	join_and_clean(t_quantum *q, int count, t_dongle *dongle)
 {
 	join_threads(q->coder, count);
@@ -52,7 +50,6 @@ int	join_and_clean(t_quantum *q, int count, t_dongle *dongle)
 	return (0);
 }
 
-// comportamento per un solo coder
 int	only_one_coder(t_coder *coder)
 {
 	if (check_simulation(coder) == 0)

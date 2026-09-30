@@ -6,13 +6,12 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/08 14:49:40 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/29 13:49:45 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:06:33 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// controlla che tutti i coder abbiano completato i compile richiesti
 int	check_n_of_compiles(t_quantum *q)
 {
 	int	i;
@@ -31,8 +30,6 @@ int	check_n_of_compiles(t_quantum *q)
 	return (0);
 }
 
-// gestisce la distruzione dei mutex e il free in caso di errore di
-// creazione del thread del monitor
 int	monitor_errors(t_quantum *q)
 {
 	cleanup_all(q->coder, q->config.n_of_coders);

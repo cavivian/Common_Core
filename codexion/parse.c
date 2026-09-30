@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:36:25 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/29 22:19:57 by camilla          ###   ########.fr       */
+/*   Updated: 2026/09/30 12:06:13 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	validation(int argc, char **argv)
 	return (0);
 }
 
-// controlla che alcuni parametri di argv non siano minori o uguali a 0
 int	check_less_zero(char **argv)
 {
 	int	check_coders;
@@ -52,7 +51,6 @@ int	check_less_zero(char **argv)
 	return (0);
 }
 
-// assegnazione e cast a int dei parametri, durante il live coding va aggiunto lo strcmp per LIFO
 int	parse(t_quantum *q, int argc, char **argv)
 {
 	if (validation(argc, argv) != 0)
@@ -73,7 +71,6 @@ int	parse(t_quantum *q, int argc, char **argv)
 	return (0);
 }
 
-// funzione che calcola il momento attuale
 long	get_time(void)
 {
 	struct timeval	tv;

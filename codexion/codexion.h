@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/29 14:32:50 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:03:12 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void		init_simulation_and_mutex(t_quantum *q);
 t_dongle	*init_array_dongle(t_quantum *q);
 t_coder		*init_array_coders(t_quantum *q);
 int			join_and_clean(t_quantum *q, int count, t_dongle *dongle);
-int			init_check_monitor(t_quantum *q, t_coder *cod);
+int			init_check_monitor(t_quantum *q);
 int			compile(t_coder *cod);
 int			debug(t_coder *coder);
 int			refactor(t_coder *coder);
@@ -118,7 +118,6 @@ void		simulation_stop_is_1(t_quantum *q);
 int			if_burnout(t_quantum *q, long save);
 void		monitor_centre(t_quantum *q);
 void		*monitor(void *arg);
-int			init_check_monitor(t_quantum *q, t_coder *cod);
 void		compile_message(t_coder *coder);
 void		debug_message(t_coder *coder);
 void		refactor_message(t_coder *coder);

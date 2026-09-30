@@ -6,13 +6,12 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 16:01:38 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/29 13:48:13 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:06:57 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// serve per swappare gli elementi della queue
 void	ft_swap(t_wait_node *a, t_wait_node *b)
 {
 	t_wait_node	tmp;
@@ -22,8 +21,6 @@ void	ft_swap(t_wait_node *a, t_wait_node *b)
 	*b = tmp;
 }
 
-// confronto il nodo passato per parametro
-// con il padre e lo faccio salire, dopo averlo inserito nell'heap 
 t_heap	*push_into_the_heap(t_heap *heap, t_wait_node node)
 {
 	int	i;
@@ -41,7 +38,6 @@ t_heap	*push_into_the_heap(t_heap *heap, t_wait_node node)
 	return (heap);
 }
 
-// controllo di chi ha la priorita'
 void	check_priority_queue(t_heap *heap, int index)
 {
 	int	left_son;
@@ -67,7 +63,6 @@ void	check_priority_queue(t_heap *heap, int index)
 	}
 }
 
-// quando trova il nodo maggiore lo toglie dalla coda
 int	delete_max_priority_node(t_heap *heap)
 {
 	if (heap == NULL || heap->current_size <= 0)
@@ -83,7 +78,6 @@ int	delete_max_priority_node(t_heap *heap)
 	return (0);
 }
 
-// funzione che crea il nodo e lo passa a heap
 void	register_heap(t_coder *coder)
 {
 	t_wait_node	node;

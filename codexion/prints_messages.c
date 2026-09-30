@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 12:04:03 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/29 14:30:15 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:06:02 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ void	take_dongle_message(t_coder *coder)
 	pthread_mutex_unlock(&coder->quantum->m_simulation_stop);
 }
 
-// qui forse potrei aggiungere quella condizione che
-//il messaggio va stampato entro 10 ms dal burnout
 void	burnout_message(t_coder *coder)
 {
 	long			save;

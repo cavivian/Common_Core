@@ -6,13 +6,12 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 14:17:36 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/29 13:41:33 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:07:24 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// ultima parte di coderses
 void	actions(t_coder *coder)
 {
 	pthread_mutex_lock(&coder->mutex);
@@ -37,7 +36,6 @@ void	freedom_dongle(t_dongle *dongle, pthread_mutex_t *m_dongle,
 	pthread_mutex_unlock(m_dongle);
 }
 
-// controlla che la dongle sx e dx siano accessibili in contemporanea
 int	compile(t_coder *cod)
 {
 	long			time_save;
@@ -66,7 +64,6 @@ int	compile(t_coder *cod)
 	return (0);
 }
 
-// funzione che si occupa di stampare il messaggio di debug
 int	debug(t_coder *coder)
 {
 	debug_message(coder);
@@ -74,7 +71,6 @@ int	debug(t_coder *coder)
 	return (0);
 }
 
-// funzione che si occupa di stampare il messaggio di refactor
 int	refactor(t_coder *coder)
 {
 	refactor_message(coder);

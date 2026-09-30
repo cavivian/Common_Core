@@ -6,13 +6,12 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/29 13:46:36 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:07:10 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-// devo gestire quando il coder è uno solo, ma lo gestisco in un'altra funzione
 t_coder	*give_dongle(t_coder *cod, t_dongle *dongle, int size)
 {
 	int	i;
@@ -32,7 +31,6 @@ t_coder	*give_dongle(t_coder *cod, t_dongle *dongle, int size)
 	return (cod);
 }
 
-// calcola il tempo del cooldown
 long	get_eta_cooldown_time(t_dongle *dongle)
 {
 	long	available;
@@ -60,8 +58,6 @@ int	centre(t_coder *coder, long actually_time)
 	return (0);
 }
 
-// funzione che mi controlla il cooldown e me lo imposta in base 
-// a chi lo ha più alto
 void	apply_cooldown(t_coder *coder)
 {
 	long	time_dx;
@@ -79,7 +75,6 @@ void	apply_cooldown(t_coder *coder)
 	usleep(actual_time * 1000);
 }
 
-// controlla se è possibile prendere due dongle in contemporanea
 int	if_dongle_is_available(t_coder *coder)
 {
 	int	dongle_dx;
