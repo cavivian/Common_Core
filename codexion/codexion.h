@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/30 12:03:12 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 14:06:55 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ typedef struct s_quantum
 	t_settings		config;
 	pthread_mutex_t	m_print;
 	pthread_t		monitor_thread;
-	pthread_cond_t	service_condition;
-	pthread_mutex_t	service_mutex;
 	t_heap			wait_heap;
 	t_coder			*coder;
 }	t_quantum;
@@ -105,8 +103,6 @@ void		*routine(void *arg);
 t_coder		*give_dongle(t_coder *cod, t_dongle *dongle, int size);
 long		get_eta_cooldown_time(t_dongle *dongle);
 int			if_dongle_is_available(t_coder *coder);
-int			centre(t_coder *coders, long actually_time);
-void		lock_unlock_of_mutex(t_coder *coder);
 void		cleanup_dongle(t_dongle *dongle, int i);
 void		cleanup_all(t_coder *cod, int size);
 int			check_simulation(t_coder *coder);
@@ -141,7 +137,6 @@ int			handle_coders_thread(t_coder *coder, int num,
 void		init_monitor_threads(t_quantum *q);
 int			monitor_errors(t_quantum *q);
 void		register_heap(t_coder *coder);
-void		apply_cooldown(t_coder *coder);
 long		get_time(void);
 void		freedom_dongle(t_dongle *dongle, pthread_mutex_t *m_dongle,
 				long time_save);

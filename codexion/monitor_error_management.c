@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/08 14:49:40 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/30 12:06:33 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:47:41 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,5 @@ int	monitor_errors(t_quantum *q)
 	cleanup_all(q->coder, q->config.n_of_coders);
 	pthread_mutex_destroy(&q->m_simulation_stop);
 	pthread_mutex_destroy(&q->m_print);
-	pthread_mutex_destroy(&q->service_mutex);
-	pthread_cond_destroy(&q->service_condition);
 	return (1);
 }

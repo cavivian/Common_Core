@@ -6,7 +6,6 @@ def echo_validator(text: str) -> str:
         if c.isalpha():
             clean_text += c
     return (clean_text == clean_text[::-1])
-            
 
 
 if __name__ == "__main__":

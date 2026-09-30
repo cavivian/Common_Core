@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/02 09:24:02 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/30 12:06:26 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:47:36 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ void	*monitor(void *arg)
 		monitor_centre(q);
 		usleep(1);
 	}
-	pthread_mutex_lock(&q->service_mutex);
-	pthread_cond_broadcast(&q->service_condition);
-	pthread_mutex_unlock(&q->service_mutex);
 	return (NULL);
 }
 

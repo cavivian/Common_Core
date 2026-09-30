@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/25 21:54:29 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/30 12:05:58 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 13:59:41 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,6 @@ void	init_simulation_and_mutex(t_quantum *q)
 	q->simulation_start = get_time();
 	pthread_mutex_init(&q->m_simulation_stop, NULL);
 	pthread_mutex_init(&q->m_print, NULL);
-	pthread_mutex_init(&q->service_mutex, NULL);
-	pthread_cond_init(&q->service_condition, NULL);
-}
-
-void	lock_unlock_of_mutex(t_coder *coder)
-{
-	pthread_mutex_lock(&coder->dongle_sx->m_dongle);
-	pthread_mutex_lock(&coder->dongle_dx->m_dongle);
-	pthread_mutex_unlock(&coder->quantum->service_mutex);
 }
 
 int	check_simulation(t_coder *coder)

@@ -1,6 +1,7 @@
 def hidenp(small: str, big: str) -> str:
-	it = iter(big)
-	return all(c in it for c in small)
+    it = iter(big)
+    return all(c in it for c in small)
+
 
 if __name__ == "__main__":
     print(hidenp("abc", "a1b2c3"))   # True

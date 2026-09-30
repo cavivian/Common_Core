@@ -1,4 +1,4 @@
-def	inter(s1: str, s2: str) -> str:
+def inter(s1: str, s2: str) -> str:
     result: str = ""
     for c in s1:
         if c is not result and c in s2:

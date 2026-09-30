@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/30 12:07:10 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 14:06:51 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,39 +40,6 @@ long	get_eta_cooldown_time(t_dongle *dongle)
 	available = dongle->t_available_dongle;
 	pthread_mutex_unlock(&dongle->m_dongle);
 	return (available);
-}
-
-int	centre(t_coder *coder, long actually_time)
-{
-	while (get_eta_cooldown_time(coder->dongle_sx) >= actually_time
-		|| (get_eta_cooldown_time(coder->dongle_dx) >= actually_time)
-		|| coder->quantum->wait_heap.array[0].coder != coder)
-	{
-		actually_time = get_time();
-		if (check_simulation(coder) != 0)
-		{
-			pthread_mutex_unlock(&coder->quantum->service_mutex);
-			return (1);
-		}
-	}
-	return (0);
-}
-
-void	apply_cooldown(t_coder *coder)
-{
-	long	time_dx;
-	long	time_sx;
-	long	actual_time;
-
-	actual_time = get_time();
-	time_dx = get_eta_cooldown_time(coder->dongle_dx) - actual_time;
-	time_sx = get_eta_cooldown_time(coder->dongle_sx) - actual_time;
-	actual_time = time_dx;
-	if (time_sx > actual_time)
-		actual_time = time_sx;
-	if (actual_time <= 0)
-		return ;
-	usleep(actual_time * 1000);
 }
 
 int	if_dongle_is_available(t_coder *coder)

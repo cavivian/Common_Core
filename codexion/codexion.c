@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:04 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/30 09:46:01 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 12:47:55 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	join_and_clean(t_quantum *q, int count, t_dongle *dongle)
 	cleanup_dongle(dongle, count);
 	pthread_mutex_destroy(&q->m_simulation_stop);
 	pthread_mutex_destroy(&q->m_print);
-	pthread_mutex_destroy(&q->service_mutex);
-	pthread_cond_destroy(&q->service_condition);
 	return (0);
 }
 
