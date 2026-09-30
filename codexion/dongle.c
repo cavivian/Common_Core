@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dongle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
+/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 09:36:04 by camilla           #+#    #+#             */
-/*   Updated: 2026/09/30 14:06:51 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/09/30 15:50:32 by camilla          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,6 @@ t_coder	*give_dongle(t_coder *cod, t_dongle *dongle, int size)
 		i++;
 	}
 	return (cod);
-}
-
-long	get_eta_cooldown_time(t_dongle *dongle)
-{
-	long	available;
-
-	available = 0;
-	pthread_mutex_lock(&dongle->m_dongle);
-	available = dongle->t_available_dongle;
-	pthread_mutex_unlock(&dongle->m_dongle);
-	return (available);
 }
 
 int	if_dongle_is_available(t_coder *coder)
