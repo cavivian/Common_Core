@@ -1,0 +1,20 @@
+import argparse
+
+def argument_parser() -> argparse.Namespace:
+    arguments_parse = argparse.ArgumentParser()
+    arguments_parse.add_argument(
+        "--function_definition",
+        default="data/input/functions_definition.json"
+    )
+    arguments_parse.add_argument(
+        "--input",
+        default="data/input/function_call",
+        help="Input path for JSON file"
+    )
+    arguments_parse.add_argument(
+        "--output",
+        default="data/output/function_calling_results.json",
+        help="Output path for JSON file"
+    )
+    args = arguments_parse.parse_args()
+    return args

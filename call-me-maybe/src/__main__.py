@@ -1,6 +1,6 @@
 from llm_sdk import Small_LLM_Model as SLM
 import numpy as np
-import agparse
+from parse import argument_parser
 from pydantic import BaseModel, ValidationError, TypeAdapter
 from typing import Literal, Union
 import json
@@ -44,7 +44,7 @@ class CheckFunctionsDefinition(BaseModel):
 
 def load_json_file(path: str, model: type[BaseModel]) -> list[BaseModel]:
     try:
-        with open(path, "r", encoding="utf-8") as f:
+        with open(path, "r") as f:
             data = json.load(f)
     except FileNotFoundError as e:
         print(f"File not found: {e}")
@@ -60,15 +60,12 @@ def load_json_file(path: str, model: type[BaseModel]) -> list[BaseModel]:
 
 
 def main() -> None:
-    try:
-        loaded_data = load_json_file("data/input/functions_definition.json",
-                                     CheckFunctionsDefinition)
-        tests = load_json_file("data/input/function_calling_tests.json",
-                               CheckPrompt)
-    except InputFileError as e:
-        print(e)
-        raise SystemExit("Exiting due to input file error.")
+    args = argument_parser()
     modello = SLM()
+    loaded_data = load_json_file("data/input/functions_definition.json",
+                                 CheckFunctionsDefinition)
+    tests = load_json_file("data/input/function_calling_tests.json",
+                           CheckPrompt)
     # Fuori dal ciclo: serializzo le funzioni una volta sola
     functions_text = json.dumps([f.model_dump() for f in loaded_data])
     for test in tests:
