@@ -20,7 +20,6 @@ clean:
 	find . -type d -name ".mypy_cache" -exec rm -rf {} +
 	find . -type f -name "*.pyc" -delete
 	find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null; true
-	find . -type f -name "maze.txt" -delete
 
 lint:
 	flake8 .
