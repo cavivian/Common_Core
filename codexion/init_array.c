@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:43:51 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/30 12:06:43 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/10/01 17:32:47 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_coders_values(int i, t_coder *coder, t_quantum *q)
 	coder[i].index = i + 1;
 }
 
+// mutex coder perche' 
 int	handle_coders_thread(t_coder *coder, int num,
 	t_dongle *dongle, int *count)
 {

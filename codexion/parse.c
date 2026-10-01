@@ -6,7 +6,7 @@
 /*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/22 09:36:25 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/30 12:06:13 by cavivian         ###   ########.fr       */
+/*   Updated: 2026/10/01 17:10:16 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	parse(t_quantum *q, int argc, char **argv)
 		q->config.algorithm = FIFO;
 	else if (!strcmp(argv[8], "edf"))
 		q->config.algorithm = EDF;
+	else if (!strcmp(argv[8], "lifo"))
+		q->config.algorithm = LIFO;
 	q->config.n_of_coders = atoi(argv[1]);
 	q->config.burnout = atoi(argv[2]);
 	q->config.compile = atoi(argv[3]);

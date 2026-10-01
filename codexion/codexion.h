@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   codexion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: camilla <camilla@student.42.fr>            +#+  +:+       +#+        */
+/*   By: cavivian <cavivian@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/31 15:04:21 by cavivian          #+#    #+#             */
-/*   Updated: 2026/09/30 15:54:34 by camilla          ###   ########.fr       */
+/*   Updated: 2026/10/01 17:09:50 by cavivian         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ typedef struct s_dongle		t_dongle;
 typedef enum e_algorithm
 {
 	FIFO,
-	EDF
+	EDF,
+	LIFO
 }	t_algorithm;
 
 typedef struct s_settings
