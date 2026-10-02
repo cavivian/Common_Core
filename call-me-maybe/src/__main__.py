@@ -2,7 +2,7 @@ from llm_sdk import Small_LLM_Model as SLM
 import numpy as np
 from parse import argument_parser
 from pydantic import BaseModel, ValidationError, TypeAdapter
-from typing import Literal, Union
+from typing import Union
 import json
 
 # quello che devo fare io e':

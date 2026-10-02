@@ -20,7 +20,6 @@ void	init_coders_values(int i, t_coder *coder, t_quantum *q)
 	coder[i].index = i + 1;
 }
 
-// mutex coder perche' 
 int	handle_coders_thread(t_coder *coder, int num,
 	t_dongle *dongle, int *count)
 {

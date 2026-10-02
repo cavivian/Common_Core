@@ -47,15 +47,15 @@ int	compile(t_coder *cod)
 			break ;
 		usleep(1);
 	}
+	if (check_simulation(cod) == 1)
+		return (1);
 	take_dongle_message(cod);
 	time_save = get_time();
 	pthread_mutex_lock(&cod->mutex);
 	cod->last_compile_start = time_save;
 	pthread_mutex_unlock(&cod->mutex);
 	compile_message(cod);
-	pthread_mutex_lock(&cod->mutex);
 	usleep(cod->quantum->config.compile * 1000);
-	pthread_mutex_unlock(&cod->mutex);
 	time_save = get_time();
 	freedom_dongle(cod->dongle_dx, &cod->dongle_dx->m_dongle, time_save
 		+ cod->quantum->config.dongle_cooldown);

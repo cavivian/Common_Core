@@ -50,10 +50,10 @@ void	check_priority_queue(t_heap *heap, int index)
 		right_son = heap_right_son(index);
 		best = index;
 		if (left_son < heap->current_size
-			&& heap->array[left_son].value > heap->array[best].value)
+			&& heap->array[left_son].value < heap->array[best].value)
 			best = left_son;
 		if (right_son < heap->current_size
-			&& heap->array[right_son].value > heap->array[best].value)
+			&& heap->array[right_son].value < heap->array[best].value)
 			best = right_son;
 		if (best == index)
 			break ;

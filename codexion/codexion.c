@@ -15,23 +15,18 @@
 void	*routine(void *arg)
 {
 	t_coder	*coder;
-	int		i;
 
-	i = 0;
 	coder = (t_coder *)arg;
 	if (coder->quantum->config.n_of_coders == 1)
 		return (only_one_coder(coder), NULL);
-	while (i < coder->quantum->config.number_of_compiles_required)
+	while (check_simulation(coder) == 0)
 	{
-		if (check_simulation(coder) != 0)
-			return (NULL);
 		if (compile(coder) != 0)
 		{
 			usleep (1);
 			continue ;
 		}
 		actions(coder);
-		i++;
 	}
 	return (NULL);
 }
@@ -50,13 +45,8 @@ int	join_and_clean(t_quantum *q, int count, t_dongle *dongle)
 
 int	only_one_coder(t_coder *coder)
 {
-	if (check_simulation(coder) == 0)
-	{
-		pthread_mutex_lock(&coder->quantum->m_simulation_stop);
-		usleep(coder->quantum->config.burnout * 1000);
-		pthread_mutex_unlock(&coder->quantum->m_simulation_stop);
-		return (1);
-	}
+	while(check_simulation(coder) == 0)
+		usleep(1);
 	return (0);
 }
 
