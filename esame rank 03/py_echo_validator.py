@@ -6,6 +6,8 @@ def echo_validator(text: str) -> str:
         if c.isalpha():
             clean_text += c
     return (clean_text == clean_text[::-1])
+    # return (text == text[::-1])  # cosi' non va bene perche' il primo caso
+    # e' False ma deve essere True perche' non deve considerare gli spazi
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ def whisper_cipher(text: str, shift: int) -> str:
     for c in text:
         if 'a' <= c <= 'z':
             res += chr((ord(c) - ord('a') + shift) % 26 + ord('a'))
-        if 'A' <= c <= 'Z':
+        elif 'A' <= c <= 'Z':
             res += chr((ord(c) - ord('A') + shift) % 26 + ord('A'))
         else:
             res += c

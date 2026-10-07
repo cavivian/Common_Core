@@ -7,7 +7,9 @@ def cryptic_sorter(strings: list[str]) -> list[str]:
 
 if __name__ == "__main__":
     print(cryptic_sorter(["apple", "cat", "banana", "dog", "elephant"]))
-    print(cryptic_sorter(["aaa", "bbb", "AAA", "BBB"]))
-    print(cryptic_sorter(["hello", "world", "hi", "test"]))
+    # cat dog apple banana elephant
+    print(cryptic_sorter(["aaa", "bbb", "AAA", "BBB"]))  # aaa AAA bbb BBB
+    print(cryptic_sorter(["hello", "world", "hi", "test"]))  # hi test hello
+    # world
     print(cryptic_sorter([]))
     print(cryptic_sorter([""]))

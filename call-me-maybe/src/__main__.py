@@ -1,6 +1,6 @@
 from llm_sdk import Small_LLM_Model as SLM
 import numpy as np
-from parse import argument_parser
+from .parse import argument_parser
 from pydantic import BaseModel, ValidationError, TypeAdapter
 from typing import Union
 import json
@@ -61,6 +61,8 @@ def load_json_file(path: str, model: type[BaseModel]) -> list[BaseModel]:
 
 def main() -> None:
     args = argument_parser()
+    if not args:
+        return None
     modello = SLM()
     loaded_data = load_json_file("data/input/functions_definition.json",
                                  CheckFunctionsDefinition)
@@ -73,9 +75,10 @@ def main() -> None:
             {"role": "system", "content": functions_text},
             {"role": "user", "content": test.prompt}
         ]
-    result = CheckFunctionsDefinition(prompt=test.prompt, name=test.name,
+    result = CheckFunctionsDefinition(name=test.name, prompt=test.prompt,
                                       parameters=test.params)
     results = list[result]
+    print(results)
     # qui dentro: genera la function call per QUESTO prompt
     # e accumula il risultato da qualche parte (es. una lista `results`)
     print("end_of_sentence:", modello._tokenizer.eos_token_id)

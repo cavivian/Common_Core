@@ -3,6 +3,6 @@ def string_permutation_checker(s1: str, s2: str) -> bool:
 
 
 if __name__ == "__main__":
-    print(string_permutation_checker("abc", "bca"))
-    print(string_permutation_checker("abc", "def"))
-    print(string_permutation_checker("", ""))
+    print(string_permutation_checker("abc", "bca"))  # True
+    print(string_permutation_checker("abc", "def"))  # False
+    print(string_permutation_checker("", ""))  # True

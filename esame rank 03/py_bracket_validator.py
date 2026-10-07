@@ -17,7 +17,8 @@ def bracket_validator(s: str) -> bool:
 
 
 if __name__ == "__main__":
-    print(bracket_validator("()"))
-    print(bracket_validator("()[]{}"))
-    print(bracket_validator("(]"))
-    print(bracket_validator("hello(world)["))
+    print(bracket_validator("()"))  # True
+    print(bracket_validator("()[]{}"))  # True
+    print(bracket_validator("(]"))  # False
+    print(bracket_validator("hello(world)["))  # False
+    print(bracket_validator("hello(world)]["))  # False

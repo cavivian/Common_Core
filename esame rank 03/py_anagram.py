@@ -5,6 +5,6 @@ def anagram(s1: str, s2: str) -> bool:
 
 
 if __name__ == "__main__":
-    print(anagram("listen", "silent"))
-    print(anagram("", ""))
-    print(anagram("abc", "abcc"))
+    print(anagram("listen", "silent"))  # True
+    print(anagram("", ""))  # True
+    print(anagram("abc", "abcc"))  # False
