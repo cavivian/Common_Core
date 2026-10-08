@@ -1,9 +1,10 @@
 from llm_sdk import Small_LLM_Model as SLM
 import numpy as np
 from .parse import argument_parser
-from pydantic import BaseModel, ValidationError, TypeAdapter
+from pydantic import BaseModel
 from typing import Union
 import json
+from .files_handle import load_json_file
 
 # quello che devo fare io e':
 # passare functions_definition.json a system
@@ -27,10 +28,6 @@ class ParameterDefinition(BaseModel):
     type: typeofparameter
 
 
-class InputFileError(Exception):
-    pass
-
-
 class CheckPrompt(BaseModel):
     prompt: str
 
@@ -40,23 +37,6 @@ class CheckFunctionsDefinition(BaseModel):
     description: str
     parameters: dict[str, ParameterDefinition]
     returns: ParameterDefinition
-
-
-def load_json_file(path: str, model: type[BaseModel]) -> list[BaseModel]:
-    try:
-        with open(path, "r") as f:
-            data = json.load(f)
-    except FileNotFoundError as e:
-        print(f"File not found: {e}")
-        raise InputFileError("Input file not found")
-    except json.JSONDecodeError as e:
-        print(f"Error decoding JSON: {e}")
-        raise InputFileError("Invalid JSON format")
-    try:
-        return (TypeAdapter(model).validate_python(data))
-    except ValidationError as e:
-        print(f"Validation error: {e}")
-        raise InputFileError("Validation error in JSON data")
 
 
 def main() -> None:
@@ -70,11 +50,13 @@ def main() -> None:
                            CheckPrompt)
     # Fuori dal ciclo: serializzo le funzioni una volta sola
     functions_text = json.dumps([f.model_dump() for f in loaded_data])
+    print(functions_text)
     for test in tests:
         richiesta = [
             {"role": "system", "content": functions_text},
             {"role": "user", "content": test.prompt}
         ]
+        # a questo result devo aggiungere anche la description
     result = CheckFunctionsDefinition(name=test.name, prompt=test.prompt,
                                       parameters=test.params)
     results = list[result]
