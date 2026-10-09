@@ -1,4 +1,4 @@
-def echo_validator(text: str) -> str:
+def echo_validator(text: str) -> bool:
     if text == "":
         return False
     clean_text: str = ""
