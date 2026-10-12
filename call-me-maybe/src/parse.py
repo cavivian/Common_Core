@@ -4,13 +4,13 @@ import argparse
 def argument_parser() -> argparse.Namespace:
     arguments_parse = argparse.ArgumentParser()
     arguments_parse.add_argument(
-        '--function_definition',
+        '--functions_definition',
         default="data/input/functions_definition.json",
         help="Input path for JSON file"
     )
     arguments_parse.add_argument(
         '--input',
-        default="data/input/function_call.json",
+        default="data/input/function_calling_tests.json",
         help="Input path for JSON file"
     )
     arguments_parse.add_argument(

@@ -2,7 +2,7 @@ from llm_sdk import Small_LLM_Model as SLM
 import numpy as np
 from .parse import argument_parser
 from pydantic import BaseModel
-from typing import Union
+from typing import Literal
 import json
 from .files_handle import load_json_file
 
@@ -21,11 +21,11 @@ from .files_handle import load_json_file
 # agparse per --functions_definition, --input e --output con path di default
 
 
-typeofparameter = Union[str, float, bool, dict, list]
+typeofparameter = Literal[str, float, bool, dict, list]
 
 
 class ParameterDefinition(BaseModel):
-    type: typeofparameter
+    type = typeofparameter
 
 
 class CheckPrompt(BaseModel):
