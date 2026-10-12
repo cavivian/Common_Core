@@ -41,8 +41,6 @@ class CheckFunctionsDefinition(BaseModel):
 
 def main() -> None:
     args = argument_parser()
-    if not args:
-        return None
     modello = SLM()
     loaded_data = load_json_file("data/input/functions_definition.json",
                                  CheckFunctionsDefinition)
