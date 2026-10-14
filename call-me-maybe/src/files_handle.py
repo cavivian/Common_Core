@@ -21,3 +21,5 @@ def load_json_file(path: str, model: type[BaseModel]) -> list[BaseModel]:
     except ValidationError as e:
         print(f"Validation error: {e}")
         raise InputFileError("Validation error in JSON data")
+
+
