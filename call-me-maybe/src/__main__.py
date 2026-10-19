@@ -55,9 +55,7 @@ def main() -> None:
             {"role": "system", "content": functions_text},
             {"role": "user", "content": test.prompt}
         ]
-        result = CheckFunctionsDefinition(name=test.name,
-                                          prompt=test.prompt,
-                                          parameters=test.params)
+        result = CheckPrompt(prompt=test.prompt)
         results = list[result]
     print(results)
     # qui dentro: genera la function call per QUESTO prompt
