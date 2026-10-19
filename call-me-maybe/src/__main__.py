@@ -61,6 +61,11 @@ def main() -> None:
     functions_text = json.dumps([f.model_dump() for f in loaded_data])
     # print(functions_text)
     results = []
+    # tutto ciò che è dentro questo ciclo va tokenizzato e passato al modello, così non basta
+    # prima va tokenizzato il prompt e passato al modello, dopo gli va dato il contesto con
+    # l'altro json, anche quello a sua volta tokenizzato
+    # una volta ottenuti entrambi si genera la risposta, si decoda
+    # si restituisce in un file json
     for test in tests:
         for function in loaded_data:
             # print(test)
