@@ -1,10 +1,10 @@
-from llm_sdk import Small_LLM_Model as SLM
+from llm_sdk.llm_sdk import Small_LLM_Model as SLM
 import numpy as np
 from .parse import argument_parser
 from pydantic import BaseModel
-from typing import Literal
+from typing import Literal, Any
 import json
-from .files_handle import load_json_file
+from .files_handle import load_json_file, InputFileError
 
 # quello che devo fare io e':
 # passare functions_definition.json a system
@@ -32,41 +32,56 @@ class CheckPrompt(BaseModel):
     prompt: str
 
 
+# mi controlla i parametri in uscita da inserire del messaggio di output
+class CheckOutputParameters(BaseModel):
+    name: str
+    prompt: str
+    parameters: dict[str, Any]
+
+
 class CheckFunctionsDefinition(BaseModel):
     name: str
     parameters: dict[str, ParameterDefinition]
+    description: str
     returns: ParameterDefinition
 
 
 def main() -> None:
     args = argument_parser()
-    if not args:
-        return None
-    loaded_data = load_json_file("--functions_defition",
-                                 CheckFunctionsDefinition)
-    tests = load_json_file("--input",
-                           CheckPrompt)
-    modello = SLM()
+    try:
+        loaded_data = load_json_file(args.functions_definition,
+                                     CheckFunctionsDefinition)
+        tests = load_json_file(args.input,
+                               CheckPrompt)
+    except InputFileError as e:
+        raise SystemExit(e)
+    modello = SLM(args.model_name)
     # Fuori dal ciclo: serializzo le funzioni una volta sola
+    # mi restituisce una stringa
     functions_text = json.dumps([f.model_dump() for f in loaded_data])
-    print(functions_text)
+    # print(functions_text)
+    results = []
     for test in tests:
-        richiesta = [
-            {"role": "system", "content": functions_text},
-            {"role": "user", "content": test.prompt}
-        ]
-        result = CheckPrompt(prompt=test.prompt)
-        results = list[result]
+        for function in loaded_data:
+            # print(test)
+            richiesta = [
+                {"role": "system", "content": functions_text},
+                {"role": "user", "content": test.prompt}
+            ]
+            result = CheckOutputParameters(prompt=test.prompt, name=function.name,
+                                           parameters=function.parameters)
+            results.append(result)
     print(results)
     # qui dentro: genera la function call per QUESTO prompt
     # e accumula il risultato da qualche parte (es. una lista `results`)
-    print("end_of_sentence:", modello._tokenizer.eos_token_id)
-    formatted = modello.format(richiesta)
-    encoding = modello.encode(formatted)[0].tolist()
+    # print("end_of_sentence:", modello._tokenizer.eos_token_id)
     # print(encoding)
     encoding_answer = []
     answer = ""
-    for _ in range(50):  # qua anziche' range, va passata la lista di prompt
+    for _ in results:  # qua anziche' range, va passata la lista di prompt,
+        # la mia results
+        formatted = modello.format(richiesta)
+        encoding = modello.encode(formatted)[0].tolist()
         logits = modello.get_logits_from_input_ids(encoding)
         next_token = np.argmax(logits)
         next_word = modello.decode([next_token])
@@ -82,9 +97,12 @@ def main() -> None:
         # qua va aperto il file di output, e passata la risposta e
         # validata in tipo json usando le funzioni:
         # json.dumps(-per le stringhe) o json.dump(-per scrivere il file json)
-    with open("--output", "a", encoding="utf-8") as f:
-        json.dump(answer)
-            
+    try:
+        with open(args.output, "a", encoding="utf-8") as f:
+            json.dump(answer, f, indent=4)
+    except FileExistsError as e:
+        raise SystemExit(e)
+
 
 if __name__ == "__main__":
     main()
