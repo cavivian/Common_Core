@@ -2,9 +2,10 @@ from llm_sdk.llm_sdk import Small_LLM_Model as SLM
 import numpy as np
 from .parse import argument_parser
 from pydantic import BaseModel
-from typing import Literal, Any
+from typing import Literal
 import json
-from .files_handle import load_json_file, InputFileError
+from .files_handle import load_json_file, InputFileError, write_output_file, OutputFileError
+from pathlib import Path
 
 # quello che devo fare io e':
 # passare functions_definition.json a system
@@ -24,6 +25,7 @@ from .files_handle import load_json_file, InputFileError
 typeofparameter = Literal["string", "number", "boolean", "array", "object"]
 
 
+# descrive che tipo è un parametro
 class ParameterDefinition(BaseModel):
     type: typeofparameter
 
@@ -33,10 +35,11 @@ class CheckPrompt(BaseModel):
 
 
 # mi controlla i parametri in uscita da inserire del messaggio di output
+# ottengo un dizionario
 class CheckOutputParameters(BaseModel):
     name: str
     prompt: str
-    parameters: dict[str, Any]
+    parameters: dict[str, ParameterDefinition]
 
 
 class CheckFunctionsDefinition(BaseModel):
@@ -66,6 +69,7 @@ def main() -> None:
     # l'altro json, anche quello a sua volta tokenizzato
     # una volta ottenuti entrambi si genera la risposta, si decoda
     # si restituisce in un file json
+    # sia test che function sono oggetti pydantic perchè dentro funzioni con BaseModel
     for test in tests:
         for function in loaded_data:
             # print(test)
@@ -75,7 +79,9 @@ def main() -> None:
             ]
             result = CheckOutputParameters(prompt=test.prompt, name=function.name,
                                            parameters=function.parameters)
-            results.append(result)
+            # questo è ciò che devo inserire nel file di output json
+            results.append(result) 
+            # se lo passo a json.dump() restituisce TypeError perchè è una lista di oggetti pydantic, ma non di dict
     print(results)
     # qui dentro: genera la function call per QUESTO prompt
     # e accumula il risultato da qualche parte (es. una lista `results`)
@@ -103,10 +109,11 @@ def main() -> None:
         # validata in tipo json usando le funzioni:
         # json.dumps(-per le stringhe) o json.dump(-per scrivere il file json)
     try:
-        with open(args.output, "a", encoding="utf-8") as f:
-            json.dump(answer, f, indent=4)
-    except FileExistsError as e:
+        path = args.output
+        write_output_file(results, path)
+    except OutputFileError as e:
         raise SystemExit(e)
+    
 
 
 if __name__ == "__main__":
