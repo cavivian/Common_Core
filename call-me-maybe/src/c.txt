@@ -1,0 +1,144 @@
+/* === 1. POP-UP DELLE NOTIFICHE SINGOLE === */
+.notification-banner {
+    background-color: #ffd1dc !important;
+    border: 1px solid #f4b6c2 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12) !important;
+}
+
+.notification-banner * {
+    color: #000000 !important;
+}
+
+/* === 2. SFONDO PRINCIPALE DI TUTTI I MENU A TENDINA === */
+.popup-menu,
+.popup-menu-content,
+.popup-menu-boxpointer,
+.datemenu-menu,
+.datemenu-calendar-column,
+.message-list,
+.message-list-scrollview,
+#calendarArea {
+    background-color: #ffd1dc !important;
+    border: 1px solid #f4b6c2 !important;
+    color: #000000 !important;
+}
+
+.popup-menu-content {
+    border-radius: 18px !important;
+}
+
+/* === 3. SOTTO-MENU (Power Off / Log Out, Bluetooth, Wi-Fi) === */
+.popup-sub-menu,
+.popup-sub-menu .popup-menu-item,
+.popup-menu-item,
+.aggregate-menu .popup-sub-menu {
+    background-color: #ffe4e8 !important;
+    border: 1px solid #f4b6c2 !important;
+    border-radius: 12px !important;
+    color: #000000 !important;
+}
+
+.popup-menu-item:hover,
+.popup-menu-item:selected,
+.popup-sub-menu .popup-menu-item:hover {
+    background-color: #f4a6b7 !important;
+    color: #000000 !important;
+}
+
+/* === 4. BARRE VOLUME E LUMINOSITÀ (SLIDERS ROSA) === */
+.slider {
+    height: 1em !important;
+    -barlevel-active-color: #d8607d !important;
+    -barlevel-background-color: #ffe4e8 !important;
+    -slider-handle-radius: 8px !important;
+    color: #d8607d !important;
+}
+
+/* === 5. SCHEDE INTERNE (Notifiche, Media Player, Eventi) === */
+.media-message-container,
+.message,
+.datemenu-today-button,
+.events-section,
+.events-list,
+.events-button,
+.event-box {
+    background-color: #ffe4e8 !important;
+    border: 1px solid #f4b6c2 !important;
+    border-radius: 12px !important;
+    color: #000000 !important;
+}
+
+.events-section *,
+.events-list *,
+.no-events-label,
+.event-time {
+    background-color: transparent !important;
+    color: #000000 !important;
+}
+
+/* Pulsante "Clear" e Interruttori */
+.message-list-clear-button,
+.message-list-clear-button:hover {
+    background-color: #ffe4e8 !important;
+    border: 1px solid #f4b6c2 !important;
+    border-radius: 10px !important;
+    color: #000000 !important;
+}
+
+.toggle-switch,
+StSwitch {
+    background-color: #f4a6b7 !important;
+}
+
+/* === 6. TESTO ED ICONE IN NERO === */
+.datemenu-menu *,
+.popup-menu *,
+.popup-sub-menu *,
+.message-title,
+.message-body,
+.message-secondary-label,
+.message-time,
+.media-message-title,
+.media-message-subtitle,
+.calendar-day-base,
+.calendar-day-heading,
+.calendar-month-label {
+    color: #000000 !important;
+}
+
+.datemenu-menu StIcon,
+.popup-menu StIcon,
+.popup-sub-menu StIcon {
+    color: #000000 !important;
+}
+
+.calendar-today {
+    background-color: #f4a6b7 !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+    border-radius: 99px !important;
+}
+
+/* === 7. CONTROLLI MEDIA PLAYER (PLAY / PAUSA / AVANTI / INDIETRO) === */
+.media-message-controls,
+.media-message-controls *,
+.media-message-controls StButton,
+.media-message-controls .button {
+    background-color: #f4a6b7 !important;
+    border: 1px solid #f4b6c2 !important;
+    border-radius: 12px !important;
+    color: #000000 !important;
+}
+
+.media-message-controls StIcon,
+.media-message-controls StButton StIcon {
+    background-color: transparent !important;
+    color: #000000 !important;
+}
+
+.media-message-controls StButton:hover,
+.media-message-controls StButton:focus,
+.media-message-controls StButton:active {
+    background-color: #d8607d !important;
+}

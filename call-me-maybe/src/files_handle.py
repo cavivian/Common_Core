@@ -70,6 +70,3 @@ def write_output_file(answer: list[str], path: str):
             json.dump(answer, f, indent=4)
     except OSError as e:
         raise OutputFileError(f"Cannot write {path}: {e.strerror}") from e
-
-write_output_file([{"prompt": "Generate a greeting message for a person by name.", "name": "fn_add_numbers", "parameters": "number, number"},
-                   {"prompt": "Add two numbers together and return their sum.", "name": "fn_greet", "parameters": "string"}], "data/output/prova.json")
