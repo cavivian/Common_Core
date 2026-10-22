@@ -4,7 +4,7 @@ from .parse import argument_parser
 import json
 from .files_handle import (load_json_file, InputFileError, write_output_file,
                            OutputFileError)
-from .tokenization_files import prompt_tokenization
+from .tokenization_files import go_to_model, build_prompt
 from .models import (CheckFunctionsDefinition,
                      CheckOutputParameters,
                      CheckPrompt)
@@ -30,68 +30,52 @@ def main() -> None:
     try:
         loaded_data = load_json_file(args.functions_definition,
                                      CheckFunctionsDefinition)
-        prompt = load_json_file(args.input,
-                                CheckPrompt)
+        tests = load_json_file(args.input,
+                               CheckPrompt)
     except InputFileError as e:
         raise SystemExit(e)
-    modello = SLM(args.model_name)
-    # ^ in realta' questo e' gia' settato di default
-    # Fuori dal ciclo: serializzo le funzioni una volta sola
-    # mi restituisce una stringa
+    # modello = SLM(args.model_name)
     functions_text = json.dumps([f.model_dump() for f in loaded_data])
     # print(functions_text)
     results = []
-    # tutto ciò che è dentro questo ciclo va tokenizzato e passato al modello,
-    # così non basta
-    # prima va tokenizzato il prompt e passato al modello,
-    # dopo gli va dato il contesto con
-    # l'altro json, anche quello a sua volta tokenizzato
-    # una volta ottenuti entrambi si genera la risposta, si decoda
-    # si restituisce in un file json
-    # sia test che function sono oggetti pydantic perchè dentro
-    # funzioni con BaseModel
-    token_prompt = prompt_tokenization(prompt)
-    print(token_prompt)
-    for test in prompt:
+    datas_validate = []
+    for test in tests:
         for function in loaded_data:
             # print(test)
-            richiesta = [
-                {"role": "system", "content": functions_text},
-                {"role": "user", "content": test.prompt}
-            ]
+            formatted = build_prompt(functions_text, test.prompt)
+            # richiesta = [
+            #     {"role": "system", "content": functions_text},
+            #     {"role": "user", "content": test.prompt}
+            # ]
             result = CheckOutputParameters(prompt=test.prompt,
                                            name=function.name,
                                            parameters=function.parameters)
-            # questo è ciò che devo inserire nel file di output json
-            results.append(result)
-            # se lo passo a json.dump() restituisce TypeError perchè
-            # è una lista di oggetti pydantic, ma non di dict
-    print(results)
+            datas_validate = ([f.model_dump() for f in result])
+            results.append(datas_validate)
+    # token_prompt = go_to_model(formatted, modello)
+    print(formatted)
     # qui dentro: genera la function call per QUESTO prompt
     # e accumula il risultato da qualche parte (es. una lista `results`)
     # print("end_of_sentence:", modello._tokenizer.eos_token_id)
     # print(encoding)
-    encoding_answer = []
-    answer = ""
-    for _ in results:  # qua anziche' range, va passata la lista di prompt,
+    # encoding_answer = []
+    # answer = ""
+    # for _ in results:  # qua anziche' range, va passata la lista di prompt,
         # la mia results
-        formatted = modello(richiesta)
-        encoding = modello.encode(formatted)[0].tolist()
-        logits = modello.get_logits_from_input_ids(encoding)
-        next_token = np.argmax(logits)
-        next_word = modello.decode([next_token])
-        # print(next_word, end="", flush=True)
-        # io qua non devo printare niente,
-        # il risultato deve essere dentro un file json
-        if next_token == modello._tokenizer.eos_token_id:
-            break
-        encoding.append(next_token)
-        encoding_answer.append(next_token)
-        answer += next_word
+        # formatted = modello(richiesta)
+        # encoding = modello.encode(formatted)[0].tolist()
+        # logits = modello.get_logits_from_input_ids(encoding)
+        # next_token = np.argmax(logits)
+        # next_word = modello.decode([next_token])
+        # # print(next_word, end="", flush=True)
+        # # io qua non devo printare niente,
+        # # il risultato deve essere dentro un file json
+        # if next_token == modello._tokenizer.eos_token_id:
+        #     break
+        # encoding.append(next_token)
+        # encoding_answer.append(next_token)
+        # answer += next_word
         # print()
-        # qua va aperto il file di output, e passata la risposta e
-        # validata in tipo json usando le funzioni:
-        # json.dumps(-per le stringhe) o json.dump(-per scrivere il file json)
     try:
         path = args.output
         write_output_file(results, path)
