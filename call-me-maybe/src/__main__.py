@@ -42,14 +42,11 @@ def main() -> None:
         for function in loaded_data:
             # print(test)
             formatted = build_prompt(functions_text, test.prompt)
-            # richiesta = [
-            #     {"role": "system", "content": functions_text},
-            #     {"role": "user", "content": test.prompt}
-            # ]
             result = CheckOutputParameters(prompt=test.prompt,
                                            name=function.name,
                                            parameters=function.parameters)
-            datas_validate = ([f.model_dump() for f in result])
+            
+            datas_validate = result.model_dump()
             results.append(datas_validate)
     # token_prompt = go_to_model(formatted, modello)
     print(formatted)
