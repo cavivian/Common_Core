@@ -38,7 +38,6 @@ def main() -> None:
     functions_text = json.dumps([f.model_dump() for f in loaded_data])
     # print(functions_text)
     results = []
-    datas_validate = []
     for test in tests:
         for function in loaded_data:
             # print(test)
@@ -54,8 +53,6 @@ def main() -> None:
             results.append(datas_validate)
     # token_prompt = go_to_model(formatted, modello)
     print(formatted)
-    # qui dentro: genera la function call per QUESTO prompt
-    # e accumula il risultato da qualche parte (es. una lista `results`)
     # print("end_of_sentence:", modello._tokenizer.eos_token_id)
     # print(encoding)
     # encoding_answer = []
