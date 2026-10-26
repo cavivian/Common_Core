@@ -1,4 +1,5 @@
-from .models import CheckPrompt
+# from .models import CheckPrompt
+from llm_sdk.llm_sdk import Small_LLM_Model as SLM
 
 
 def build_prompt(functions_text: str, user_prompt: str) -> str:
@@ -21,10 +22,6 @@ def build_prompt(functions_text: str, user_prompt: str) -> str:
     )
 
 
-def go_to_model(prompt: list[CheckPrompt], modello) -> list[int]:
-    token: list[int] = []
-    
-    for request in prompt:
-        request = modello.encode()
-        token.append(request)
-    return token
+def from_text_to_token(prompt: str, modello: SLM) -> list[int]:
+    request = modello.encode(prompt)[0].tolist()
+    return request

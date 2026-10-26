@@ -13,11 +13,11 @@ class CheckPrompt(BaseModel):
     prompt: str = Field(min_length=1, max_length=100)
 
 
-# mi controlla i parametri in uscita da inserire del messaggio di output
+# mi controlla i parametri in uscita da inserire nel messaggio di output
 # ottengo un dizionario
 class CheckOutputParameters(BaseModel):
     name: str = Field(min_length=1, max_length=50)
-    prompt: str = Field(min_length=1, max_length=100)
+    prompt: str = Field(min_length=1, max_length=1000)
     parameters: dict[str, ParameterDefinition] = Field(min_length=1,
                                                        max_length=50)
 
@@ -25,5 +25,5 @@ class CheckOutputParameters(BaseModel):
 class CheckFunctionsDefinition(BaseModel):
     name: str = Field(min_length=1, max_length=50)
     parameters: dict[str, ParameterDefinition]
-    description: str = Field(min_length=1, max_length=100)
+    description: str = Field(min_length=1, max_length=1000)
     returns: ParameterDefinition
