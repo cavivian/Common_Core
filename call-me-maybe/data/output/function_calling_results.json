@@ -1,2 +1,57 @@
 [
-    
+    {
+        "name": "fn_add_numbers",
+        "prompt": "What is the sum of 2 and 3?",
+        "parameters": {}
+    },
+    {
+        "name": "fn_add_numbers",
+        "prompt": "What is the sum of 265 and 345?",
+        "parameters": {}
+    },
+    {
+        "name": "fn_add_numbers",
+        "prompt": "Greet shrek",
+        "parameters": {}
+    },
+    {
+        "name": "fn_add_numbers",
+        "prompt": "Greet john",
+        "parameters": {}
+    },
+    {
+        "name": "fn_add_numbers",
+        "prompt": "Reverse the string 'hello'",
+        "parameters": {}
+    },
+    {
+        "name": "fn_add_numbers",
+        "prompt": "Reverse the string 'world'",
+        "parameters": {}
+    },
+    {
+        "name": "fn_add_numbers",
+        "prompt": "What is the square root of 16?",
+        "parameters": {}
+    },
+    {
+        "name": "fn_add_numbers",
+        "prompt": "Calculate the square root of 144",
+        "parameters": {}
+    },
+    {
+        "name": "fn_add_numbers",
+        "prompt": "Replace all numbers in \"Hello 34 I'm 233 years old\" with NUMBERS",
+        "parameters": {}
+    },
+    {
+        "name": "fn_add_numbers",
+        "prompt": "Replace all vowels in 'Programming is fun' with asterisks",
+        "parameters": {}
+    },
+    {
+        "name": "fn_add_numbers",
+        "prompt": "Substitute the word 'cat' with 'dog' in 'The cat sat on the mat with another cat'",
+        "parameters": {}
+    }
+]

@@ -1,5 +1,5 @@
 from llm_sdk.llm_sdk import Small_LLM_Model as SLM
-# /import numpy as np
+import numpy as np
 from .parse import argument_parser
 import json
 from .files_handle import (load_json_file, InputFileError, write_output_file,
@@ -40,16 +40,33 @@ def main() -> None:
         print(functions_text)
         print()
         results = []
+        dizionario = {}
+        generated: str = ""
         for test in tests:
-            for function in loaded_data:
-                formatted = build_prompt(functions_text, test.prompt)
-                result = CheckOutputParameters(prompt=test.prompt,
-                                               name=function.name,
-                                               parameters=function.parameters)
-                datas_validate = result.model_dump()
-                results.append(datas_validate)
-                token_prompt = from_text_to_token(formatted, modello)
+            formatted = build_prompt(functions_text, test.prompt)
+            # v- cio' che deve essere ritornato dentro il json
+            token_prompt = from_text_to_token(formatted, modello)
+            logits = modello.get_logits_from_input_ids(token_prompt)
+            next_token = np.argmax(logits)
+            next_word = modello.decode(next_token)
+            result = CheckOutputParameters(prompt=test.prompt,
+                                           name=loaded_data[0].name,
+                                           parameters=dizionario
+                                           )
+            datas_validate = result.model_dump()
+            results.append(datas_validate)
+        print(generated)
+        print(results)
+        print()
+        print(len(logits))
+        print()
+        print(next_token)
+        print()
+        print(next_word)
+        print()
         print(formatted)
+        print()
+        print(result)
         print()
         print(token_prompt)
         word = modello.decode(token_prompt)

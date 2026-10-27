@@ -1,5 +1,6 @@
 # from .models import CheckPrompt
 from llm_sdk.llm_sdk import Small_LLM_Model as SLM
+from .__main__ import generated
 
 
 def build_prompt(functions_text: str, user_prompt: str) -> str:
@@ -25,3 +26,7 @@ def build_prompt(functions_text: str, user_prompt: str) -> str:
 def from_text_to_token(prompt: str, modello: SLM) -> list[int]:
     request = modello.encode(prompt)[0].tolist()
     return request
+
+
+def token_id_allowed(generated: str, candidate: str):
+    
