@@ -3,11 +3,17 @@ import numpy as np
 from .parse import argument_parser
 import json
 from .files_handle import (load_json_file, InputFileError, write_output_file,
-                           OutputFileError)
-from .tokenization_files import build_prompt, from_text_to_token
+                           OutputFileError
+                           )
+from .tokenization_files import (build_prompt,
+                                 from_text_to_token,
+                                 token_id_allowed,
+                                 load_vocab
+                                 )
 from .models import (CheckFunctionsDefinition,
                      CheckOutputParameters,
-                     CheckPrompt)
+                     CheckPrompt
+                     )
 
 
 # quello che devo fare io e':
@@ -22,7 +28,7 @@ from .models import (CheckFunctionsDefinition,
 # vincolo sui tipi di parametri
 # sostituzione di np.argmax(logits) con "argmax solo tra i token ammessi"
 # criterio di stop basato sulla struttura completa, non su eos_token_id
-# agparse per --functions_definition, --input e --output con path di default
+# argparse per --functions_definition, --input e --output con path di default
 
 
 def main() -> None:
@@ -41,37 +47,53 @@ def main() -> None:
         print()
         results = []
         dizionario = {}
-        generated: str = ""
+        names = [f.name for f in loaded_data]
+        id_to_token = load_vocab(modello)
+        print(len(id_to_token))
+        print(id_to_token[0], id_to_token[1], id_to_token[2])
+        print([t for t in id_to_token.values() if t.startswith("fn")][:10])
         for test in tests:
             formatted = build_prompt(functions_text, test.prompt)
-            # v- cio' che deve essere ritornato dentro il json
+            generated: str = ""
+            print("sto per entrare nel ciclo, sono prima del while")
             token_prompt = from_text_to_token(formatted, modello)
-            logits = modello.get_logits_from_input_ids(token_prompt)
-            next_token = np.argmax(logits)
-            next_word = modello.decode(next_token)
-            result = CheckOutputParameters(prompt=test.prompt,
-                                           name=loaded_data[0].name,
+            while generated not in names:  # qui devo fare la funzione che mi controlli i nomi delle funzioni
+                # print("sono dentro il ciclo")
+                logits = modello.get_logits_from_input_ids(token_prompt)
+                allowed = token_id_allowed(generated, names, id_to_token)
+                for i in range(len(logits)):
+                    if i not in allowed:
+                        logits[i] = float("-inf")
+                token_id_allowed(generated, modello)
+                next_token = int(np.argmax(logits))
+                token_prompt.append(next_token)
+                generated += id_to_token[next_token]
+            # v- cio' che deve essere ritornato dentro il json
+            print("sono appena uscito dal ciclo")
+            result = CheckOutputParameters(name=generated,
+                                           prompt=test.prompt,
                                            parameters=dizionario
                                            )
             datas_validate = result.model_dump()
             results.append(datas_validate)
-        print(generated)
+        print("\n sono passata di qui \n", generated)
+        print()
         print(results)
         print()
-        print(len(logits))
+        # print(len(logits))
         print()
-        print(next_token)
+        # print(next_token)
         print()
-        print(next_word)
+        # print(next_word)
         print()
         print(formatted)
         print()
         print(result)
         print()
-        print(token_prompt)
-        word = modello.decode(token_prompt)
+        # print(token_prompt)
+        # word = modello.decode(token_prompt)
         print()
-        print(word)
+        # print(word)
         # print(results)
     except PermissionError as e:
         raise SystemExit(e)
