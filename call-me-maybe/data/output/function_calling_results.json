@@ -10,47 +10,47 @@
         "parameters": {}
     },
     {
-        "name": "fn_add_numbers",
+        "name": "fn_greet",
         "prompt": "Greet shrek",
         "parameters": {}
     },
     {
-        "name": "fn_add_numbers",
+        "name": "fn_greet",
         "prompt": "Greet john",
         "parameters": {}
     },
     {
-        "name": "fn_add_numbers",
+        "name": "fn_reverse_string",
         "prompt": "Reverse the string 'hello'",
         "parameters": {}
     },
     {
-        "name": "fn_add_numbers",
+        "name": "fn_reverse_string",
         "prompt": "Reverse the string 'world'",
         "parameters": {}
     },
     {
-        "name": "fn_add_numbers",
+        "name": "fn_get_square_root",
         "prompt": "What is the square root of 16?",
         "parameters": {}
     },
     {
-        "name": "fn_add_numbers",
+        "name": "fn_get_square_root",
         "prompt": "Calculate the square root of 144",
         "parameters": {}
     },
     {
-        "name": "fn_add_numbers",
+        "name": "fn_substitute_string_with_regex",
         "prompt": "Replace all numbers in \"Hello 34 I'm 233 years old\" with NUMBERS",
         "parameters": {}
     },
     {
-        "name": "fn_add_numbers",
+        "name": "fn_substitute_string_with_regex",
         "prompt": "Replace all vowels in 'Programming is fun' with asterisks",
         "parameters": {}
     },
     {
-        "name": "fn_add_numbers",
+        "name": "fn_substitute_string_with_regex",
         "prompt": "Substitute the word 'cat' with 'dog' in 'The cat sat on the mat with another cat'",
         "parameters": {}
     }

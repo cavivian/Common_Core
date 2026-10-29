@@ -28,18 +28,26 @@ def from_text_to_token(prompt: str, modello: SLM) -> list[int]:
     return request
 
 
-def token_id_allowed(generated: str, names: list[str], id_to_token: dict[int, str]) -> set[int]:
-    for item in id_to_token.items():
-        pass
+# questa funzione che mi controlla se effettivamente
+# c'e' nel json cio' che cerco
+def token_id_allowed(generated: str,
+                     names: list[str],
+                     id_to_token: dict[int, str]
+                     ) -> set[int]:
+    allowed = set()
+    for id_token, text in id_to_token.items():
+        if any(n.startswith(generated + text) for n in names):
+            allowed.add(id_token)
+    return (allowed)
     # return word
     # print(word)
     # print(" sono dentro 'token_id_allowed'", generated)
 
 
 def load_vocab(modello: SLM) -> dict[int, str]:
-    d = modello.get_path_to_vocab_file()
-    with open(d) as f:
-        path = json.load(f)
-    inverso = {v: k for k, v in path.items()}
+    path = modello.get_path_to_vocab_file()
+    with open(path) as f:
+        d = json.load(f)
+    inverso = {v: k.replace("Ġ", " ").replace("Ċ", "\n") for k, v in d.items()}
     return inverso
     # print(inverso)
