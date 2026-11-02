@@ -23,7 +23,7 @@ def build_prompt(functions_text: str, user_prompt: str) -> str:
     )
 
 
-def from_text_to_token(prompt: str, modello: SLM) -> list[int]:
+def from_prompt_to_token(prompt: str, modello: SLM) -> list[int]:
     request = modello.encode(prompt)[0].tolist()
     return request
 
@@ -38,10 +38,10 @@ def token_id_allowed(generated: str,
     for id_token, text in id_to_token.items():
         if any(n.startswith(generated + text) for n in names):
             allowed.add(id_token)
+            # print()
+            # print(allowed, end="")
+            # print()
     return (allowed)
-    # return word
-    # print(word)
-    # print(" sono dentro 'token_id_allowed'", generated)
 
 
 def load_vocab(modello: SLM) -> dict[int, str]:

@@ -6,7 +6,7 @@ from .files_handle import (load_json_file, InputFileError, write_output_file,
                            OutputFileError
                            )
 from .tokenization_files import (build_prompt,
-                                 from_text_to_token,
+                                 from_prompt_to_token,
                                  token_id_allowed,
                                  load_vocab
                                  )
@@ -17,16 +17,10 @@ from .models import (CheckFunctionsDefinition,
 
 
 # quello che devo fare io e':
-# passare functions_definition.json a system
-# passare functions_call.json a user
-# ricreare le funzioni che hanno _ davanti al nome
 # ricreare la mappa token_id -> stringa del token dal vocab file
-# lettura dei due json e gestione degli errori
 # logica di validazione incrementale del json (sono dentro {}? sto scrivendo
 # un chiave? un valore stringa, un numero?)
-# vincolo che il valore "name" sia uno dei nomi di funzione noti
 # vincolo sui tipi di parametri
-# sostituzione di np.argmax(logits) con "argmax solo tra i token ammessi"
 # criterio di stop basato sulla struttura completa, non su eos_token_id
 # argparse per --functions_definition, --input e --output con path di default
 
@@ -59,7 +53,7 @@ def main() -> None:
             generated: str = ""
             print()
             print("sto per entrare nel ciclo, sono prima del while")
-            token_prompt = from_text_to_token(formatted, modello)
+            token_prompt = from_prompt_to_token(formatted, modello)
             while generated not in names:
                 # print("sono dentro il ciclo")
                 logits = modello.get_logits_from_input_ids(token_prompt)
@@ -69,16 +63,20 @@ def main() -> None:
                 for i in range(len(logits)):  # mi scorre tutti i logit creati
                     if i not in allowed:  # se non e' tra quelli validi
                         logits[i] = float("-inf")  # lo setta a -inf,
-                        # per rendere meno probabile il suo pescaggio
+                        # per rendere impossibile il suo pescaggio
                 next_token = int(np.argmax(logits))
                 token_prompt.append(next_token)
                 generated += id_to_token[next_token]
-                # dec = modello.decode(next_token)
-                # print(dec, end="")
+                dec = modello.decode(next_token)
+                print(dec)
                 print(test.prompt, "->", generated)
-            # v- cio' che deve essere ritornato dentro il json
+            # params = [f.parameters for f in loaded_data]
+            # for i, param in enumerate(params):
+            #     last = (i == len(param) - 1)   # True solo per l'ultimo
+            #     terminator = "}" if last else ","
             print()
             print("sono appena uscito dal ciclo")
+            # v- cio' che deve essere ritornato dentro il json
             result = CheckOutputParameters(name=generated,
                                            prompt=test.prompt,
                                            parameters=dizionario
@@ -94,11 +92,9 @@ def main() -> None:
         print()
         print(results)
         print()
-        # print(len(logits))
+        print(len(logits))
         print()
-        # print(next_token)
-        print()
-        # print(next_word)
+        print(next_token)
         print()
         print(formatted)
         print()
