@@ -1,9 +1,9 @@
 PYTHON = python3 -m
 MAIN = call_me_maybe.py
 CONFIG = config.txt
-export HF_HOME=/home/cavivian/sgoinfre/.hf_cache
-export UV_CACHE_DIR=/home/cavivian/sgoinfre
-export  export UV_PROJECT_ENVIRONMENT=/home/cavivian/sgoinfre/.venv
+# export HF_HOME=/home/cavivian/sgoinfre/.hf_cache
+# export UV_CACHE_DIR=/home/cavivian/sgoinfre
+# export  export UV_PROJECT_ENVIRONMENT=/home/cavivian/sgoinfre/.venv
 
 install:
 	uv sync

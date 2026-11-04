@@ -39,47 +39,54 @@ def main() -> None:
         functions_text = json.dumps([f.model_dump() for f in loaded_data])
         print(functions_text)
         print()
-        results = []
-        dizionario = {}
-        names = [f.name for f in loaded_data]
-        id_to_token = load_vocab(modello)
+        results = []  # ciò che va passato all'output
+       # dizionario = {}
+        names = [f.name for f in loaded_data]  # sono i nomi delle funzioni, quelli che iniziano per fn_
+        id_to_token = load_vocab(modello)  # caricamento del vocabolario dei token
         print(len(id_to_token))
         print(id_to_token[0], id_to_token[1], id_to_token[2])
         print([t for t in id_to_token.values() if t.startswith("fn")][:10])
         # v tutto questo ciclo e' solo per cercare il nome del prompt
-        # e verificare che ci sia
-        for test in tests:
-            formatted = build_prompt(functions_text, test.prompt)
-            generated: str = ""
+        # e verificare che ci sia, e per trovare i parametri corrispondenti a quella funzione
+        for test in tests:  # ciclo che scorre i prompt
+            formatted = build_prompt(functions_text, test.prompt)  # si costruisce la formattazione del prompt secondo il modello
+            generated: str = ""  # stringa che contiene i nomi generati
             print()
             print("sto per entrare nel ciclo, sono prima del while")
-            token_prompt = from_prompt_to_token(formatted, modello)
-            while generated not in names:
-                # print("sono dentro il ciclo")
-                logits = modello.get_logits_from_input_ids(token_prompt)
-                allowed = token_id_allowed(generated, names, id_to_token)
+            token_prompt = from_prompt_to_token(formatted, modello)  # lista che contiene tutti i token del prompt
+            while generated not in names:  # finchè non è uno dei nomi
+                logits = modello.get_logits_from_input_ids(token_prompt)  # calcolami il logit dei token
+                allowed = token_id_allowed(generated, names, id_to_token)  # check se un logit è ammesso o no
                 if not allowed:
                     raise ValueError(f"nessun token valido dopo {generated!r}")
                 for i in range(len(logits)):  # mi scorre tutti i logit creati
                     if i not in allowed:  # se non e' tra quelli validi
                         logits[i] = float("-inf")  # lo setta a -inf,
                         # per rendere impossibile il suo pescaggio
-                next_token = int(np.argmax(logits))
-                token_prompt.append(next_token)
+                next_token = int(np.argmax(logits))  # token con il più alto logit
+                token_prompt.append(next_token)  # qua gli aggiungo i token del nome
                 generated += id_to_token[next_token]
                 dec = modello.decode(next_token)
                 print(dec)
                 print(test.prompt, "->", generated)
-            # params = [f.parameters for f in loaded_data]
-            # for i, param in enumerate(params):
-            #     last = (i == len(param) - 1)   # True solo per l'ultimo
-            #     terminator = "}" if last else ","
+            if generated in names:
+                params = next(f.parameters for f in loaded_data if f.name == generated)  # i parametri li prendi dalla definizione della funzione in loaded_data
+                for i, param_name in enumerate(params):
+                    last = (i == len(params) - 1)   # True solo per l'ultimo
+                    terminator = "}" if last else ","
+                    if i == 0:
+                        # Usiamo gli apici singoli per delimitare la f-string
+                        testo = f'", "parameters": {{"{param_name}": '
+                    else:
+                        testo = f'"{param_name}": '
+                token_prompt.extend(from_prompt_to_token(testo, modello))
+            print(i, param_name, last)
             print()
             print("sono appena uscito dal ciclo")
             # v- cio' che deve essere ritornato dentro il json
             result = CheckOutputParameters(name=generated,
                                            prompt=test.prompt,
-                                           parameters=dizionario
+                                           parameters=params
                                            #  ^ questo va modificato,
                                            # per adesso gli
                                            # passo un dizionario vuoto
