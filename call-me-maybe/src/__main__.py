@@ -13,6 +13,7 @@ from .models import (CheckFunctionsDefinition,
                      CheckOutputParameters,
                      CheckPrompt
                      )
+from .generation import create_value_mask, create_parameters
 
 
 # quello che devo fare io e':
@@ -21,7 +22,6 @@ from .models import (CheckFunctionsDefinition,
 # un chiave? un valore stringa, un numero?)
 # vincolo sui tipi di parametri
 # criterio di stop basato sulla struttura completa, non su eos_token_id
-# argparse per --functions_definition, --input e --output con path di default
 
 
 def main() -> None:
@@ -50,46 +50,34 @@ def main() -> None:
         # v tutto questo ciclo e' solo per cercare il nome del prompt
         # e verificare che ci sia, e per trovare i parametri
         # corrispondenti a quella funzione
+        mask = create_value_mask(id_to_token)
         for test in tests:  # ciclo che scorre i prompt
             formatted = build_prompt(functions_text, test.prompt)
-            # si costruisce la formattazione del prompt secondo il modello
-            generated: str = ""  # stringa che contiene i nomi generati
+            token_prompt = from_prompt_to_token(formatted, modello)
+            token_prompt.extend(from_prompt_to_token('{"name": "',
+                                                     modello))
+            generated = token_allowed_generation(names, modello, token_prompt,
+                                                 id_to_token)
+            params = next(f.parameters for f in loaded_data
+                          if f.name == generated)
+            values = create_parameters(modello, token_prompt, params,
+                                       id_to_token, mask)
+            result = CheckOutputParameters(name=generated,
+                                           prompt=test.prompt,
+                                           parameters=values
+                                           )
+            results.append(result.model_dump())
             print()
             print("sto per entrare nel ciclo, sono prima del while")
-            token_prompt = from_prompt_to_token(formatted, modello)
             # ^ lista che contiene tutti i token del prompt
-            generated = token_allowed_generation(generated, names, modello,
-                                                 token_prompt,
-                                                 id_to_token,
-                                                 test)
-            parameter_store = {}
-            if generated in names:
-                params = next(f.parameters for f in loaded_data
-                              if f.name == generated)
-                # prende i parametri da definizione della funzione loaded_data
-                for i, param_name in enumerate(params):
-                    last = (i == len(params) - 1)   # True solo per l'ultimo
-                    terminator = "}" if last else ","
-                    if i == 0:
-                        # Usiamo gli apici singoli per delimitare la f-string
-                        testo = f'", "parameters": {{"{param_name}": '
-                    else:
-                        testo = f'"{param_name}": '
-                token_prompt.extend(from_prompt_to_token(testo, modello))
-                print(i, param_name, last)
+            # generated = token_allowed_generation(generated, names, modello,
+            #                                      token_prompt,
+            #                                      id_to_token,
+            #                                      test)
+            # prende i parametri da definizione della funzione loaded_dat
             print()
             print("sono appena uscito dal ciclo")
             # v- cio' che deve essere ritornato dentro il json
-            result = CheckOutputParameters(name=generated,
-                                           prompt=test.prompt,
-                                           parameters=params
-                                           #  ^ questo va modificato,
-                                           # per adesso gli
-                                           # passo un dizionario vuoto
-                                           # ma devo ancora prendere
-                                           # i parametri giusti
-                                           )
-            results.append(result.model_dump())
         print("\n sono passata di qui \n", generated)
         print()
         print()
