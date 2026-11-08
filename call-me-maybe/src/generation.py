@@ -12,7 +12,7 @@ NUMBER_COMPLETE = re.compile(r"-?\d+(\.\d+)?")
 MAX_VALUE_TOKENS = 40
 
 
-def create_value_mask(id_to_token: dict[str, set[int]]) -> dict[str, set[int]]:
+def create_value_mask(id_to_token: dict[int, str]) -> dict[str, set[int]]:
     mask: dict[str, set[int]] = {
         "digits": set(), "comma": set(), "quote": set(), "brace": set(),
         "string": set()
@@ -33,7 +33,7 @@ def create_value_mask(id_to_token: dict[str, set[int]]) -> dict[str, set[int]]:
 
 def create_number(modello: SLM,
                   token_prompt: list[int],
-                  id_to_token: dict[str, int],
+                  id_to_token: dict[int, str],
                   digits: set[int],
                   end_ids: set[int]) -> float:
     text: str = ""
@@ -44,7 +44,7 @@ def create_number(modello: SLM,
         if NUMBER_COMPLETE.fullmatch(text):
             allowed |= end_ids
         logits = modello.get_logits_from_input_ids(token_prompt)
-        token = token_allowed_generation(logits, allowed)
+        token = get_higher_allowed_token(logits, allowed)
         if token in end_ids:
             return float(text)
         token_prompt.append(token)
@@ -74,9 +74,9 @@ def create_parameters(modello: SLM, token_prompt: list[int],
     for i, name in enumerate(names):
         the_type = params[name].type
         if i == 0:
-            start = '", "parameters" : {'
+            start = '", "parameters": {'
         else:
-            start = ', "'
+            start = ', '
         if the_type == "string":
             opening = '"'
         else:
@@ -100,6 +100,6 @@ def create_parameters(modello: SLM, token_prompt: list[int],
                                             token_prompt, id_to_token)
             if text == "true":
                 values[name] = text
-            else:
-                raise ValueError()
+        else:
+            raise ValueError()
     return values

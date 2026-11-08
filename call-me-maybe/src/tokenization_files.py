@@ -39,10 +39,7 @@ def token_id_allowed(generated: str,
     for id_token, text in id_to_token.items():
         if any(n.startswith(generated + text) for n in names):
             allowed.add(id_token)
-            # print()
-            # print(allowed, end="")
-            # print()
-    return (allowed)
+    return allowed
 
 
 def load_vocab(modello: SLM) -> dict[int, str]:
@@ -51,7 +48,6 @@ def load_vocab(modello: SLM) -> dict[int, str]:
         d = json.load(f)
     inverso = {v: k.replace("Ġ", " ").replace("Ċ", "\n") for k, v in d.items()}
     return inverso
-    # print(inverso)
 
 
 def token_allowed_generation(choices: list[str], modello: SLM,
@@ -66,17 +62,15 @@ def token_allowed_generation(choices: list[str], modello: SLM,
         token = get_higher_allowed_token(logits, allowed)
         # ^ check se un logit è ammesso o no
         token_prompt.append(token)
-        generated += id_to_token(token)
+        generated += id_to_token[token]
     return generated
 
 
 def get_higher_allowed_token(logits: list[int], allowed: set[int]) -> int:
     if not allowed:
         raise ValueError(f"nessun token valido dopo {allowed!r}")
-    for i in range(len(logits)):  # mi scorre tutti i logit creati
-        if i not in allowed:  # se non e' tra quelli validi
-            logits[i] = float("-inf")  # lo setta a -inf,
-            # per rendere impossibile il suo pescaggio
-    next_token = int(np.argmax(logits))  # token con il più alto logit
-    return next_token
+    scores = np.full(len(logits), -np.inf)
+    ids = np.fromiter(allowed, dtype=int)
+    scores[ids] = np.asarray(scores)[ids]
+    return int(np.argmax(scores))
     # return generated

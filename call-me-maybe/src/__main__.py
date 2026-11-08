@@ -38,28 +38,29 @@ def main() -> None:
         functions_text = json.dumps([f.model_dump() for f in loaded_data])
         print(functions_text)
         print()
-        results = []  # ciò che va passato all'output
-        # dizionario = {}
-        names = [f.name for f in loaded_data]  # sono i nomi delle funzioni,
-        # quelli che iniziano per fn_
+        results = []  
+        names = [f.name for f in loaded_data]
+        print(names)
         id_to_token = load_vocab(modello)
-        # ^ caricamento del vocabolario dei token
         print(len(id_to_token))
         print(id_to_token[0], id_to_token[1], id_to_token[2])
         print([t for t in id_to_token.values() if t.startswith("fn")][:10])
-        # v tutto questo ciclo e' solo per cercare il nome del prompt
-        # e verificare che ci sia, e per trovare i parametri
-        # corrispondenti a quella funzione
         mask = create_value_mask(id_to_token)
-        for test in tests:  # ciclo che scorre i prompt
+        print("sto per entrare nel ciclo, sono prima del while")
+        for test in tests:
+            print("sono entrato nel ciclo")
             formatted = build_prompt(functions_text, test.prompt)
+            print("sono dopo formatted")
             token_prompt = from_prompt_to_token(formatted, modello)
+            print("sono dopo token prompt")
             token_prompt.extend(from_prompt_to_token('{"name": "',
                                                      modello))
             generated = token_allowed_generation(names, modello, token_prompt,
                                                  id_to_token)
+            print("sono dopo generated")
             params = next(f.parameters for f in loaded_data
                           if f.name == generated)
+            print("sono dopo params")
             values = create_parameters(modello, token_prompt, params,
                                        id_to_token, mask)
             result = CheckOutputParameters(name=generated,
@@ -68,16 +69,8 @@ def main() -> None:
                                            )
             results.append(result.model_dump())
             print()
-            print("sto per entrare nel ciclo, sono prima del while")
-            # ^ lista che contiene tutti i token del prompt
-            # generated = token_allowed_generation(generated, names, modello,
-            #                                      token_prompt,
-            #                                      id_to_token,
-            #                                      test)
-            # prende i parametri da definizione della funzione loaded_dat
             print()
             print("sono appena uscito dal ciclo")
-            # v- cio' che deve essere ritornato dentro il json
         print("\n sono passata di qui \n", generated)
         print()
         print()
@@ -91,12 +84,9 @@ def main() -> None:
         print()
         print(result)
         print()
-        # print(token_prompt)
-        # word = modello.decode(token_prompt)
         print()
-        # print(word)
-        # print(results)
     except PermissionError as e:
+        print("sono nel permission error del try del ciclo dei test")
         raise SystemExit(e)
     try:
         path = args.output
