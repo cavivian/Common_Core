@@ -58,11 +58,15 @@ def token_allowed_generation(choices: list[str], modello: SLM,
     while generated not in choices:  # finchè non è uno dei nomi
         allowed = token_id_allowed(generated, choices, id_to_token)
         logits = modello.get_logits_from_input_ids(token_prompt)
+        # print(np.argmax(logits), "stampa prima")
         # ^ mi calcola il logit dei token
         token = get_higher_allowed_token(logits, allowed)
+        # print(np.argmax(token), "stampa dopo")
         # ^ check se un logit è ammesso o no
         token_prompt.append(token)
+        print(id_to_token[token], sep="", end="", flush=True)
         generated += id_to_token[token]
+    print()
     return generated
 
 
@@ -71,6 +75,5 @@ def get_higher_allowed_token(logits: list[int], allowed: set[int]) -> int:
         raise ValueError(f"nessun token valido dopo {allowed!r}")
     scores = np.full(len(logits), -np.inf)
     ids = np.fromiter(allowed, dtype=int)
-    scores[ids] = np.asarray(scores)[ids]
+    scores[ids] = np.asarray(logits)[ids]
     return int(np.argmax(scores))
-    # return generated

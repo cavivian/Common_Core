@@ -33,12 +33,13 @@ def main() -> None:
                                CheckPrompt)
     except InputFileError as e:
         raise SystemExit(e)
+    i: int = 0
     try:
         modello = SLM(args.model_name)
         functions_text = json.dumps([f.model_dump() for f in loaded_data])
         print(functions_text)
         print()
-        results = []  
+        results = []
         names = [f.name for f in loaded_data]
         print(names)
         id_to_token = load_vocab(modello)
@@ -48,7 +49,7 @@ def main() -> None:
         mask = create_value_mask(id_to_token)
         print("sto per entrare nel ciclo, sono prima del while")
         for test in tests:
-            print("sono entrato nel ciclo")
+            print(f"sono entrato nel ciclo {i}")
             formatted = build_prompt(functions_text, test.prompt)
             print("sono dopo formatted")
             token_prompt = from_prompt_to_token(formatted, modello)
@@ -61,16 +62,17 @@ def main() -> None:
             params = next(f.parameters for f in loaded_data
                           if f.name == generated)
             print("sono dopo params")
-            values = create_parameters(modello, token_prompt, params,
-                                       id_to_token, mask)
+            parameters = create_parameters(modello, token_prompt, params,
+                                           id_to_token, mask)
             result = CheckOutputParameters(name=generated,
                                            prompt=test.prompt,
-                                           parameters=values
+                                           parameters=parameters
                                            )
             results.append(result.model_dump())
             print()
             print()
             print("sono appena uscito dal ciclo")
+            i += 1
         print("\n sono passata di qui \n", generated)
         print()
         print()
