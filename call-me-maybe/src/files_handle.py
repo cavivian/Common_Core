@@ -64,8 +64,6 @@ def write_output_file(answer: list[str], path: str):
     try:
         dir_path = Path(path).parent
         dir_path.mkdir(parents=True, exist_ok=True)
-        # parents = crea ogni cartella intermediaria mancata nel percorso
-        # exist_ok = previene il FileExistsError se la directory esiste di già
         with open(path, "w", encoding="utf-8") as f:
             json.dump(answer, f, indent=4)
     except OSError as e:
