@@ -9,7 +9,6 @@ from .models import ParameterDefinition
 
 NUMBER_PREFIX = re.compile(r"-?(\d+(\.\d*)?)?")
 NUMBER_COMPLETE = re.compile(r"-?\d+(\.\d+)?")
-
 MAX_VALUE_TOKENS = 40
 
 
@@ -54,15 +53,15 @@ def create_number(modello: SLM,
 
 
 def create_string(modello: SLM, token_prompt: list[int], allowed: set[int],
-                  quote_id: set[int], id_to_token: dict[int, str]) -> str:
+                  quote_id: set[int], id_to_token: dict[int, str]) -> Any:
     ids: list[int] = []
     for _ in range(MAX_VALUE_TOKENS * 3):
         logits = modello.get_logits_from_input_ids(token_prompt)
         token = get_higher_allowed_token(logits, allowed | quote_id)
         if token in quote_id:
-            token = search_before_quote(id_to_token[token])
-            if token:
-                complete = from_prompt_to_token(token, modello)
+            before_quote = search_before_quote(id_to_token[token])
+            if before_quote:
+                complete = from_prompt_to_token(before_quote, modello)
                 token_prompt.extend(complete)
                 ids.extend(complete)
             break
@@ -106,10 +105,9 @@ def create_parameters(modello: SLM, token_prompt: list[int],
         elif the_type == "boolean":
             text = token_allowed_generation(["true", "false"], modello,
                                             token_prompt, id_to_token)
-            if text == "true":
-                values[name] = text
+            values[name] = text == "true"
         else:
-            raise ValueError()
+            raise ValueError("wrong types")
     return values
 
 

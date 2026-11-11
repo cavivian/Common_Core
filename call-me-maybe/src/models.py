@@ -4,7 +4,6 @@ from typing import Literal, Any
 typeofparameter = Literal["string", "number", "boolean", "array", "object"]
 
 
-# descrive che tipo è un parametro
 class ParameterDefinition(BaseModel):
     type: typeofparameter
 
@@ -13,8 +12,6 @@ class CheckPrompt(BaseModel):
     prompt: str = Field(min_length=1)
 
 
-# mi controlla i parametri in uscita da inserire nel messaggio di output
-# ottengo un dizionario
 class CheckOutputParameters(BaseModel):
     name: str = Field(min_length=1)
     prompt: str = Field(min_length=1)

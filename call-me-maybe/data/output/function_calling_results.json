@@ -9,7 +9,7 @@
     },
     {
         "name": "fn_add_numbers",
-        "prompt": "What is the sum of 265 and 345?",
+        "prompt": "What is the sum of 265 and -345?",
         "parameters": {
             "a": 265.0,
             "b": 345.0

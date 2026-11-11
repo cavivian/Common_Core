@@ -3,14 +3,13 @@ MAIN = call_me_maybe.py
 CONFIG = config.txt
 export HF_HOME=/home/cavivian/sgoinfre/.hf_cache
 export UV_CACHE_DIR=/home/cavivian/sgoinfre
-export  export UV_PROJECT_ENVIRONMENT=/home/cavivian/sgoinfre/.venv
+export UV_PROJECT_ENVIRONMENT=/home/cavivian/sgoinfre/.venv
 
 install:
 	uv sync
 
 run:
 	uv run python3 -m src
-#	$(PYTHON) $(MAIN) $(CONFIG)
 
 debug:
 	$(PYTHON) -m pdb $(MAIN) $(CONFIG)
@@ -22,12 +21,12 @@ clean:
 	find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null; true
 
 lint:
-	flake8 .
-	mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
+	flake8 ./src
+	uv run mypy ./src --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
 
 lint-strict:
-	flake8 .
-	mypy . --strict
+	flake8 ./src
+	uv run mypy ./src --strict
 
 build:
 	pip install build

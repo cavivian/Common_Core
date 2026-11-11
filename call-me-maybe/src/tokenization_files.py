@@ -2,6 +2,7 @@
 from llm_sdk.llm_sdk import Small_LLM_Model as SLM
 import json
 import numpy as np
+from typing import Any
 
 
 def build_prompt(functions_text: str, user_prompt: str) -> str:
@@ -24,13 +25,11 @@ def build_prompt(functions_text: str, user_prompt: str) -> str:
     )
 
 
-def from_prompt_to_token(prompt: str, modello: SLM) -> list[int]:
+def from_prompt_to_token(prompt: str, modello: SLM) -> Any:
     request = modello.encode(prompt)[0].tolist()
     return request
 
 
-# questa funzione che mi controlla se effettivamente
-# c'e' nel json cio' che cerco
 def token_id_allowed(generated: str,
                      names: list[str],
                      id_to_token: dict[int, str]
@@ -64,7 +63,7 @@ def token_allowed_generation(choices: list[str], modello: SLM,
     return generated
 
 
-def get_higher_allowed_token(logits: list[int], allowed: set[int]) -> int:
+def get_higher_allowed_token(logits: list[float], allowed: set[int]) -> int:
     if not allowed:
         raise ValueError(f"nessun token valido dopo {allowed!r}")
     scores = np.full(len(logits), -np.inf)

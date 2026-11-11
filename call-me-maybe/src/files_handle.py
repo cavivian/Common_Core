@@ -1,5 +1,5 @@
 import json
-from typing import TypeVar
+from typing import TypeVar, Any
 from pathlib import Path
 from pydantic import BaseModel, ValidationError
 
@@ -60,7 +60,7 @@ def load_json_file(path: str, model: type[T]) -> list[T]:
     return entries
 
 
-def write_output_file(answer: list[str], path: str):
+def write_output_file(answer: list[dict[str, Any]], path: str) -> None:
     try:
         dir_path = Path(path).parent
         dir_path.mkdir(parents=True, exist_ok=True)

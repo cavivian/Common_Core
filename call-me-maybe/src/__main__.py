@@ -48,7 +48,7 @@ def main() -> None:
                                            parameters=parameters
                                            )
             results.append(result.model_dump())
-    except PermissionError as e:
+    except (PermissionError, ValueError) as e:
         raise SystemExit(e)
     try:
         path = args.output
