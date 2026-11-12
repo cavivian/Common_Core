@@ -45,7 +45,8 @@ def load_vocab(modello: SLM) -> dict[int, str]:
     path = modello.get_path_to_vocab_file()
     with open(path, encoding="utf-8") as f:
         d = json.load(f)
-    inverso = {v: k.replace("Ġ", " ").replace("Ċ", "\n") for k, v in d.items()}
+    inverso = {v: k.replace("Ġ", " ").replace("Ċ", "\n")
+               for k, v in d.items()}
     return inverso
 
 
