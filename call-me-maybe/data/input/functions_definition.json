@@ -18,9 +18,6 @@
     "name": "fn_greet",
     "description": "Generate a greeting message for a person by name.",
     "parameters": {
-      "name": {
-        "type": "string"
-      }
     },
     "returns": {
       "type": "string"
@@ -42,9 +39,7 @@
     "name": "fn_get_square_root",
     "description": "Calculate the square root of a number.",
     "parameters": {
-      "a": {
-        "type": "number"
-      }
+
     },
     "returns": {
       "type": "number"

@@ -2,3 +2,7 @@
 ./src/.mypy_cache
 ./src/__pycache__
 *.pyc
+data
+.mypy_cache
+__pycache__
+llm_sdk

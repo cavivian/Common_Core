@@ -48,7 +48,7 @@ def main() -> None:
                                            parameters=parameters
                                            )
             results.append(result.model_dump())
-    except (OSError, ValueError) as e:
+    except (OSError, ValueError, RuntimeError) as e:
         raise SystemExit(e)
     try:
         path = args.output

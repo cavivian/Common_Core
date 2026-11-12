@@ -1,8 +1,8 @@
 PYTHON = python3 -m
 MAIN = __main__.py
-# export HF_HOME=/home/cavivian/sgoinfre/.hf_cache
-# export UV_CACHE_DIR=/home/cavivian/sgoinfre
-# export UV_PROJECT_ENVIRONMENT=/home/cavivian/sgoinfre/.venv
+export HF_HOME=/home/cavivian/sgoinfre/.hf_cache
+export UV_CACHE_DIR=/home/cavivian/sgoinfre
+export UV_PROJECT_ENVIRONMENT=/home/cavivian/sgoinfre/.venv
 
 install:
 	uv sync
