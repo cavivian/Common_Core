@@ -89,7 +89,7 @@ def create_parameters(modello: SLM, token_prompt: list[int],
             opening = ""
         static_part = f'{start}"{name}": {opening}'
         token_prompt.extend(from_prompt_to_token(static_part, modello))
-        if the_type == "number":
+        if the_type == "number" or the_type == "integer":
             last = i == len(names) - 1
             if last:
                 end_ids = mask["brace"]

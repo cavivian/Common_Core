@@ -1,7 +1,8 @@
 from pydantic import BaseModel, Field
 from typing import Literal, Any
 
-typeofparameter = Literal["string", "number", "boolean", "array", "object"]
+typeofparameter = Literal["string", "number", "boolean", "array", "object",
+                          "integer"]
 
 
 class ParameterDefinition(BaseModel):
