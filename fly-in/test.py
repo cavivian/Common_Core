@@ -43,9 +43,9 @@ def main():
         pygame.draw.rect(display, (150, 110, 130), rettangolo.rect)
         rettangolo.move()
         pygame.display.flip()
-        tempo_passato += dt
-        tempo_totale = 200
-        progresso = tempo_passato / tempo_totale
+        # tempo_passato += dt
+        # tempo_totale = 200
+        # progresso = tempo_passato / tempo_totale
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -70,7 +70,7 @@ def main():
                 if event.key == pygame.K_LEFT:
                     rettangolo.set_speed(0, 0)
 
-        dt = clock.tick(120)
+        clock.tick(120)
     pygame.quit()
 
 
