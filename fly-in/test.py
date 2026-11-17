@@ -2,7 +2,8 @@ import pygame
 
 
 class Rettangolo:
-    def __init__(self, coord: tuple[int, int] = (960, 540), screen_size: tuple[int, int] = (1920, 1080)):
+    def __init__(self, coord: tuple[int, int] = (960, 540),
+                 screen_size: tuple[int, int] = (1920, 1080)):
         self.x = coord[0]
         self.y = coord[1]
         self.screen_size = screen_size
@@ -36,7 +37,7 @@ def main():
     clock = pygame.time.Clock()
     rettangolo = Rettangolo()
     running = True
-    dt = 0
+    # dt = 0
 
     while running:
         display.fill((230, 210, 220))
