@@ -22,12 +22,12 @@ clean:
 	find . -type d -name "*.egg-info" -exec rm -rf {} + 2>/dev/null; true
 
 lint:
-	flake8 ./src
-	uv run mypy ./src --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
+	flake8
+	uv run mypy --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
 
 lint-strict:
-	flake8 ./src
-	uv run mypy ./src --strict
+	flake8
+	uv run mypy --strict
 
 build:
 	pip install build

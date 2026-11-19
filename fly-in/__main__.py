@@ -3,15 +3,15 @@ from parser import Parse
 
 
 def main():
+    if len(sys.argv) != 2:
+        raise SystemExit("I only need 1 argument")
     try:
-        with open(sys.argv[1], 'r') as f:
-            content = f.readline()
-            while content:
-                contenuto = Parse(content)
-                contenuto.from_content_to_list_of_dict(content)
-                content = f.readline()  # serve x stoppare il ciclo, x la fine
-    except FileExistsError:
-        SystemExit()
+        io = Parse(sys.argv[1])
+        io.open()
+        print(len(io.connections))
+        print(len(io.zone))
+    except FileNotFoundError:
+        raise SystemExit("File corrupted")
 
 
 if __name__ == "__main__":
