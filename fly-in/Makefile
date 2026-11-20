@@ -13,7 +13,7 @@ run:
 	@uv run python3 __main__.py maps/hard/01_maze_nightmare.txt
 
 debug:
-	$(PYTHON) -m pdb $(MAIN)
+	$(PYTHON) pdb $(MAIN)
 
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
@@ -29,8 +29,5 @@ lint-strict:
 	flake8
 	uv run mypy --strict
 
-build:
-	pip install build
-	python3 -m build
 
 .PHONY: install run debug clean lint lint-strict build
