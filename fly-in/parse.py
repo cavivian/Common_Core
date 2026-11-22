@@ -1,7 +1,3 @@
-# cosa devo fare:
-# - try-except in cui leggo i file dei percorsi(basta farlo con sys)
-# - fare il parse di tutti i file (sempre dentro il try, di quello che
-# viene passato in input)
 import re
 from typing import Any
 
@@ -21,20 +17,25 @@ VALID_ZONES = {"normal", "blocked", "restricted", "priority"}
 
 
 class ParseError(Exception):
-    def __init__(self, index: int, cause: str):
+    """This class raise the errors of the program, and displays the line
+    and the problem"""
+    def __init__(self, index: int, cause: str) -> None:
         self.index = index
         self.cause = cause
         super().__init__(f"line {index}: {cause}")
 
 
-class Parse:
+class Parsing:
+    """This class checks that every line of
+    the file given is written correctly"""
     def __init__(self, path: str) -> None:
         self.path = path
-        self.connections = []
-        self.zone = []
+        self.connections: list[dict[str, Any]] = []
+        self.zone: list[dict[str, Any]] = []
         self.nb_drones: int | None = None
 
-    def open(self):
+    def open(self) -> None:
+        """ Function that opens the map"""
         with open(self.path, 'r') as f:
             for i, line in enumerate(f, start=1):
                 try:
@@ -42,11 +43,12 @@ class Parse:
                 except ValueError as e:
                     raise ParseError(i, str(e)) from e
             self.check_all()
-            # print(f"I'm {line} at index {i}")
-    # in questa funzione non sto salvando l'indice o il nome di dove
 
-    # trovo l'errore
-    def correct_format(self, content: str) -> str:
+    def correct_format(self, content: str) -> None:
+        """ Function that checks if the format is correct, like:
+        - if nb_drones is the first info
+        - if the zones and connection syntax is correct
+            - if not the program raise an error"""
         self.line = content.strip()
         if self.line.startswith('#') or self.line == "":
             pass
@@ -55,86 +57,97 @@ class Parse:
             match = re.fullmatch(COMPLETE_STRUCTURE, self.line, re.VERBOSE)
             match_connections = re.fullmatch(CONNECTIONS, self.line,
                                              re.VERBOSE)
+            if (match or match_connections) and self.nb_drones is None:
+                raise ValueError("nb_drones must be defined "
+                                 "before zones and connections")
             if match_drones:
-                result = match_drones.groupdict()
-                # self.drones.append(result)
-                result['numbers'] = int(result['numbers'])
-                if result['numbers'] <= 0:
-                    raise ValueError("nb_drones must be positive")
-                if self.nb_drones is not None:
-                    raise ValueError("nb_drones defined more than once")
-                self.nb_drones = result['numbers']
-                # print(f"i'm here {result}")
-                # print(type(result['numbers']))
+                self.drones_match(match_drones)
             elif match:
-                result = match.groupdict()
-                # print(result)
-                result['tags'] = self.give_default(self.create_a_dict(
-                    result['tags']), ZONE_DEFAULTS)
-                result['x'] = int(result['x'])
-                result['y'] = int(result['y'])
-                result['tags']['max_drones'] = int(result['tags']
-                                                   ['max_drones'])
-                if result['tags']['zone'] not in VALID_ZONES:
-                    raise ValueError(f"""invalid zone type '{result['tags']
-                                                           ['zone']}'""")
-                if result['tags']['max_drones'] <= 0:
-                    raise ValueError("max_drones must be positive")
-                self.zone.append(result)
-                # print(result['x'])
-                # print(type(result['x']))
-                # print(f"Zone results: {result}")
+                self.match_zones(match)
             elif match_connections:
-                result = match_connections.groupdict()
-                result['tags'] = self.give_default(self.create_a_dict(
-                    result['tags']), LINK_DEFAULTS)
-                result['tags']['max_link_capacity'] = int(result['tags']
-                                                          ['max_link_capacity']
-                                                          )
-                if result['tags']['max_link_capacity'] <= 0:
-                    raise ValueError("max_link_capacity must be positive")
-                self.connections.append(result)
-                # print(f"Connection results: {result}")
+                self.connections_match(match_connections)
             else:
                 raise ValueError(f"invalid line: '{self.line}'")
 
+    def drones_match(self, match_drones: re.Match[str]) -> None:
+        """ Function that checks that the number of drones is positive, and if
+        it can be an int, else raise an error"""
+        result = match_drones.groupdict()
+        result['numbers'] = int(result['numbers'])
+        if result['numbers'] <= 0:
+            raise ValueError("nb_drones must be positive")
+        if self.nb_drones is not None:
+            raise ValueError("nb_drones defined more than once")
+        self.nb_drones = result['numbers']
+
+    def match_zones(self, match: re.Match[str]) -> None:
+        """ This checks that the zones are written correctly"""
+        result = match.groupdict()
+        result['tags'] = self.give_default(self.create_a_dict(
+            result['tags']), ZONE_DEFAULTS)
+        result['x'] = int(result['x'])
+        result['y'] = int(result['y'])
+        try:
+            result['tags']['max_drones'] = int(result['tags']['max_drones'])
+        except ValueError as e:
+            raise ValueError("max_drones must be an integer") from e
+        if result['tags']['zone'] not in VALID_ZONES:
+            raise ValueError(f"invalid zone type "
+                             f"'{result['tags']['zone']}'")
+        if result['tags']['max_drones'] <= 0:
+            raise ValueError("max_drones must be positive")
+        if any(z['name'] == result['name'] for z in self.zone):
+            raise ValueError(f"duplicate zone name '{result['name']}'")
+        self.zone.append(result)
+
+    def connections_match(self, match_connections: re.Match[str]) -> None:
+        """ This checks that the connection are written correctly"""
+        result = match_connections.groupdict()
+        result['tags'] = self.give_default(self.create_a_dict(
+            result['tags']), LINK_DEFAULTS)
+        try:
+            result['tags']['max_link_capacity'] = int(result['tags']
+                                                      ['max_link_capacity']
+                                                      )
+        except ValueError as e:
+            raise ValueError("max_link_capacity must be an integer.") from e
+        if result['tags']['max_link_capacity'] <= 0:
+            raise ValueError("max_link_capacity must be positive")
+        if result['zone1'] == result['zone2']:
+            raise ValueError("connection links zone "
+                             f"'{result['zone1']}' to itself")
+        known = {z['name'] for z in self.zone}
+        for name in (result['zone1'], result['zone2']):
+            if name not in known:
+                raise ValueError(f"connection uses unknown zone '{name}'")
+        key = frozenset((result['zone1'], result['zone2']))
+        if any(frozenset((c['zone1'], c['zone2'])) == key
+               for c in self.connections):
+            raise ValueError(f"duplicate connection "
+                             f"{result['zone1']}-{result['zone2']}")
+        self.connections.append(result)
+
     def check_all(self) -> None:
+        """ This is an ultimate check"""
         if self.nb_drones is None:
             raise ValueError("nb_drones is missing")
-        names: set[str] = set()
-        for z in self.zone:
-            if z['name'] in names:
-                raise ValueError(f"duplicate zone name '{z['name']}'")
-            names.add(z['name'])
         kinds = [z['kind'] for z in self.zone]
         if kinds.count('start_hub') != 1:
             raise ValueError("there must be exactly one start_hub")
         if kinds.count('end_hub') != 1:
             raise ValueError("there must be exactly one end_hub")
-        links: set[frozenset[str]] = set()
-        for c in self.connections:
-            for name in (c['zone1'], c['zone2']):
-                if name not in names:
-                    raise ValueError(f"connection uses unknown zone '{name}'")
-            key = frozenset((c['zone1'], c['zone2']))
-            if key in links:
-                raise ValueError(
-                    f"duplicate connection {c['zone1']}-{c['zone2']}")
-            links.add(key)
 
     def create_a_dict(self, tags: str | None) -> dict[str, Any]:
+        """ This creates a dict for every key-value pair,
+        Run the final checks on the whole file"""
         storage = {}
         if tags is None:
             return storage
-        # print(tags)
-        if tags == 'numbers':
-            for line in tags.split():
-                key, value = line.split(':')
-                storage[key] = value
         for line in tags.split():
             key, value = line.split('=')
+            if key in storage:
+                raise ValueError(f"duplicate tag '{key}'")
             storage[key] = value
-        # print(storage)
         return (storage)
 
     def give_default(self, storage: dict[str, Any],
