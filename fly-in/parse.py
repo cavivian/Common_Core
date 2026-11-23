@@ -128,7 +128,8 @@ class Parsing:
         self.connections.append(result)
 
     def check_all(self) -> None:
-        """ This is an ultimate check"""
+        """ This is an ultimate check,
+        Run the final checks on the whole file"""
         if self.nb_drones is None:
             raise ValueError("nb_drones is missing")
         kinds = [z['kind'] for z in self.zone]
@@ -138,8 +139,7 @@ class Parsing:
             raise ValueError("there must be exactly one end_hub")
 
     def create_a_dict(self, tags: str | None) -> dict[str, Any]:
-        """ This creates a dict for every key-value pair,
-        Run the final checks on the whole file"""
+        """ This creates a dict for every key-value pair"""
         storage = {}
         if tags is None:
             return storage

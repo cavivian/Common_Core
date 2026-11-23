@@ -1,0 +1,131 @@
+PYGAME:
+per creare la finestra di pygame fare:
+	- <var1> = pygame.display.set_mode(<dimensioni>)
+per inserire una immagine fare:
+	- <var2> = pygame.image.load('<nomeimmagine.png>').convert() -> [serve per rendere i pixel dell'immagine uguali
+	a quelli della finestra, così ogni blit è più veloce]
+	-  <var2> = pygame.transform.scale(<var2>,
+									   <var2.get_width() * 2,
+									   <var2>.get_height() * 2) -> [vuole la nuova dimensione come una coppia tra prentesi]
+per inserire il tempo delle azioni fare:
+	- <var4> = pygame.time.Clock()
+	- <var5> = 0.1
+per inserire un test dentro la finestra fare:
+	- <var6> = pygame.font.Font(None, size=<numero>)
+per runnare la finestra fare:
+	- <var3> = True
+	- <var13> = False -> [serve per il riconoscimento della freccia del mouse]
+	- <coordinata1> = 0 -> [parte alta a sinistra]
+	- while <var3>:
+	-	<var1>.fill((255, 255, 255)) -> [ad ogni giro del while ridisegna da capo e fill pulisce la finestra con un colore, così da 
+	non vedere i vecchi colori]
+	-	<var1>.blit(<var2>, (<coordinata1, coordinata2>)) -> [per inserire l'immagine nella finestra di pygame]
+	-	<var8> = pygame.Rect(<coordinata1>, 30, <var2>.get_width(), <var2>.get_height())
+	-	<var11> = pygame.mouse.get_pos() -> [questa è la variabile del mouse]
+	-	<var9> = pygame.Rect(300, 0, 160, 280)
+	-	<var10> = <var8>.colliderect(<var9>)
+	-	<var12> = <var9>.collidepoint(<var11>)
+	-	pygame.draw.rect(<var1>, (255 * <var10>, 255 * <var12>, 0), <var9>)
+	- [se qua mettessi if <var13> e sotto indentato questo v, l'immagine si muoverebbe solo premendo il tasto 'D']
+	-	coordinata1 += 50 * <var5> -> [l'immagine si sposta di 50 pixel al secondo]
+	-	<var7> = <var6>.render('<testo>', True, (0, 0, 0)) -> [gli 0 sarebbero il colore, in questo caso sarebbe il nero]
+	-	<var1>.blit(<var7>, (300, 100)) -> [300 e 100 sarebbero la posizione dentro la finestra]
+	-	for event in pygame.event.get(): -> [il ciclo non ha memoria, questo contiene tutte le azioni fatte, altrimenti
+	il sistema pensa che la finestra non risponda e si blocca]
+	-		if event.type == pygame.QUIT:
+	-			<var3> = False
+	-		if event.type == pygame.KEYDOWN: -> [si parla dell' input della tastiera, del momento in cui premo il tasto]
+	-			if event.key == pygame.K_d: -> [si parla di premere la D]
+	-				<var13> = True
+	-		if event.type == pygame.KEYUP: -> [si parla di rilasciare la D]
+	-			if event.key == pygame.K_d:
+	-				<var13> = False
+	-	pygame.display.flip() -> [mostra il disegno nascosto che pygame disegna, al posto di quello vecchio]
+	-	<var5>.tick(<timeinnum>) / 1000 -> [sarebbero gli fps][itck(60) dice di non andare oltre i 60 giri nel while al secondo,
+	con questa espressione ricavo i secondi, (dt)] -> utile per i droni
+	-	>var5> = max(0.001, min(0.1, <var5>))
+	- pygame.quit()
+
+sapere cosa si intende per rendering -> [s'intende trasformare una descrizione(un testo, una forma, un modello) in pixel
+da mostrare. cCon font.render(...) trasformi il testo in un immagine e poi la bilt ti]
+per modificare l'immagine si può usare convert_alpha(). -> [mantiene la trasparenza, non toglie da solo la trasparenza]
+PIXELART RENDERING METHODS:
+1 - image.load -> transform.scale -> screen.blit -> [ingrandire ogni immagine appena la carichi (transform.scale)
+e poi disegnarla;]
+	scale first techinque (smoothest, slowest)
+2 - set_mode(dims, pygame.SCALED) -> [usare set_mode(dims, pygame.SCALED): tu disegni in piccolo e
+pygame ingrandisce tutta la finestra;]
+	scale last techinque (optimized)
+3 - image.load -> intermediate.blit -> transform.scale -> screen.blit -> [disegnare in piccolo su una superficie intermedia e ingrandire
+quella una volta sola]
+	scale last techinque (more control)
+
+[questo blocco dice in pratica che il colore diventa rosso se i due rettangoli si toccano, e diventa verde se il mouse
+è dentro <var9>]
+if event.type == pygame.QUIT:
+	-			<var3> = False
+	-		if event.type == pygame.KEYDOWN: -> [si parla dell' input della tastiera, del momento in cui premo il tasto]
+	-			if event.key == pygame.K_d: -> [si parla di premere la D]
+	-				<var13> = True
+	-		if event.type == pygame.KEYUP: -> [si parla di rilasciare la D]
+	-			if event.key == pygame.K_d:
+	-				<var13> = False
+
+
+DIREZIONE DELLE COORDINATE:
++x ------>
++y
+ |
+ |
+ |
+ v
+
+quindi se si parla di coordinata (0, 0), si intende in alto a sinistra
+
+
+------- COME COLLEGARLO AL CODICE -------
+
+FILE  →  Parser  →  Modello  →  Simulazione  →  Cronologia dei turni
+                   (Zone,                          │
+                    Connection,                    ├→ Output testuale (D1-zona ...)
+                    Drone)                         └→ Vista pygame (disegna)
+
+MODELLO: non sa niente di pygame
+SIMULAZIONE: decide chi fa cosa, turno per turno. Crea la Cronologia
+VISTA: un'altra classe che legge modello e cronologia e li disegna. Non decide niente, legge e basta
+
+Cosa devono offrire le classi alla vista
+
+La vista vuole solo leggere. Per ogni classe, cosa le serve:
+
+Classe				Cosa legge la vista
+Zone				nome, coordinate x e y, colore, tipo (per distinguere le restricted, per esempio)
+Connection			le due zone che unisce (per tirare una linea) e la capacità
+Drone				dove si trova in questo turno: in una zona, oppure in transito su una connessione
+
+
+Due cose che la vista deve fare da sola
+
+Da coordinate a pixel. Le coordinate della mappa sono piccoli interi (da -1 a 7, per esempio)
+e la finestra ragiona in pixel. La vista deve moltiplicare per una scala e aggiungere uno spostamento,
+perché alcune coordinate sono negative. Ricorda anche che in pygame l'asse y va verso il basso, come hai scritto negli appunti,
+e decidi se vuoi la mappa capovolta oppure no.
+Da nome del colore a colore vero. Nei file il colore è una parola libera, anche inventata.
+Pygame ha pygame.Color('red') che riconosce i nomi comuni e dà un errore per quelli sconosciuti.
+Ti serve un colore di riserva (per esempio un grigio) per le zone senza colore o con un nome non valido
+
+Come si collega ai turni
+
+Nel video il ciclo usa dt per spostare le immagini in modo continuo.
+Nel tuo progetto i droni si muovono a scatti, un turno alla volta.
+La vista tiene un indice del turno corrente (per esempio parte da 0), e ad ogni passo del ciclo disegna le posizioni
+di quel turno. Per passare al turno dopo hai due strade: un tasto (per esempio la barra spaziatrice, come il tasto D
+degli appunti), oppure un timer. Se vuoi un movimento fluido tra due turni, puoi calcolare una posizione intermedia
+solo per disegnare. È un abbellimento da fare per ultimo.
+
+Cosa cambia per la progettazione dei droni
+
+Non cambia niente nelle classi, a patto di includere nel drone i dati che la vista userà. Per decidere cosa
+contiene, ti propongo di aggiungere una domanda all'elenco che ti avevo chiesto: oltre a "cosa deve sapere il drone per
+la simulazione", chiediti "cosa deve sapere la vista per disegnarlo in questo turno". Le due risposte quasi sempre
+coincidono.
