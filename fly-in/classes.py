@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class ZoneType(Enum):
     """Creation of enum variables for zone type"""
     RESTRICTED = "restricted"
@@ -8,11 +9,12 @@ class ZoneType(Enum):
     PRIORITY = "priority"
 
 
-class DroneStatus(Enum):
+class ZoneStatus(Enum):
     """Create of enum variables for simulation drone status"""
-    START = "start"
-    END = "end"
-    NORMAL = "normal"
+    START_HUB = "start_hub"
+    END_HUB = "end_hub"
+    HUB = "hub"
+
 
 class Drone:
     """This class represents the info about a Drone"""
@@ -59,19 +61,62 @@ class Fleet:
         return all(d.zone == self.end_zone for d in self.drones)
 
 
-class Zones:
-    def __init__(self, zones_name: str, c_x: int, c_y: int, typezone: ZoneType, color: str, max_drones: int, status: DroneStatus) -> None:
-        self.zones_name = zones_name
-        self.c_x = c_x
-        self.c_y = c_y
+class Zone:
+    """Class that creates the zones"""
+
+    def __init__(self, name: str,
+                 x: int, y: int,
+                 typezone: ZoneType,
+                 color: str | None,
+                 max_drones: int,
+                 status: ZoneStatus
+                 ) -> None:
+        self.name = name
+        self.x = x
+        self.y = y
         self.typezone = typezone
         self.color = color
         self.max_drones = max_drones
         self.status = status
 
+    def is_blocked(self) -> bool:
+        """Return True if drones can never enter this zone."""
+        return self.typezone == ZoneType.BLOCKED
+
+    def move_cost(self) -> int:
+        """Return how many turns a drone needs to enter this zone."""
+        if self.typezone == ZoneType.RESTRICTED:
+            return 2
+        return 1
+
+    def has_room(self, drones_inside: int) -> bool:
+        """Return True if one more drone can be in the zone.
+
+        Start and end zones have no limit."""
+        if self.status != ZoneStatus.HUB:
+            return True
+        return drones_inside < self.max_drones
 
 
-class Connections:
-    def __init__(self, connections):
-        self.connections = connections
-        pass
+class Connection:
+    """Class that connects the zone without repetitions of zone's name"""
+
+    def __init__(self, zone1: str,
+                 zone2: str,
+                 max_link_capacity: int,
+                 ) -> None:
+        self.zone1 = zone1
+        self.max_link_capacity = max_link_capacity
+        self.zone2 = zone2
+
+    def other_end(self, zone: str) -> str:
+        """Return the zone at the opposite end of the connection."""
+        if zone == self.zone1:
+            return self.zone2
+        if zone == self.zone2:
+            return self.zone1
+        raise ValueError(f"'{zone}' is not part of this connection")
+
+    def has_room(self, drones_on_link: int) -> bool:
+        """Return True if one more drone can use this connection."""
+        return drones_on_link < self.max_link_capacity

@@ -1,5 +1,5 @@
 import re
-from typing import Any
+from classes import Zone, ZoneType, ZoneStatus, Connection
 
 DRONES = r"(?:nb_drones):\s(?P<numbers>\d+)"
 COMPLETE_STRUCTURE = r"""(?P<kind>hub|start_hub|end_hub):\s
@@ -30,8 +30,8 @@ class Parsing:
     the file given is written correctly"""
     def __init__(self, path: str) -> None:
         self.path = path
-        self.connections: list[dict[str, Any]] = []
-        self.zone: list[dict[str, Any]] = []
+        self.connections: list[Connection] = []
+        self.zone: list[Zone] = []
         self.nb_drones: int | None = None
 
     def open(self) -> None:
@@ -72,75 +72,77 @@ class Parsing:
     def drones_match(self, match_drones: re.Match[str]) -> None:
         """ Function that checks that the number of drones is positive, and if
         it can be an int, else raise an error"""
-        result = match_drones.groupdict()
-        result['numbers'] = int(result['numbers'])
-        if result['numbers'] <= 0:
+        nb_drones = int(match_drones.group('numbers'))
+        if nb_drones <= 0:
             raise ValueError("nb_drones must be positive")
         if self.nb_drones is not None:
             raise ValueError("nb_drones defined more than once")
-        self.nb_drones = result['numbers']
+        self.nb_drones = nb_drones
 
     def match_zones(self, match: re.Match[str]) -> None:
         """ This checks that the zones are written correctly"""
         result = match.groupdict()
-        result['tags'] = self.give_default(self.create_a_dict(
-            result['tags']), ZONE_DEFAULTS)
-        result['x'] = int(result['x'])
-        result['y'] = int(result['y'])
+        tags = self.give_default(self.create_a_dict(result['tags']),
+                                 ZONE_DEFAULTS)
+        x = int(result['x'])
+        y = int(result['y'])
         try:
-            result['tags']['max_drones'] = int(result['tags']['max_drones'])
+            max_drones = int(tags['max_drones'])
         except ValueError as e:
             raise ValueError("max_drones must be an integer") from e
-        if result['tags']['zone'] not in VALID_ZONES:
-            raise ValueError(f"invalid zone type "
-                             f"'{result['tags']['zone']}'")
-        if result['tags']['max_drones'] <= 0:
+        if tags['zone'] not in VALID_ZONES:
+            raise ValueError(f"invalid zone type '{tags['zone']}'")
+        if max_drones <= 0:
             raise ValueError("max_drones must be positive")
-        if any(z['name'] == result['name'] for z in self.zone):
+        if any(z.name == result['name'] for z in self.zone):
             raise ValueError(f"duplicate zone name '{result['name']}'")
-        self.zone.append(result)
+        self.zone.append(Zone(name=result['name'], x=x, y=y,
+                              typezone=ZoneType(tags['zone']),
+                              color=tags.get('color'),
+                              max_drones=max_drones,
+                              status=ZoneStatus(result['kind'])))
 
     def connections_match(self, match_connections: re.Match[str]) -> None:
         """ This checks that the connection are written correctly"""
         result = match_connections.groupdict()
-        result['tags'] = self.give_default(self.create_a_dict(
-            result['tags']), LINK_DEFAULTS)
+        tags = self.give_default(self.create_a_dict(result['tags']),
+                                 LINK_DEFAULTS)
         try:
-            result['tags']['max_link_capacity'] = int(result['tags']
-                                                      ['max_link_capacity']
-                                                      )
+            capacity = int(tags['max_link_capacity'])
         except ValueError as e:
             raise ValueError("max_link_capacity must be an integer.") from e
-        if result['tags']['max_link_capacity'] <= 0:
+        if capacity <= 0:
             raise ValueError("max_link_capacity must be positive")
         if result['zone1'] == result['zone2']:
             raise ValueError("connection links zone "
                              f"'{result['zone1']}' to itself")
-        known = {z['name'] for z in self.zone}
+        known = {z.name for z in self.zone}
         for name in (result['zone1'], result['zone2']):
             if name not in known:
                 raise ValueError(f"connection uses unknown zone '{name}'")
         key = frozenset((result['zone1'], result['zone2']))
-        if any(frozenset((c['zone1'], c['zone2'])) == key
+        if any(frozenset((c.zone1, c.zone2)) == key
                for c in self.connections):
             raise ValueError(f"duplicate connection "
                              f"{result['zone1']}-{result['zone2']}")
-        self.connections.append(result)
+        self.connections.append(Connection(zone1=result['zone1'],
+                                           zone2=result['zone2'],
+                                           max_link_capacity=capacity))
 
     def check_all(self) -> None:
         """ This is an ultimate check,
         Run the final checks on the whole file"""
         if self.nb_drones is None:
             raise ValueError("nb_drones is missing")
-        kinds = [z['kind'] for z in self.zone]
-        if kinds.count('start_hub') != 1:
+        kinds = [z.status for z in self.zone]
+        if kinds.count(ZoneStatus.START_HUB) != 1:
             raise ValueError("there must be exactly one start_hub")
-        if kinds.count('end_hub') != 1:
+        if kinds.count(ZoneStatus.END_HUB) != 1:
             raise ValueError("there must be exactly one end_hub")
 
-    def create_a_dict(self, tags: str | None) -> dict[str, Any]:
+    def create_a_dict(self, tags: str | None) -> dict[str, str]:
         """ This creates a dict for every key-value pair"""
-        storage = {}
+        storage: dict[str, str] = {}
         if tags is None:
             return storage
         for line in tags.split():
@@ -148,10 +150,10 @@ class Parsing:
             if key in storage:
                 raise ValueError(f"duplicate tag '{key}'")
             storage[key] = value
-        return (storage)
+        return storage
 
-    def give_default(self, storage: dict[str, Any],
-                     defaults: dict[str, Any]) -> dict[str, str]:
+    def give_default(self, storage: dict[str, str],
+                     defaults: dict[str, str]) -> dict[str, str]:
         """Add the missing keys of `storage`, using `defaults`."""
         for key, value in defaults.items():
             storage.setdefault(key, value)
